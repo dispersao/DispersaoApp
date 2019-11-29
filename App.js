@@ -6,6 +6,7 @@ import { Container, Text } from 'native-base';
 
 import SplashScreen from './src/screens/SplashScreen';
 import JabaScreen from './src/screens/JabaScreen';
+import TokenScreen from './src/screens/TokenScreen';
 
 class HomeScreen extends React.Component {
   render() {
@@ -96,7 +97,8 @@ const BottomTab = createBottomTabNavigator(
 
 const InitialNavigator = createSwitchNavigator({
   Splash: SplashScreen,
-  App: JabaScreen
+  Jaba: JabaScreen,
+  Token: TokenScreen
 });
 
 export default createAppContainer(InitialNavigator);
