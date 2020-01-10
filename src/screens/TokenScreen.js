@@ -10,12 +10,21 @@ class TokenScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      statusText: ""
+      statusText: "",
+      inputText: ""
     };
     //Binding handleBackButtonClick function with this
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   }
 
+  checkToken = () => {
+
+    if (this.state.inputText!=="APP") {
+      this.setState({statusText: "Nenhuma sessão em andamento "});
+    } else {
+      this.props.navigation.navigate('Main');
+    }
+  };
 
 
     componentDidMount() {
@@ -55,14 +64,15 @@ class TokenScreen extends React.Component {
 
           <Row size={1} style={{marginVertical: 5 }}>
             <Item regular style={{width: '90%',  justifyContent: 'center', color: 'white' }}>
-             <Input placeholder='Token da Sessão' autoCapitalize="characters" style={{textTransform: 'uppercase', justifyContent: 'center', color: 'white', borderColor: 'gray'}} />
+             <Input placeholder='Token da Sessão' autoCapitalize="characters" style={{textTransform: 'uppercase', justifyContent: 'center', color: 'white', borderColor: 'gray'}}
+             onChangeText={(inputText) => this.setState({inputText})} />
             </Item>
           </Row>
 
           <Row size={1} style={{paddingHorizontal: 10}}>
             <Button rounded
             style={{width: '100%', justifyContent: 'center' ,  alignItems: 'center',  backgroundColor: 'rgb(217, 98, 53)' }}
-            onPress={()=> {this.setState({statusText: "Nenhuma sessão em andamento "})}}>
+            onPress={()=> {this.checkToken()}}>
               <Text style={{ fontSize: 15, color: 'white', justifyContent: 'center' , alignItems: 'center' }}>Começar</Text>
             </Button>
           </Row>

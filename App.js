@@ -2,13 +2,24 @@ import React from 'react';
 import { Button, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { createStackNavigator, createBottomTabNavigator, createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { Entypo, Foundation, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Container, Text } from 'native-base';
 
 import SplashScreen from './src/screens/SplashScreen';
 import JabaScreen from './src/screens/JabaScreen';
 import TokenScreen from './src/screens/TokenScreen';
 
+import FeedScreen from './src/screens/FeedScreen';
+import NotificationsScreen from './src/screens/NotificationsScreen';
+import ProfileListScreen from './src/screens/ProfileListScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
+import InfoScreen from './src/screens/InfoScreen';
+import LanguageScreen from './src/screens/LanguageScreen';
+
 class HomeScreen extends React.Component {
+
+
+
   render() {
     return (
       <Container style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -55,8 +66,8 @@ class DetailsScreen extends React.Component {
 }
 
 
-
-const HomeStack = createStackNavigator({
+/*
+const FeedStack = createStackNavigator({
   Home: { screen: HomeScreen },
   Details: { screen: DetailsScreen },
 });
@@ -65,22 +76,33 @@ const SettingsStack = createStackNavigator({
   Settings: { screen: SettingsScreen },
   Details: { screen: DetailsScreen },
 });
+*/
 
 const BottomTab = createBottomTabNavigator(
   {
-    Home: { screen: HomeStack },
-    Settings: { screen: SettingsStack },
+    Feed: { screen: FeedScreen },
+    Notifications: { screen: NotificationsScreen },
+    Profiles: { screen: ProfileListScreen },
+    Info: { screen: InfoScreen },
+    Language: { screen: LanguageScreen}
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;
         let iconName;
-        if (routeName === 'Home') {
-          iconName = `ios-information-circle${focused ? '' : '-outline'}`;
-        } else if (routeName === 'Settings') {
-          iconName = 'ios-options';
+        if (routeName === 'Feed') {
+          iconName = 'ios-paper'; //Ionicons
+        } else if (routeName === 'Notifications') {
+          iconName = 'ios-notifications';
+        } else if (routeName === 'Profiles') {
+          iconName = 'ios-people';
+        } else if (routeName === 'Info') {
+          iconName = 'ios-information-circle';
+        } else if (routeName === 'Language') {
+          iconName = 'ios-globe';
         }
+
 
         // You can return any component that you like here! We usually use an
         // icon component from react-native-vector-icons
@@ -96,9 +118,13 @@ const BottomTab = createBottomTabNavigator(
 );
 
 const InitialNavigator = createSwitchNavigator({
+  //temporarily jumping straight to mains. swtich back to Splash first later
+  Main: BottomTab,
   Splash: SplashScreen,
   Jaba: JabaScreen,
-  Token: TokenScreen
+  Token: TokenScreen,
+  Profile: ProfileScreen
+
 });
 
 export default createAppContainer(InitialNavigator);
