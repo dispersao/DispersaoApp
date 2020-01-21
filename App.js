@@ -78,11 +78,17 @@ const SettingsStack = createStackNavigator({
 });
 */
 
+const ProfilesStack = createStackNavigator({
+  ProfileList: ProfileListScreen,
+  Profile: ProfileScreen,
+});
+
+
 const BottomTab = createBottomTabNavigator(
   {
     Feed: { screen: FeedScreen },
     Notifications: { screen: NotificationsScreen },
-    Profiles: { screen: ProfileListScreen },
+    Profiles: ProfilesStack,
     Info: { screen: InfoScreen },
     Language: { screen: LanguageScreen}
   },
@@ -123,8 +129,10 @@ const InitialNavigator = createSwitchNavigator({
   Splash: SplashScreen,
   Jaba: JabaScreen,
   Token: TokenScreen,
-  Profile: ProfileScreen
+
 
 });
+
+
 
 export default createAppContainer(InitialNavigator);
