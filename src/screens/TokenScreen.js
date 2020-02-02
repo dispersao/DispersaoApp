@@ -1,17 +1,24 @@
 import React from 'react';
-import { View, Image, Text, BackHandler } from 'react-native';
+import { View, Image, Text, BackHandler, Vibration } from 'react-native';
 import { Container, Icon, Header, Content, Button, Input, Item } from 'native-base';
 import { Entypo, Foundation } from '@expo/vector-icons';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Linking } from 'expo';
+import { Linking, Notifications } from 'expo';
+
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
+
 
 class TokenScreen extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       statusText: "",
-      inputText: ""
+      inputText: "",
+      expoPushToken : '',
+      notification: {},
     };
     //Binding handleBackButtonClick function with this
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
@@ -25,12 +32,46 @@ class TokenScreen extends React.Component {
       this.props.navigation.navigate('Main');
     }
   };
+  registerForPushNotificationsAsync = async () => {
+    if (Constants.isDevice) {
+      const { status: existingStatus } = await Permissions.getAsync(
+        Permissions.NOTIFICATIONS
+      );
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Permissions.askAsync(
+          Permissions.NOTIFICATIONS
+        );
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+      }
+      let token = await Notifications.getExpoPushTokenAsync();
+      this.setState({expoPushToken: token});
+    } else {
+      alert('Must use physical device for Push Notifications');
+    }
+  };
+
+  _handleNotification = notification => {
+    Vibration.vibrate()
+    this.setState({ notification: notification });
+    console.log(notification)
+  };
+
 
 
     componentDidMount() {
       // This is the first method in the activity lifecycle
       // Addding Event Listener for the BackPress
       BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+      this.registerForPushNotificationsAsync();
+
+      this._notificationSubscription = Notifications.addListener(
+        this._handleNotification
+      );
     }
     componentWillUnmount() {
       // This is the Last method in the activity lifecycle
@@ -76,6 +117,19 @@ class TokenScreen extends React.Component {
               <Text style={{ fontSize: 15, color: 'white', justifyContent: 'center' , alignItems: 'center' }}>Começar</Text>
             </Button>
           </Row>
+
+          <Row size={1} style={{paddingHorizontal: 10}}>
+            <Text style={{ fontSize: 15, color: 'white', justifyContent: 'center' , alignItems: 'center' }}>
+              {this.state.expoPushToken}
+            </Text>
+          </Row>
+
+          <Row size={1} style={{paddingHorizontal: 10}}>
+            <Text style={{ fontSize: 15, color: 'white', justifyContent: 'center' , alignItems: 'center' }}>
+              {this.state.notification.data}
+            </Text>
+          </Row>
+
 
           <Row size={1} style={{paddingHorizontal: 10}}>
             {/* hi, i'm a spacer */}

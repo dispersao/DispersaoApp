@@ -18,9 +18,10 @@ class SplashScreen extends React.Component {
     const data = await this.performWait();
 
     // const fontLoaded =   await Font.loadAsync({ FontAwesome, Entypo});
+    console.log(data)
 
     if ((data !== null)/*&&(fontLoaded!==null)*/) {
-      this.props.navigation.navigate('App');
+      this.props.navigation.navigate('Token');
     }
   }
 
