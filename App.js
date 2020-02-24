@@ -125,12 +125,10 @@ const BottomTab = createBottomTabNavigator(
 
 const InitialNavigator = createSwitchNavigator({
   //temporarily jumping straight to mains. swtich back to Splash first later
-  Main: BottomTab,
   Splash: SplashScreen,
   Jaba: JabaScreen,
   Token: TokenScreen,
-
-
+  Main: BottomTab
 });
 
 
