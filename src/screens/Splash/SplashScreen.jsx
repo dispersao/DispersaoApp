@@ -8,7 +8,7 @@ const SplashScreen = () => {
   return (
     <Container>
       <Content contentContainerStyle={styles.viewStyles}>
-        <Image source={require('../../../../assets/images/dispersao_splash.png')} />
+        <Image source={require('../../../assets/images/dispersao_splash.png')} />
       </Content>
     </Container>
   )

@@ -9,7 +9,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Provider } from 'react-redux'
 import store from './src/store';
 
-import Dataloader from './src/modules/script/components/DataLoader.jsx';
+import Dataloader from './src/HOC/DataLoader.jsx';
 
 import FeedScreen from './src/screens/FeedScreen';
 import NotificationsScreen from './src/screens/NotificationsScreen';
@@ -17,7 +17,8 @@ import ProfileListScreen from './src/screens/ProfileListScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import InfoScreen from './src/screens/InfoScreen';
 import LanguageScreen from './src/screens/LanguageScreen';
-
+import JabaScreen from './src/screens/Jaba/JabaScreen.jsx';
+import TokenScreen from './src/screens/TokenScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 export default function App() {
@@ -28,7 +29,11 @@ export default function App() {
     <Provider store={store}>
       <Dataloader>
         <NavigationContainer>
-          <Tab.Navigator screenOptions={({ route }) => ({
+          <Stack.Navigator>
+            <Stack.Screen name="Jaba" component={JabaScreen} />
+            <Stack.Screen name="Token" component={TokenScreen} />
+          </Stack.Navigator>
+          {/* <Tab.Navigator screenOptions={({ route }) => ({
             tabBarIcon: ({ focused, tintColor }) => {
               let iconName;
               let routeName = route.name;
@@ -54,7 +59,7 @@ export default function App() {
             <Tab.Screen name="Notifications" component={NotificationsScreen} />
             <Tab.Screen name="Profiles" component={ProfileListScreen} />
             <Tab.Screen name="Language" component={LanguageScreen} />
-          </Tab.Navigator>
+          </Tab.Navigator> */}
         </NavigationContainer>
       </Dataloader>
     </Provider>

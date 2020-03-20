@@ -28,6 +28,11 @@ function* fetchConfig(action) {
 }
 
 function* fetchScript() {
-  const scripts = yield fetchScriptAPI()
-  yield put(fetchScriptSuccess(scripts))
+  try {
+    const scripts = yield fetchScriptAPI()
+    yield put(fetchScriptSuccess(scripts))
+  } catch (e) {
+    console.log(e)
+  }
+  
 }
