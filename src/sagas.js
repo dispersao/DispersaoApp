@@ -7,10 +7,15 @@ import {
   watchFethScript
 } from './modules/script/sagas'
 
+import {
+  watchCreateAppuser
+} from './modules/appuser/sagas'
+
 
 export default function* rootSaga() {
   yield all([
     watchFetchConfig(),
-    watchFethScript()
+    watchFethScript(),
+    watchCreateAppuser()
   ])
 }

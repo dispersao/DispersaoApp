@@ -13,7 +13,7 @@ const TwitterButton = () => {
   return (
     <SocialButton 
       name='twitter'
-      url='http://twitter.com'
+      url='https://www.twitter.com/DispersaoFilme/'
       style={styles.button} />
   )
 }

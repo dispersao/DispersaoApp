@@ -13,7 +13,7 @@ const FacebookButton = () => {
   return (
     <SocialButton 
       name='facebook'
-      url='http://facebook.com'
+      url='https://www.facebook.com/dispersaofilme'
       style={styles.button} />
   )
 }

@@ -15,21 +15,22 @@ import Constants from 'expo-constants'
 import { fetchScript } from '../modules/script/actions'
 import { getLoaded } from '../modules/script/selector'
 
-import SplashScreen from '../screens/Splash/SplashScreen.jsx'
+import { createAppuser } from '../modules/appuser/actions'
+import { getExpotoken } from '../modules/appuser/selector'
 
+import SplashScreen from '../screens/Splash/SplashScreen.jsx'
 
 const TIMEOUT_SPLASH = 3000
 
 const DataLoader = ({ 
   children, 
   loaded, 
-  fetchScriptData
+  fetchScriptData,
+  createUser,
+  userToken
 }) => {
 
   const [timeUp, setTimeUp] = useState(false)
-
-  const [expoToken, setExpoToken] = useState(null)
-
 
   const registerForPushNotificationsAsync = async () => {
     if (Constants.isDevice) {
@@ -55,7 +56,7 @@ const DataLoader = ({
 
   const registerExpoToken = async () => {
     let token = await Notifications.getExpoPushTokenAsync();
-    setExpoToken(token)
+    createUser(token)
   }
 
   _handleNotification = notification => {
@@ -89,10 +90,10 @@ const DataLoader = ({
 
   return (
     <>
-      {loaded && timeUp && expoToken && 
+      {loaded && timeUp && userToken && 
         children
       } 
-      {(!loaded || !timeUp || !expoToken) &&
+      {(!loaded || !timeUp || !userToken) &&
         <SplashScreen />
       }
     </>
@@ -108,11 +109,16 @@ DataLoader.propTypes = {
 const mapStateToProps = (state) => {
   return {
     loaded: getLoaded(state),
+    userToken: getExpotoken(state)
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
   fetchScriptData: () => dispatch(fetchScript()),
+  createUser: (expotoken) => {
+    console.log(expotoken)
+    dispatch(createAppuser({expotoken}))
+  }
 }) 
 
 export default connect(

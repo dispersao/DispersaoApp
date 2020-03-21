@@ -13,7 +13,7 @@ const InstagramButton = () => {
   return (
     <SocialButton 
       name='instagram'
-      url='http://instagram.com'
+      url='https://www.instagram.com/dispersao.ofilme/'
       style={styles.button} />
   )
 }
