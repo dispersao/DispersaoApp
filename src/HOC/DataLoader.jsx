@@ -12,11 +12,11 @@ import { Notifications } from 'expo'
 import * as Permissions from 'expo-permissions'
 import Constants from 'expo-constants'
 
-import { fetchScript } from '../modules/script/actions'
-import { getLoaded } from '../modules/script/selector'
-
-import { createAppuser } from '../modules/appuser/actions'
+import { findOrCreateAppUser } from '../modules/appuser/actions'
 import { getExpotoken } from '../modules/appuser/selector'
+
+import { getAvailableScripts } from '../modules/script/selector'
+import { fetchAvailableScripts } from '../modules/script/actions'
 
 import SplashScreen from '../screens/Splash/SplashScreen.jsx'
 
@@ -24,10 +24,10 @@ const TIMEOUT_SPLASH = 3000
 
 const DataLoader = ({ 
   children, 
-  loaded, 
-  fetchScriptData,
-  createUser,
-  userToken
+  findOrCreateUser,
+  userToken,
+  availableScript,
+  getAvailableScripts
 }) => {
 
   const [timeUp, setTimeUp] = useState(false)
@@ -36,7 +36,7 @@ const DataLoader = ({
     if (Constants.isDevice) {
       const { status: existingStatus } = await Permissions.getAsync(
         Permissions.NOTIFICATIONS
-      );
+      )
       let finalStatus = existingStatus
       if (existingStatus !== 'granted') {
         const { status } = await Permissions.askAsync(
@@ -45,32 +45,30 @@ const DataLoader = ({
         finalStatus = status
       }
       if (finalStatus !== 'granted') {
-        alert('Failed to get push token for push notification!');
+        alert('This app only works with push notifications!')
         return
       }
-      
     } else {
-      alert('Must use physical device for Push Notifications');
+      alert('Must use physical device for Push Notifications')
     }
   }
 
   const registerExpoToken = async () => {
-    let token = await Notifications.getExpoPushTokenAsync();
-    createUser(token)
+    let token = await Notifications.getExpoPushTokenAsync()
+
+    findOrCreateUser(token)
   }
 
   _handleNotification = notification => {
     // Vibration.vibrate()
     console.log(notification)
-  };
+  }
 
   useEffect(() => {
-    if (!loaded) {
-      fetchScriptData()
+    if (!availableScript) {
+      getAvailableScripts()
     }
-  }, [loaded])
 
-  useEffect(() => {
     registerForPushNotificationsAsync()
 
     registerExpoToken()
@@ -90,10 +88,10 @@ const DataLoader = ({
 
   return (
     <>
-      {loaded && timeUp && userToken && 
+      {timeUp && userToken && availableScript &&
         children
       } 
-      {(!loaded || !timeUp || !userToken) &&
+      {(!timeUp || !userToken || !availableScript) &&
         <SplashScreen />
       }
     </>
@@ -101,24 +99,19 @@ const DataLoader = ({
 }
 
 DataLoader.propTypes = {
-  children: PropTypes.object,
-  loaded: PropTypes.bool,
-  fetchScriptData: PropTypes.func.isRequired,
+  children: PropTypes.node,
+  findOrCreateUser: PropTypes.func,
+  userToken: PropTypes.string
 }
 
-const mapStateToProps = (state) => {
-  return {
-    loaded: getLoaded(state),
-    userToken: getExpotoken(state)
-  }
-}
+const mapStateToProps = (state) => ({
+  userToken: getExpotoken(state),
+  availableScript: getAvailableScripts(state)
+})
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchScriptData: () => dispatch(fetchScript()),
-  createUser: (expotoken) => {
-    console.log(expotoken)
-    dispatch(createAppuser({expotoken}))
-  }
+  findOrCreateUser: (expotoken) => dispatch(findOrCreateAppUser({expotoken})),
+  getAvailableScripts: () => dispatch(fetchAvailableScripts()),
 }) 
 
 export default connect(

@@ -1,6 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { getToken } from '../../modules/script/selector'
+import { getScript as getAppuserScript } from '../../modules/appuser/selector'
+import { getAvailableScripts } from '../../modules/script/selector'
+import { toJS } from '../../utils/immutableToJs.jsx'
+
+
+import {
+  // fetchAvailableScripts,
+  stopFetchAvailableScripts
+} from '../../modules/script/actions'
 
 import {
   Container,
@@ -39,43 +47,71 @@ const styles = StyleSheet.create({
 })
 
 const JabaScreen = ({
-  token
+  userScript,
+  availableScript,
+  getAvailableScripts,
+  haveAvailableScripts,
+  navigation,
 }) => {
+  
+
+  useEffect(()=> {
+    if (userScript) {
+      navigation.navigate('App')
+    }
+  }, [])
+
+  useEffect(() => {
+    if (availableScript.amount) {
+      haveAvailableScripts()
+    }
+    return haveAvailableScripts
+  }, [availableScript])
+  
+
   const socialMedia = ['facebook', 'instagram', 'twitter']
 
   return (
     <Container >
       <Content contentContainerStyle={styles.contentStyles}>
-        <Grid style={styles.grid} >
-          <Row size={1} />
-          <Row size={5}>
-            <Logo />
-          </Row>
-          <Row size={1}>
-            <Informative />
-          </Row>
-          <Row size={1} style={styles.paddingRow}>
-            <ButtonRow socialMedias={socialMedia} />
-          </Row>
-          <Row size={1}>
-            <SiteLink />
-          </Row>
-          {token &&
-            <Row size={1} style={styles.paddingRow}>
-              <InitButton />
+        {(!userScript || userScript.state === 'finished') && 
+          <Grid style={styles.grid} >
+            <Row size={1} />
+            <Row size={5}>
+              <Logo />
             </Row>
-          }
-        </Grid>
+            <Row size={1}>
+              <Informative />
+            </Row>
+            <Row size={1} style={styles.paddingRow}>
+              <ButtonRow socialMedias={socialMedia} />
+            </Row>
+            <Row size={1}>
+              <SiteLink />
+            </Row>
+            {availableScript.amount > 0 &&
+              <Row size={1} style={styles.paddingRow}>
+                <InitButton 
+                  navigation={navigation} />
+              </Row>
+            }
+          </Grid>
+        }
       </Content>
     </Container>
   )
 }
 
 const mapStateToProps = (state) => ({
-  token: getToken(state)
+  userScript: getAppuserScript(state),
+  availableScript: getAvailableScripts(state)
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  haveAvailableScripts: () => dispatch(stopFetchAvailableScripts())
 })
 
 export default connect(
   mapStateToProps,
-  null
-)(JabaScreen)
+  mapDispatchToProps
+)(toJS(JabaScreen))

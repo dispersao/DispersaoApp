@@ -10,3 +10,8 @@ export const createAppuser = async (appuser) => {
   const user = await axios.post('/appusers', appuser)
   return user.data
 }
+
+export const findAppuser = async (expotoken) => {
+  const user = await axios.get(`/appusers?expotoken=${expotoken}`)
+  return user.data
+}

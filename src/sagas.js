@@ -3,8 +3,8 @@ import {
 } from 'redux-saga/effects'
 
 import {
-  watchFetchConfig,
-  watchFethScript
+  watchFethScript,
+  watchFetchAvailableScripts
 } from './modules/script/sagas'
 
 import {
@@ -14,8 +14,8 @@ import {
 
 export default function* rootSaga() {
   yield all([
-    watchFetchConfig(),
     watchFethScript(),
+    watchFetchAvailableScripts(),
     watchCreateAppuser()
   ])
 }

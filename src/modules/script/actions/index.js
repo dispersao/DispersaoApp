@@ -1,29 +1,13 @@
-export const FETCH_CONFIG = 'FETCH_CONFIG'
-export const FETCH_CONFIG_SUCCESS = 'FETCH_CONFIG_SUCCESS'
-export const FETCH_CONFIG_FAILURE = 'FETCH_CONFIG_FAILURE'
 
 export const FETCH_SCRIPT = 'FETCH_SCRIPT'
 export const FETCH_SCRIPT_SUCCESS = 'FETCH_SCRIPT_SUCCESS'
 export const FETCH_SCRIPT_FAILURE = 'FETCH_SCRIPT_FAILURE'
 
-export const fetchConfig = () => ({
-  type: FETCH_CONFIG,
-  payload: {}
-})
+export const FETCH_AVAILABLE_SCRIPTS = 'FETCH_AVAILABLE_SCRIPTS'
+export const FETCH_AVAILABLE_SCRIPTS_SUCCESS = 'FETCH_AVAILABLE_SCRIPTS_SUCCESS'
+export const FETCH_AVAILABLE_SCRIPTS_ERROR = 'FETCH_AVAILABLE_SCRIPTS_ERROR'
 
-export const fetchConfigSuccess = (config) => ({
-  type: FETCH_CONFIG_SUCCESS,
-  payload: {
-    config
-  }
-})
-
-export const fetchConfigFailure = (error) => ({
-  type: FETCH_CONFIG_FAILURE,
-  payload: {
-    error
-  }
-})
+export const STOP_FETCH_AVAILABLE_SCRIPT = 'STOP_FETCH_AVAILABLE_SCRIPT'
 
 export const fetchScript = () => ({
   type: FETCH_SCRIPT,
@@ -42,4 +26,29 @@ export const fetchScriptFailure = (error) => ({
   payload: {
     error
   }
+})
+
+export const fetchAvailableScripts = () => ({
+  type: FETCH_AVAILABLE_SCRIPTS,
+  payload: {}
+})
+
+
+export const fetchAvailableScriptsSuccess = (amount) => ({
+  type: FETCH_AVAILABLE_SCRIPTS_SUCCESS,
+  payload: {
+    amount
+  }
+})
+
+export const fetchAvailableScriptsError = (error) => ({
+  type: FETCH_AVAILABLE_SCRIPTS_ERROR,
+  payload: {
+    error
+  }
+})
+
+export const stopFetchAvailableScripts = () => ({
+  type: STOP_FETCH_AVAILABLE_SCRIPT,
+  payload: {}
 })

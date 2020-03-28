@@ -1,7 +1,8 @@
 import { fromJS } from 'immutable'
 
 import {
-  FETCH_SCRIPT_SUCCESS
+  FETCH_SCRIPT_SUCCESS,
+  FETCH_AVAILABLE_SCRIPTS_SUCCESS
 } from '../actions'
 let script
 const reducer = (state = fromJS({
@@ -25,6 +26,11 @@ const reducer = (state = fromJS({
           })
         )
       }
+
+      case FETCH_AVAILABLE_SCRIPTS_SUCCESS:
+        return state.mergeDeep(fromJS({
+          availableScripts: action.payload
+        }))
       
     default:
       return state

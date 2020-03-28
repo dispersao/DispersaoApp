@@ -17,7 +17,7 @@ class TokenScreen extends React.Component {
     this.state = {
       statusText: "",
       inputText: "",
-      expoPushToken : '',
+      expoPushToken: '',
       notification: {},
     };
     //Binding handleBackButtonClick function with this
@@ -26,8 +26,8 @@ class TokenScreen extends React.Component {
 
   checkToken = () => {
 
-    if (this.state.inputText!=="APP") {
-      this.setState({statusText: "Nenhuma sessão em andamento "});
+    if (this.state.inputText !== "APP") {
+      this.setState({ statusText: "Nenhuma sessão em andamento " });
     } else {
       this.props.navigation.navigate('Main');
     }
@@ -49,7 +49,7 @@ class TokenScreen extends React.Component {
         return;
       }
       let token = await Notifications.getExpoPushTokenAsync();
-      this.setState({expoPushToken: token});
+      this.setState({ expoPushToken: token });
     } else {
       alert('Must use physical device for Push Notifications');
     }
@@ -58,85 +58,83 @@ class TokenScreen extends React.Component {
   _handleNotification = notification => {
     Vibration.vibrate()
     this.setState({ notification: notification });
-    console.log(notification)
   };
 
 
 
-    componentDidMount() {
-      // This is the first method in the activity lifecycle
-      // Addding Event Listener for the BackPress
-      BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
-      this.registerForPushNotificationsAsync();
+  componentDidMount() {
+    // This is the first method in the activity lifecycle
+    // Addding Event Listener for the BackPress
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+    this.registerForPushNotificationsAsync();
 
-      this._notificationSubscription = Notifications.addListener(
-        this._handleNotification
-      );
-    }
-    componentWillUnmount() {
-      // This is the Last method in the activity lifecycle
-      // Removing Event Listener for the BackPress
-      BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
-    }
-    handleBackButtonClick() {
-      // Registered function to handle the Back Press
-      // We can move to any screen. If we want
-      this.props.navigation.navigate('Jaba');
-      // Returning true means we have handled the backpress
-      // Returning false means we haven't handled the backpress
-      return true;
-    }
+    this._notificationSubscription = Notifications.addListener(
+      this._handleNotification
+    );
+  }
+  componentWillUnmount() {
+    // This is the Last method in the activity lifecycle
+    // Removing Event Listener for the BackPress
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+  handleBackButtonClick() {
+    // Registered function to handle the Back Press
+    // We can move to any screen. If we want
+    this.props.navigation.navigate('Jaba');
+    // Returning true means we have handled the backpress
+    // Returning false means we haven't handled the backpress
+    return true;
+  }
 
   render() {
     return (
       <Container >
-	      <Content contentContainerStyle={styles.contentStyles} enableOnAndroid>
-        <Grid  style={{ alignItems: 'center'}} >
-          <Row size={1} style={{ }}>
-            {/* hi, i'm a spacer */}
-          </Row>
-          <Row size={5} style={{  }}>
-            <Image source={require('../../assets/images/dispersao_jaba.png')}  style={{resizeMode: 'contain',  paddingHorizontal: 50,  width: "100%", height: "100%"}} />
-          </Row>
-          <Row size={1} style={{ justifyContent: 'flex-start', alignItems: 'center'   /* backgroundColor: '#00CE9F' , height: 100 */}}>
-            {/* hi, i'm a spacer */}
-              <Text style={{ fontSize: 15, color: 'rgb(217, 98, 53)', justifyContent: 'center' , alignItems: 'center' }}>{this.state.statusText}</Text>
-          </Row>
+        <Content contentContainerStyle={styles.contentStyles} enableOnAndroid>
+          <Grid style={{ alignItems: 'center' }} >
+            <Row size={1} style={{}}>
+              {/* hi, i'm a spacer */}
+            </Row>
+            <Row size={5} style={{}}>
+              <Image source={require('../../assets/images/dispersao_jaba.png')} style={{ resizeMode: 'contain', paddingHorizontal: 50, width: "100%", height: "100%" }} />
+            </Row>
+            <Row size={1} style={{ justifyContent: 'flex-start', alignItems: 'center'   /* backgroundColor: '#00CE9F' , height: 100 */ }}>
+              {/* hi, i'm a spacer */}
+              <Text style={{ fontSize: 15, color: 'rgb(217, 98, 53)', justifyContent: 'center', alignItems: 'center' }}>{this.state.statusText}</Text>
+            </Row>
 
-          <Row size={1} style={{marginVertical: 5 }}>
-            <Item regular style={{width: '90%',  justifyContent: 'center', color: 'white' }}>
-             <Input placeholder='Token da Sessão' autoCapitalize="characters" style={{textTransform: 'uppercase', justifyContent: 'center', color: 'white', borderColor: 'gray'}}
-             onChangeText={(inputText) => this.setState({inputText})} />
-            </Item>
-          </Row>
+            <Row size={1} style={{ marginVertical: 5 }}>
+              <Item regular style={{ width: '90%', justifyContent: 'center', color: 'white' }}>
+                <Input placeholder='Token da Sessão' autoCapitalize="characters" style={{ textTransform: 'uppercase', justifyContent: 'center', color: 'white', borderColor: 'gray' }}
+                  onChangeText={(inputText) => this.setState({ inputText })} />
+              </Item>
+            </Row>
 
-          <Row size={1} style={{paddingHorizontal: 10}}>
-            <Button rounded
-            style={{width: '100%', justifyContent: 'center' ,  alignItems: 'center',  backgroundColor: 'rgb(217, 98, 53)' }}
-            onPress={()=> {this.checkToken()}}>
-              <Text style={{ fontSize: 15, color: 'white', justifyContent: 'center' , alignItems: 'center' }}>Começar</Text>
-            </Button>
-          </Row>
+            <Row size={1} style={{ paddingHorizontal: 10 }}>
+              <Button rounded
+                style={{ width: '100%', justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgb(217, 98, 53)' }}
+                onPress={() => { this.checkToken() }}>
+                <Text style={{ fontSize: 15, color: 'white', justifyContent: 'center', alignItems: 'center' }}>Começar</Text>
+              </Button>
+            </Row>
 
-          <Row size={1} style={{paddingHorizontal: 10}}>
-            <Text style={{ fontSize: 15, color: 'white', justifyContent: 'center' , alignItems: 'center' }}>
-              {this.state.expoPushToken}
-            </Text>
-          </Row>
+            <Row size={1} style={{ paddingHorizontal: 10 }}>
+              <Text style={{ fontSize: 15, color: 'white', justifyContent: 'center', alignItems: 'center' }}>
+              </Text>
+            </Row>
 
-          <Row size={1} style={{paddingHorizontal: 10}}>
-            <Text style={{ fontSize: 15, color: 'white', justifyContent: 'center' , alignItems: 'center' }}>
-              {this.state.notification.data}
-            </Text>
-          </Row>
+            <Row size={1} style={{ paddingHorizontal: 10 }}>
+              <Text style={{ fontSize: 15, color: 'white', justifyContent: 'center', alignItems: 'center' }}>
+                {this.state.notification.data}
+              </Text>
+            </Row>
 
 
-          <Row size={1} style={{paddingHorizontal: 10}}>
-            {/* hi, i'm a spacer */}
-          </Row>
-        </Grid>
+            <Row size={1} style={{ paddingHorizontal: 10 }}>
+              {/* hi, i'm a spacer */}
+            </Row>
+          </Grid>
 
-	      </Content>
+        </Content>
       </Container>
     );
   }

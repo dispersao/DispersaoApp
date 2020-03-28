@@ -21,7 +21,7 @@ const InitButton = ({
   navigation
 }) => {
   const handlePress = () => {
-    navigation.navigate('token')
+    navigation.navigate('Token')
   }
 
   return (
