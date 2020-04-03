@@ -3,6 +3,8 @@ export const FETCH_SCRIPT = 'FETCH_SCRIPT'
 export const FETCH_SCRIPT_SUCCESS = 'FETCH_SCRIPT_SUCCESS'
 export const FETCH_SCRIPT_FAILURE = 'FETCH_SCRIPT_FAILURE'
 
+export const POLL_FETCH_AVAILABLE_SCRIPTS = 'POLL_FETCH_AVAILABLE_SCRIPTS'
+
 export const FETCH_AVAILABLE_SCRIPTS = 'FETCH_AVAILABLE_SCRIPTS'
 export const FETCH_AVAILABLE_SCRIPTS_SUCCESS = 'FETCH_AVAILABLE_SCRIPTS_SUCCESS'
 export const FETCH_AVAILABLE_SCRIPTS_ERROR = 'FETCH_AVAILABLE_SCRIPTS_ERROR'
@@ -33,6 +35,10 @@ export const fetchAvailableScripts = () => ({
   payload: {}
 })
 
+export const pollFetchAvailableScripts = () => ({
+  type: POLL_FETCH_AVAILABLE_SCRIPTS,
+  payload: {}
+})
 
 export const fetchAvailableScriptsSuccess = (amount) => ({
   type: FETCH_AVAILABLE_SCRIPTS_SUCCESS,

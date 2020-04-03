@@ -8,13 +8,12 @@ import {
 } from 'redux-saga/effects'
 
 import {
-  FETCH_SCRIPT,
-  fetchScriptSuccess,
   FETCH_AVAILABLE_SCRIPTS,
+  POLL_FETCH_AVAILABLE_SCRIPTS,
+  STOP_FETCH_AVAILABLE_SCRIPT,
   fetchAvailableScriptsSuccess,
   fetchAvailableScriptsError,
   stopFetchAvailableScripts,
-  STOP_FETCH_AVAILABLE_SCRIPT
 } from '../actions'
 
 import {
@@ -24,28 +23,27 @@ import {
 
 const POLLING_DELAY = 1000
 
-export function* watchFethScript() {
-  yield takeLeading(FETCH_SCRIPT, fetchScript)
-}
-
 export function* watchFetchAvailableScripts() {
+  yield takeLeading(FETCH_AVAILABLE_SCRIPTS, fetchAvailableScripts)
+}
+
+export function* watchPollAvailableScripts() {
   while (true) {
-      yield take(FETCH_AVAILABLE_SCRIPTS)
-      yield race([call(fetchAvailableScript), take(STOP_FETCH_AVAILABLE_SCRIPT)] )
+      yield take(POLL_FETCH_AVAILABLE_SCRIPTS)
+      yield race([call(pollAvailableScript), take(STOP_FETCH_AVAILABLE_SCRIPT)] )
   }
 }
 
-
-function* fetchScript() {
+function* fetchAvailableScripts() {
   try {
-    const scripts = yield fetchScriptAPI()
-    yield put(fetchScriptSuccess(scripts))
+    const scripts = yield fetchAvailabeScriptsAPI()
+    yield put(fetchAvailableScriptsSuccess(scripts))
   } catch (e) {
-    console.log(e)
+    yield put(fetchAvailableScriptsError(err))
   }
 }
 
-function* fetchAvailableScript() {
+function* pollAvailableScript() {
   while (true) {
       try {
           const scripts = yield fetchAvailabeScriptsAPI()

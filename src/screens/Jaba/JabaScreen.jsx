@@ -4,9 +4,8 @@ import { getScript as getAppuserScript } from '../../modules/appuser/selector'
 import { getAvailableScripts } from '../../modules/script/selector'
 import { toJS } from '../../utils/immutableToJs.jsx'
 
-
 import {
-  // fetchAvailableScripts,
+  pollFetchAvailableScripts,
   stopFetchAvailableScripts
 } from '../../modules/script/actions'
 
@@ -49,7 +48,7 @@ const styles = StyleSheet.create({
 const JabaScreen = ({
   userScript,
   availableScript,
-  getAvailableScripts,
+  pollAvailableScripts,
   haveAvailableScripts,
   navigation,
 }) => {
@@ -62,8 +61,11 @@ const JabaScreen = ({
   }, [])
 
   useEffect(() => {
+    console.log('in useEffect', availableScript.amount)
     if (availableScript.amount) {
       haveAvailableScripts()
+    } else {
+      pollAvailableScripts()
     }
     return haveAvailableScripts
   }, [availableScript])
@@ -108,7 +110,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  haveAvailableScripts: () => dispatch(stopFetchAvailableScripts())
+  haveAvailableScripts: () => dispatch(stopFetchAvailableScripts()),
+  pollAvailableScripts: () => dispatch(pollFetchAvailableScripts())
 })
 
 export default connect(
