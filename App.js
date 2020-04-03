@@ -1,18 +1,18 @@
-import 'react-native-gesture-handler';
-import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import 'react-native-gesture-handler'
+import * as React from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
 
 import { Provider } from 'react-redux'
-import store from './src/store';
+import store from './src/store'
 
-import Dataloader from './src/HOC/DataLoader.jsx';
-import AppScreen from './src/screens/AppScreen.jsx';
-import JabaScreen from './src/screens/Jaba/JabaScreen.jsx';
-import TokenScreen from './src/screens/TokenScreen';
+import Dataloader from './src/HOC/DataLoader.jsx'
+import AppScreen from './src/screens/AppScreen.jsx'
+import JabaScreen from './src/screens/Jaba/JabaScreen.jsx'
+import TokenScreen from './src/screens/Token/TokenScreen.jsx'
 
 export default function App() {
-  const Stack = createStackNavigator();
+  const Stack = createStackNavigator()
 
   return (
     <Provider store={store}>
@@ -26,5 +26,5 @@ export default function App() {
         </NavigationContainer>
       </Dataloader>
     </Provider>
-  );
+  )
 }
