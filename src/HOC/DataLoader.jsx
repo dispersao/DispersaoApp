@@ -20,6 +20,8 @@ import { fetchAvailableScripts } from '../modules/script/actions'
 
 import SplashScreen from '../screens/Splash/SplashScreen.jsx'
 
+import i18n from '../translations/i18n'
+
 const TIMEOUT_SPLASH = 3000
 
 const DataLoader = ({ 
@@ -27,7 +29,7 @@ const DataLoader = ({
   findOrCreateUser,
   userToken,
   availableScript,
-  getAvailableScripts
+  getAvailableScripts,
 }) => {
 
   const [timeUp, setTimeUp] = useState(false)
@@ -45,12 +47,16 @@ const DataLoader = ({
         finalStatus = status
       }
       if (finalStatus !== 'granted') {
-        alert('This app only works with push notifications!')
+        alert(i18n.translate('splash.notGranted'))
         return
       }
     } else {
-      alert('Must use physical device for Push Notifications')
+      alert(i18n.translate('splash.notDevice'))
     }
+  }
+
+  const setLocale = async () => {
+    console.log(i18n.translate('jaba.infoText'))
   }
 
   const registerExpoToken = async () => {
@@ -80,6 +86,9 @@ const DataLoader = ({
     const timer = setTimeout(() => {
       setTimeUp(true)
     }, TIMEOUT_SPLASH)
+
+    setLocale()
+
     return () => {
       clearTimeout(timer)
     }

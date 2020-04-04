@@ -4,7 +4,6 @@ import {
   StyleSheet
 } from 'react-native'
 import { Foundation } from '@expo/vector-icons'
-import { Row } from 'react-native-easy-grid'
 
 const styles = StyleSheet.create({
   text: {
@@ -16,7 +15,9 @@ const styles = StyleSheet.create({
   }
 })
 
-const Informative = () => {
+const Informative = ({
+  text
+}) => {
   return (
     <>
       <Foundation
@@ -25,7 +26,7 @@ const Informative = () => {
         color="rgb(217,98,53)" />
       <Text
         style={styles.text}>
-        Saiba mais sobre o filme
+        {text}
       </Text>
     </>
   )

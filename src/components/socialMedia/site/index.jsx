@@ -11,19 +11,19 @@ const styles = StyleSheet.create({
   }
 })
 
-const SiteLink = () => {
+const SiteLink = ({
+  text
+}) => {
   const handlePress = async () => {
     let result = openBrowserAsync('https://dispersao.net/')
-    console.log(result)
   }
   
   return (
     <Text 
       style={styles.text}
-      onPress={handlePress}
-      >
-        Conheça o site &gt;
-      </Text>
+      onPress={handlePress}>
+      {text} &gt;
+    </Text>
   )
 }
 

@@ -1,0 +1,19 @@
+{
+  "splash": {
+    "notDevice": "Você deveria usar um devide real para habilitar as Notificações e apreciar toda a a experiência",
+    "notGranted": "Você deveria permitir as notificações para obter uma experiência completa."
+  },
+  "jaba": {
+    "infoText": "Saiba mais sobre o filme",
+    "initText": "Iniciar",
+    "siteLink": "Conheça o site"
+  },
+  "token": {
+    "placeholder": "Token da Sessao",
+    "send": "Começar",
+    "error": {
+      "invalidToken": "Token inválido",
+      "invalidState": "Essa sessão não está disponível"
+    }
+  }
+}

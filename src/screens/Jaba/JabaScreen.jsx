@@ -1,13 +1,6 @@
 import React, { useEffect } from 'react'
+import { StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
-import { getScript as getAppuserScript } from '../../modules/appuser/selector'
-import { getAvailableScripts } from '../../modules/script/selector'
-import { toJS } from '../../utils/immutableToJs.jsx'
-
-import {
-  pollFetchAvailableScripts,
-  stopFetchAvailableScripts
-} from '../../modules/script/actions'
 
 import {
   Container,
@@ -19,16 +12,22 @@ import {
   Grid
 } from 'react-native-easy-grid'
 
+import { getScript as getAppuserScript } from '../../modules/appuser/selector'
+import { getAvailableScripts } from '../../modules/script/selector'
+import { toJS } from '../../utils/immutableToJs.jsx'
+
 import {
-  Text,
-  StyleSheet
-} from 'react-native'
+  pollFetchAvailableScripts,
+  stopFetchAvailableScripts
+} from '../../modules/script/actions'
 
 import Logo from '../../components/logo'
 import ButtonRow from '../../components/socialMedia/ButtonRow.jsx'
 import Informative from './components/Informative.jsx'
 import SiteLink from '../../components/socialMedia/site'
 import InitButton from './components/InitButton.jsx'
+
+import i18n from '../../translations/i18n'
 
 const styles = StyleSheet.create({
   contentStyles: {
@@ -61,7 +60,6 @@ const JabaScreen = ({
   }, [])
 
   useEffect(() => {
-    console.log('in useEffect', availableScript.amount)
     if (availableScript.amount) {
       haveAvailableScripts()
     } else {
@@ -73,6 +71,10 @@ const JabaScreen = ({
 
   const socialMedia = ['facebook', 'instagram', 'twitter']
 
+  const navigateToApp = () => {
+    navigation.navigate('Token')
+  }
+
   return (
     <Container >
       <Content contentContainerStyle={styles.contentStyles}>
@@ -83,18 +85,21 @@ const JabaScreen = ({
               <Logo />
             </Row>
             <Row size={1}>
-              <Informative />
+              <Informative 
+                text={i18n.translate('jaba.infoText')} />
             </Row>
             <Row size={1} style={styles.paddingRow}>
               <ButtonRow socialMedias={socialMedia} />
             </Row>
             <Row size={1}>
-              <SiteLink />
+              <SiteLink 
+                text={i18n.translate('jaba.siteLink')} />
             </Row>
             {availableScript.amount > 0 &&
               <Row size={1} style={styles.paddingRow}>
                 <InitButton 
-                  navigation={navigation} />
+                  text={i18n.translate('jaba.initText')}
+                  onPress={navigateToApp}/>
               </Row>
             }
           </Grid>

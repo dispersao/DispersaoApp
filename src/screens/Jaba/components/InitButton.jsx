@@ -18,18 +18,18 @@ const styles = StyleSheet.create({
 })
 
 const InitButton = ({
-  navigation
+  text,
+  onPress
 }) => {
-  const handlePress = () => {
-    navigation.navigate('Token')
-  }
-
+  
   return (
     <Button 
       rounded 
       style={styles.button} 
-      onPress={handlePress}>
-      <Text style={styles.text}>Iniciar</Text>
+      onPress={onPress}>
+      <Text style={styles.text}>
+        {text}
+      </Text>
     </Button>
   )
 }
