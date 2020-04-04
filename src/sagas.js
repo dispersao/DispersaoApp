@@ -8,7 +8,8 @@ import {
 } from './modules/script/sagas'
 
 import {
-  watchCreateAppuser
+  watchCreateAppuser,
+  watchUpdateAppuser
 } from './modules/appuser/sagas'
 
 
@@ -16,6 +17,7 @@ export default function* rootSaga() {
   yield all([
     watchFetchAvailableScripts(),
     watchPollAvailableScripts(),
-    watchCreateAppuser()
+    watchCreateAppuser(),
+    watchUpdateAppuser()
   ])
 }
