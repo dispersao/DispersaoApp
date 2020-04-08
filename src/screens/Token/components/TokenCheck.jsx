@@ -11,10 +11,7 @@ import {
   Button
 } from 'native-base'
 
-import {
-  Row, 
-  Grid 
-} from 'react-native-easy-grid'
+import { Row } from 'react-native-easy-grid'
 
 import { updateAppuser } from '../../../modules/appuser/actions/'
 import { getError } from '../../../modules/appuser/selector'
@@ -74,14 +71,6 @@ const TokenCheck = ({
 }) => {
   let [inputValue, setInputValue] = useState(null)
 
-  const onPress = () => {
-    if (inputValue){
-      associateToken(inputValue)
-    } else {
-      console.log('something went wrong...', inputValue )
-    }
-  }
-
   return (
     <>
       <Row 
@@ -100,7 +89,7 @@ const TokenCheck = ({
           regular 
           style={styles.itemInput}>
           <Input 
-            keyboardType='visible-password'
+            keyboardType='number-pad'
             placeholder={i18n.translate('token.placeholder')} 
             autoCapitalize="characters" 
             style={styles.input}
@@ -114,7 +103,7 @@ const TokenCheck = ({
           rounded
           disabled={!inputValue}
           style={styles.button}
-          onPress={onPress}>
+          onPress={() => associateToken(inputValue)}>
           <Text 
             style={styles.buttonText}>
               {i18n.translate('token.send')}

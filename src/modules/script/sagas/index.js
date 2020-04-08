@@ -39,7 +39,7 @@ function* fetchAvailableScripts() {
     const scripts = yield fetchAvailabeScriptsAPI()
     yield put(fetchAvailableScriptsSuccess(scripts))
   } catch (e) {
-    yield put(fetchAvailableScriptsError(err))
+    yield put(fetchAvailableScriptsError(e))
   }
 }
 
