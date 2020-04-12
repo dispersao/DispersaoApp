@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase', 
     justifyContent: 'center', 
     color: 'white', 
-    borderColor: 'gray' 
+    borderColor: 'gray'
   },
   button: {
     width: '100%', 

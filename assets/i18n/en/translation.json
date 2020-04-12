@@ -14,6 +14,34 @@
     "error": {
       "invalidToken": "Invalid session token",
       "invalidState": "This session is not available"
+    },
+    "feed": {
+      "time" : {
+        "second" : {
+          "one": "%{amount} second ago",
+          "other": "%{amount} second ago"
+        },
+        "minute" : {
+          "one": "%{amount} minute ago",
+          "other": "%{amount} minutes ago"
+        },
+        "hour" : {
+          "one": "%{amount} hour ago",
+          "other": "%{amount} hours ago"
+        },
+        "day" : {
+          "one":"aproximately %{amount} day ago",
+          "other":"aproximately %{amount} day ago"
+        },
+        "month" : {
+          "one": "aproximately %{amount} month ago",
+          "other": "aproximately %{amount} months ago"
+        },
+        "year" : {
+          "one": "aproximately %{amount} year ago",
+          "other": "aproximately %{amount} year ago"
+        }
+      }
     }
   }
 }

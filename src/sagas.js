@@ -9,15 +9,19 @@ import {
 
 import {
   watchCreateAppuser,
-  watchUpdateAppuser
+  watchUpdateAppuser  
 } from './modules/appuser/sagas'
 
+import {
+  watchSessioncontentsFetch
+} from './modules/sessioncontent/sagas'
 
 export default function* rootSaga() {
   yield all([
     watchFetchAvailableScripts(),
     watchPollAvailableScripts(),
     watchCreateAppuser(),
-    watchUpdateAppuser()
+    watchUpdateAppuser(),
+    watchSessioncontentsFetch()
   ])
 }

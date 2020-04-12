@@ -8,8 +8,8 @@ import store from './src/store'
 
 import Dataloader from './src/HOC/DataLoader.jsx'
 import AppScreen from './src/screens/AppScreen.jsx'
-import JabaScreen from './src/screens/Jaba/JabaScreen.jsx'
-import TokenScreen from './src/screens/Token/TokenScreen.jsx'
+import JabaScreen from './src/screens/Jaba/index.jsx'
+import TokenScreen from './src/screens/Token/index.jsx'
 
 export default function App() {
   const Stack = createStackNavigator()

@@ -7,7 +7,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "ifconfig": "node bin/ifconfig.js",
-    "start": " npm ifconfig && expo start",
+    "start": "node bin/ifconfig.js && expo start",
     "android": "node bin/ifconfig.js && expo start --android",
     "ios": "node bin/ifconfig.js && expo start --ios",
     "web": "expo start --web",
@@ -42,6 +42,7 @@
     "native-base": "^2.13.8",
     "normalizr": "^3.6.0",
     "npm": "^6.14.3",
+    "re-reselect": "^3.4.0",
     "react": "16.8.3",
     "react-dom": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",

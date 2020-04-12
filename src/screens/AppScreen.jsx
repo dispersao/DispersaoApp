@@ -1,7 +1,6 @@
 import React from 'react'
-const Tab = createBottomTabNavigator();
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import FeedScreen from './FeedScreen';
+import FeedScreen from './Feed/index.jsx';
 import NotificationsScreen from './NotificationsScreen';
 import ProfileListScreen from './ProfileListScreen';
 import ProfileScreen from './ProfileScreen';
@@ -9,6 +8,7 @@ import InfoScreen from './InfoScreen';
 import LanguageScreen from './LanguageScreen';
 import { Ionicons } from '@expo/vector-icons';
 
+const Tab = createBottomTabNavigator();
 
 const AppScreen = () => {
   return (

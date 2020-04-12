@@ -18,7 +18,7 @@ import { getExpotoken } from '../modules/appuser/selector'
 import { getAvailableScripts } from '../modules/script/selector'
 import { fetchAvailableScripts } from '../modules/script/actions'
 
-import SplashScreen from '../screens/Splash/SplashScreen.jsx'
+import SplashScreen from '../screens/Splash/index.jsx'
 
 import i18n from '../translations/i18n'
 
@@ -57,6 +57,7 @@ const DataLoader = ({
 
   const setLocale = async () => {
     console.log(i18n.translate('jaba.infoText'))
+    console.log(i18n.translate('feed.time.second', {amount:4}))
   }
 
   const registerExpoToken = async () => {
