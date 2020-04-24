@@ -16,12 +16,17 @@ import {
   watchSessioncontentsFetch
 } from './modules/sessioncontent/sagas'
 
+import {
+  watchCreateDeleteUpdateLike
+} from './modules/likes/sagas'
+
 export default function* rootSaga() {
   yield all([
     watchFetchAvailableScripts(),
     watchPollAvailableScripts(),
     watchCreateAppuser(),
     watchUpdateAppuser(),
-    watchSessioncontentsFetch()
+    watchSessioncontentsFetch(),
+    watchCreateDeleteUpdateLike()
   ])
 }
