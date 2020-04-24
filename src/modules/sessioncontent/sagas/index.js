@@ -18,6 +18,7 @@ import { postsFetchSuccess } from '../../post/actions'
 import { commentsFetchSuccess } from '../../comment/actions'
 import { profilesFetchSuccess } from '../../profile/actions'
 import { contentcreatorsFetchSuccess } from '../../contentcreator/actions'
+import { likesFetchSuccess } from '../../likes/actions'
 
 import {
   fetchSessioncontents as fetchSessioncontentsAPI
@@ -32,7 +33,8 @@ const entitiesMap = {
   contentcreators: contentcreatorsFetchSuccess,
   posts: postsFetchSuccess,
   comments: commentsFetchSuccess,
-  profiles: profilesFetchSuccess
+  profiles: profilesFetchSuccess,
+  likes: likesFetchSuccess
 }
 
 function* findSessioncontents(action) {
