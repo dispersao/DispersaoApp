@@ -22,7 +22,7 @@ import SplashScreen from '../screens/Splash/index.jsx'
 
 import i18n from '../translations/i18n'
 
-const TIMEOUT_SPLASH = 3000
+const TIMEOUT_SPLASH = 1000
 
 const DataLoader = ({ 
   children, 
@@ -56,8 +56,7 @@ const DataLoader = ({
   }
 
   const setLocale = async () => {
-    console.log(i18n.translate('jaba.infoText'))
-    console.log(i18n.translate('feed.time.second', {amount:4}))
+   
   }
 
   const registerExpoToken = async () => {
