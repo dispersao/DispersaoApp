@@ -12,17 +12,17 @@
 
   if (elapsed < msPerMinute) {
     time.amount =  Math.round(elapsed/1000)
-    time.unity = 'second'   
+    time.unity = 'second'
   }
 
   else if (elapsed < msPerHour) {
-    tiepo.amount = Math.round(elapsed/msPerMinute) 
-    time.unity = 'minute'   
+    time.amount = Math.round(elapsed/msPerMinute) 
+    time.unity = 'minute'
   }
 
   else if (elapsed < msPerDay ) {
     time.amount = Math.round(elapsed/msPerHour )
-    time.unity = 'hour'   
+    time.unity = 'hour'
   }
 
   else if (elapsed < msPerMonth) {

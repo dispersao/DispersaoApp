@@ -18,7 +18,11 @@ export default function App() {
     <Provider store={store}>
       <Dataloader>
         <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator
+            screenOptions={{
+              headerShown: false
+            }}
+            >
             <Stack.Screen name="Jaba" component={JabaScreen} />
             <Stack.Screen name="Token" component={TokenScreen} />
             <Stack.Screen name="App" component={AppScreen} />
