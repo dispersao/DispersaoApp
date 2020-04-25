@@ -1,18 +1,21 @@
 import { 
-  normalize,
-  schema
+  schema,
+  normalize
  } from 'normalizr'
+import { sessioncontentSchema } from './sessioncontent'
 
 import { profileSchema } from '../../profile/schema'
 import { commentSchema } from '../../comment/schema'
 import { postSchema } from '../../post/schema'
 import { scriptSchema } from '../../script/schema'
+import { likeSchema } from '../../likes/schema/likes'
 
-export const sessioncontentSchema = new schema.Entity('sessioncontents', {
+sessioncontentSchema.define({
   profile: profileSchema,
   comment: commentSchema,
   post: postSchema,
-  script: scriptSchema
+  script: scriptSchema,
+  likes: [likeSchema]
 })
 
 export const sessioncontentListSchema = [sessioncontentSchema]

@@ -32,7 +32,6 @@ const PostHeader = ({
 }) => {
   const timeDiff = timeDifference(new Date(), new Date(time))
   const translationPath = `feed.time.${timeDiff.unity}.${timeDiff.amount === 1 ? 'one' : 'other'}`
-  console.log('contentcreator', contentcreator)
 
   const handleClick = ()=> {
     onClick && onClick()

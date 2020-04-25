@@ -7,6 +7,7 @@ import posts from './modules/post/reducer'
 import comments from './modules/comment/reducer'
 import profiles from './modules/profile/reducer'
 import sessioncontents from './modules/sessioncontent/reducer'
+import likes from './modules/likes/reducer'
 
 const reducer = combineReducers({
   script,
@@ -15,7 +16,8 @@ const reducer = combineReducers({
   posts,
   comments,
   profiles,
-  sessioncontents
+  sessioncontents,
+  likes
 })
 
 export default reducer

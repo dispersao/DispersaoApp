@@ -14,12 +14,12 @@ import PostFooter from './PostFooter.jsx'
 
 import { getPostByPostId } from '../../../modules/post/selector'
 
-const Post = ({
-  id,
-  element,
-  updated_at
-}) => {
-  console.log(element)
+const Post = (props) => {
+
+  const {
+    element,
+    updated_at,
+  } = props
 
   return (
     <Card>
@@ -30,8 +30,10 @@ const Post = ({
          />
       </CardItem>
       <CardItem cardBody style={{margin: 0}}>
-        <PostBody {...element} />
-        {/* <PostFooter {...element} /> */}
+        <PostBody {...element}  />
+      </CardItem>
+      <CardItem footer bordered>
+        <PostFooter {...props} />
       </CardItem>
     </Card>
   )
