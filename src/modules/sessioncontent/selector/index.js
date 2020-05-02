@@ -2,16 +2,30 @@ import createCachedSelector from 're-reselect'
 
 const getState = (state) => state.sessioncontents
 const getType = (state, props) => props.type
-const getTypeJSON = (state, props) => JSON.stringify(props.type)
+const getTypes = (state, props) => props.types
+const getId = (state, props) => props.id
+const getTypesJSON = (state, props) => JSON.stringify(props.types)
+const getTypeAndIdJSON = (state, props) => JSON.stringify({ [props.type] : props.id })
+
 
 export const getSessioncontentListByType = createCachedSelector(
-  [getState, getType],
-  (sessioncontents, type) => {
+  [getState, getTypes],
+  (sessioncontents, types) => {
     if (!sessioncontents) {
       return
     }
     return sessioncontents
-      .filter(sescon => !type || !type.length || type.some(t => sescon.get(t)))
+      .filter(sescon => !types || !types.length || types.some(t => sescon.get(t)))
       .valueSeq()
   }
-)(getTypeJSON)
+)(getTypesJSON)
+
+export const getSessioncontentByContentId = createCachedSelector(
+  [getState, getType, getId],
+  (sessioncontents, type, contentId) => {
+    if (!sessioncontents) {
+      return
+    }
+    return sessioncontents.find(sescon => sescon.get(type) === contentId)
+  }
+)(getTypeAndIdJSON)

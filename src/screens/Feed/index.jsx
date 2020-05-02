@@ -3,12 +3,8 @@ import { connect } from 'react-redux'
 
 import { getSessioncontentListByType } from '../../modules/sessioncontent/selector'
 
-import { 
-  Container, 
-  Content, 
-  Card, 
-  CardItem,
-  Text
+import {  
+  Content
 } from 'native-base'
 
 import Post from './components/Post.jsx'
@@ -19,7 +15,7 @@ import { toJS } from '../../utils/immutableToJs.jsx'
 
 const Feed = ({comments, posts}) => {
   return (
-    <Content padder>
+    <Content padder style={{paddingTop: 30}}>
       {posts && posts.length && 
         posts.map((post, index) => {
           return <Post key={index} {...post} />
@@ -30,13 +26,13 @@ const Feed = ({comments, posts}) => {
 }
 
 const mapStateToProps = (state) => ({
-  posts: getSessioncontentListByType(state, {type: ['post']}),
+  posts: getSessioncontentListByType(state, {types: ['post']}),
 })
 
 export default connect(
   mapStateToProps,
   null
   )(WithLoadedElement(toJS(Feed), {
-  type: ['post', 'comment']
+  types: ['post', 'comment']
 }))
 

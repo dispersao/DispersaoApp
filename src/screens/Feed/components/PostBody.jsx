@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
   },
   text: {
-    paddingBottom: 25
+    fontSize: 14
   }
 })
 
