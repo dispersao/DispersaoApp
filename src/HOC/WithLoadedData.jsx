@@ -1,14 +1,19 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { getSessioncontentListByType } from '../modules/sessioncontent/selector'
-import { Text } from 'native-base'
+import { getSessioncontentListByType,
+  getLoading
+} from '../modules/sessioncontent/selector'
 
 import { sessioncontentsFetch } from '../modules/sessioncontent/actions'
 
 const WithLoadedData = (WrappedComponent, externalProps) => {
 
   const LoadedData = (props) => {
-    const { fetch, sessioncontents } = props
+    const { 
+      fetch, 
+      sessioncontents,
+      dataloading
+    } = props
 
     useEffect(() => {
       if (!sessioncontents) {
@@ -16,25 +21,15 @@ const WithLoadedData = (WrappedComponent, externalProps) => {
       }
     }, [sessioncontents])
 
-    return (
-      <>
-        {sessioncontents &&
-          <WrappedComponent {...props} />
-        }
-        {!sessioncontents && 
-          <Text>
-            {'loading'}
-          </Text>
-        }
-      </>
-    )
+    return <WrappedComponent {...props} loading={dataloading} />
   }
 
   const mapStateToProps = (state, ownProps) => ({
     sessioncontents: getSessioncontentListByType(state, {
       ...ownProps,
       ...externalProps
-    })
+    }),
+    dataloading: getLoading(state)
   })
 
   const mapDispatchToProps = (dispatch, ownProps) => ({
