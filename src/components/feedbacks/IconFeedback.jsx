@@ -7,7 +7,7 @@ const color = "#d96235";
 const unmarkedColor = "#999999";
 const styles = StyleSheet.create({
   button: {
-    padding:10
+    padding:5
   },
   text: {
     fontSize: 12,
