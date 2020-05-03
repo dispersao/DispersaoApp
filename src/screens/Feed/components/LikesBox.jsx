@@ -27,8 +27,6 @@ const LikesBox = ({
     myLikeType = myLike.dislike ? dislikeStr : likeStr
   }
 
-  // console.log(myLike, myLikeType)
-
   const onClick = (type) => {
     if (myLikeStatus !== "loading") {
       setMyLikeStatus("loading")
