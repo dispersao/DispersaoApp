@@ -15,8 +15,10 @@ const WithLoadedData = (WrappedComponent, externalProps) => {
       dataloading
     } = props
 
+    const { noEmptyList } = externalProps
+
     useEffect(() => {
-      if (!sessioncontents) {
+      if (!sessioncontents || (!sessioncontents.size && noEmptyList)) {
         fetch()
       }
     }, [sessioncontents])
