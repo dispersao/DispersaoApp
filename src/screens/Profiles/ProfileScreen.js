@@ -46,7 +46,7 @@ class ProfileScreen extends React.Component {
                   {/* hi, i'm a spacer */}
                 </Col>
                  <Col size={1}>
-                    <Thumbnail source={require('../../assets/images/profile_joao.jpg')}  />
+                    <Thumbnail source={require('../../../assets/images/profile_joao.jpg')}  />
                 </Col>
                 <Col  size={3} >
                     <Text style={{ fontWeight: 'bold', fontSize: 22, textAlign: 'left'}}>João</Text>
@@ -106,7 +106,7 @@ class ProfileScreen extends React.Component {
             <Card >
               <CardItem header bordered>
                 <Left>
-                  <Thumbnail source={require('../../assets/images/profile_joao.jpg')}  />
+                  <Thumbnail source={require('../../../assets/images/profile_joao.jpg')}  />
                   <Body>
                     <Text style={{ fontWeight: 'bold'}}>João</Text>
                     <Text style={{ color: 'gray'}}>há 5 minutos</Text>
@@ -115,7 +115,7 @@ class ProfileScreen extends React.Component {
               </CardItem>
               <CardItem cardBody  style={{margin: 0}}>
                 <Body  >
-                  <Image source={require('../../assets/images/jabor-regrets.png')} style={{flex: 1, aspectRatio: 1, resizeMode: 'contain', alignSelf: 'center' , }} />
+                  <Image source={require('../../../assets/images/jabor-regrets.png')} style={{flex: 1, aspectRatio: 1, resizeMode: 'contain', alignSelf: 'center' , }} />
                 </Body>
               </CardItem>
               <CardItem footer bordered>

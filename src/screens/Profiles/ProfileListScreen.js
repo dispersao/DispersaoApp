@@ -15,7 +15,7 @@ class ProfileListScreen extends React.Component {
           <Card >
             <CardItem  button onPress={() => this.props.navigation.navigate("Profile")}>
               <Left>
-                <Thumbnail source={require('../../assets/images/profile_joao.jpg')}  />
+                <Thumbnail source={require('../../../assets/images/profile_joao.jpg')}  />
                 <Body>
                   <Text style={{ fontWeight: 'bold'}}>João</Text>
                 </Body>

@@ -58,11 +58,12 @@ const styles = {
   
 
 const PostHeader = ({
-  contentcreator,
+  contentcreatorElement,
   time,
   onClick,
   style = 'big'
 }) => {
+
   const timeDiff = timeDifference(new Date(), new Date(time))
   const translationPath = `feed.time.${timeDiff.unity}.${timeDiff.amount === 1 ? 'one' : 'other'}`
 
@@ -76,17 +77,17 @@ const PostHeader = ({
 
   return (
     <>
-    { contentcreator && 
+    { contentcreatorElement && 
       <Left onClick={handleClick}>
-        { contentcreator.icon && 
+        { contentcreatorElement.icon && 
         <Thumbnail 
           style= {styles[style].thumb}
-          source={{uri: contentcreator.icon.url}}  />
+          source={{uri: contentcreatorElement.icon.url}}  />
         }
         <Body>
           <Text 
             style={combineStyle('title')}>
-              {contentcreator.name}
+              {contentcreatorElement.name}
             </Text>
           <Text 
             style={combineStyle('description')}>
@@ -100,7 +101,7 @@ const PostHeader = ({
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  contentcreator: getContentcreatorByContentcreatorId(state, ownProps)
+  contentcreatorElement: getContentcreatorByContentcreatorId(state, ownProps)
 })
 
 
