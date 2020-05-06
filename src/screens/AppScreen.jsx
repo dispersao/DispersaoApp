@@ -5,7 +5,8 @@ import FeedScreen from './Feed/index.jsx';
 import NotificationsScreen from './NotificationsScreen';
 import ProfileListScreen from './Profiles/ProfileList.jsx';
 // import ProfileListScreen from './ProfileListScreen';
-import ProfileScreen from './Profiles/ProfileScreen';
+// import ProfileScreen from './Profiles/ProfileScreen';
+import ProfileHub from './Profiles/index.jsx';
 import InfoScreen from './InfoScreen';
 import LanguageScreen from './LanguageScreen';
 import { Ionicons } from '@expo/vector-icons';
@@ -38,7 +39,7 @@ const AppScreen = () => {
         }}>
         <Tab.Screen name="Feed" component={FeedScreen} />
         <Tab.Screen name="Notifications" component={NotificationsScreen} />
-        <Tab.Screen name="Profiles" component={ProfileListScreen} />
+        <Tab.Screen name="Profiles" component={ProfileHub} />
         <Tab.Screen name="Language" component={LanguageScreen} />
       </Tab.Navigator> 
   )

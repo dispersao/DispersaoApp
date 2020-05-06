@@ -21,11 +21,13 @@ const styles = StyleSheet.create({
   }
 })
 const ProfileList = ({
-  navigation,
+  navigation: { navigate },
   profiles
 }) => {
   const handleProfileItemClick = (profile) => {
-    console.log(profile)
+    navigate('Profile', {
+      id: profile
+    })
   }
 
   return(
