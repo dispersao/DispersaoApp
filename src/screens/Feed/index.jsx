@@ -40,7 +40,8 @@ function wait(timeout) {
 const Feed = ({ 
   posts,
   loading,
-  fetch
+  fetch,
+  navigation
 }) => {
   const onRefresh = useCallback(() => {
     fetch && fetch()
@@ -76,6 +77,6 @@ export default connect(
   mapStateToProps,
   null
   )(WithLoadedElement(toJS(Feed), {
-  types: ['post', 'comment']
+  types: ['post', 'comment', 'profile']
 }))
 

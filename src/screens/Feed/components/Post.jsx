@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { toJS } from '../../../utils/immutableToJs'
 import { StyleSheet } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 import { 
   Card, 
@@ -28,12 +29,20 @@ const styles = StyleSheet.create({
 const Post = (props) => {
 
   const [commentsOpened, setCommentsOpened] = useState(false)
+  const { navigate } = useNavigation()
 
   const {
     element,
     updated_at,
     comments
   } = props
+  
+  const handleHeaderClick = (id) => {
+    navigate('Profiles', {
+      screen: 'Profile',
+      params: { id },
+    })
+  }
 
   return (
     <Card >
@@ -42,6 +51,7 @@ const Post = (props) => {
           <PostHeader 
             {...element}
             time={updated_at}
+            onClick={handleHeaderClick}
           />
         }
       </CardItem>
@@ -61,7 +71,8 @@ const Post = (props) => {
       </CardItem>
       {commentsOpened && comments.length &&
         <CommentList 
-          comments={comments} />
+          comments={comments}
+        />
       }
     </Card>
   )

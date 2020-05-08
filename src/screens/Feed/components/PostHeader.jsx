@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { timeDifference } from '../../../utils/stringUtils'
 
@@ -7,7 +7,8 @@ import {
   Text, 
   Body, 
   Thumbnail,
-  Left
+  Left,
+  Button
 } from 'native-base'
 
 import { toJS } from '../../../utils/immutableToJs'
@@ -15,6 +16,7 @@ import { toJS } from '../../../utils/immutableToJs'
 import i18n from '../../../translations/i18n'
 
 import { getContentcreatorByContentcreatorId } from '../../../modules/contentcreator/selector'
+import { getProfileByContentcreatorId } from '../../../modules/profile/selector'
 
 const generalStyles = StyleSheet.create({
   title: {
@@ -22,6 +24,10 @@ const generalStyles = StyleSheet.create({
   },
   description: {
     color: 'gray'
+  },
+  container: {
+   flexDirection: 'row',
+   flex: 1
   }
 })
 const bigStyles = StyleSheet.create({
@@ -59,16 +65,16 @@ const styles = {
 
 const PostHeader = ({
   contentcreatorElement,
+  profile,
   time,
   onClick,
   style = 'big'
 }) => {
-
   const timeDiff = timeDifference(new Date(), new Date(time))
   const translationPath = `feed.time.${timeDiff.unity}.${timeDiff.amount === 1 ? 'one' : 'other'}`
 
   const handleClick = ()=> {
-    onClick && onClick()
+    onClick && profile && onClick(profile.id)
   }
 
   const combineStyle = (field) => {
@@ -78,32 +84,37 @@ const PostHeader = ({
   return (
     <>
     { contentcreatorElement && 
-      <Left onClick={handleClick}>
-        { contentcreatorElement.icon && 
-        <Thumbnail 
-          style= {styles[style].thumb}
-          source={{uri: contentcreatorElement.icon.url}}  />
-        }
-        <Body>
-          <Text 
-            style={combineStyle('title')}>
-              {contentcreatorElement.name}
-            </Text>
-          <Text 
-            style={combineStyle('description')}>
-              {i18n.translate(translationPath, timeDiff)}
-          </Text>
-        </Body>
-      </Left>
+        <Left>
+          <TouchableOpacity 
+            style={generalStyles.container}
+            onPress={handleClick}
+            >
+            { contentcreatorElement.icon && 
+              <Thumbnail
+                style= {styles[style].thumb}
+                source={{uri: contentcreatorElement.icon.url}}  />
+            }
+            <Body>
+              <Text 
+                style={combineStyle('title')}>
+                  {contentcreatorElement.name}
+              </Text>
+              <Text 
+                style={combineStyle('description')}>
+                  {i18n.translate(translationPath, timeDiff)}
+              </Text>
+            </Body>
+          </TouchableOpacity>
+        </Left>
     }
     </>
   )
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  contentcreatorElement: getContentcreatorByContentcreatorId(state, ownProps)
+  contentcreatorElement: getContentcreatorByContentcreatorId(state, ownProps),
+  profile: getProfileByContentcreatorId(state, ownProps)
 })
-
 
 export default connect(
   mapStateToProps,
