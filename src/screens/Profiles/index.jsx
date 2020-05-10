@@ -3,11 +3,11 @@ import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import ProfileList from './ProfileList.jsx'
-import ProfileScreen from './ProfileScreen'
+import ProfileScreen from './Profile.jsx'
 
-const ProfileHub = () => {
+const ProfileHub = (props) => {
   const Stack = createStackNavigator()
-
+  console.log('ProfileHub', props)
   return (
     <Stack.Navigator
       screenOptions={{

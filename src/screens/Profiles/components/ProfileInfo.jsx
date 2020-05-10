@@ -1,48 +1,43 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
+import { Card } from 'native-base'
 
-import { toJS } from '../../../utils/immutableToJs'
-import { getContentcreatorByContentcreatorId } from '../../../modules/contentcreator/selector'
-
-import {
-  Thumbnail,
-  Text
-} from 'native-base'
+import ProfileDescription from './ProfileDescription.jsx'
+import ProfileHeader from './ProfileHeader.jsx'
 
 const styles = StyleSheet.create({
-  thumb: {
-    width: 40,
-    height: 40,
-    marginRight: 15
+  content: {
+    paddingHorizontal: 25,
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    paddingBottom: 20,
+    margin: 0
   },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold'
+  divider: {
+    width: '75%',
+    height: 1,
+    backgroundColor: '#d9d9d9',
+    marginVertical: 15
   }
 })
 
 const ProfileInfo = ({
-  contentcreatorElement,
-  id
+  profile,
+  sessioncontent
 }) => {
   return (
-    <>
-      <Thumbnail
-        style={styles.thumb}
-        source={{uri: (contentcreatorElement?.icon?.url || '')}}  />
-      <Text style={styles.title}>
-        {contentcreatorElement.name}
-      </Text>
-    </>
+    <Card style={styles.content}>
+      <ProfileHeader 
+        {...profile} 
+        sessioncontent={sessioncontent} />
+      <View 
+        style={styles.divider} />
+      <ProfileDescription 
+        text={profile.content} />
+    </Card>
   )
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  contentcreatorElement: getContentcreatorByContentcreatorId(state, ownProps)
-})
-
-export default connect(
-  mapStateToProps,
-  null
-)(toJS(ProfileInfo))
+export default ProfileInfo

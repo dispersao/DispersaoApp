@@ -9,6 +9,7 @@ class ProfileScreen extends React.Component {
 
   constructor(props) {
     super(props);
+    const { navigation: { navigate }, route: {params : { id }}} = props
     //Binding handleBackButtonClick function with this
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   }

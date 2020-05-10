@@ -6,7 +6,7 @@ import { getProfileByProfileId } from '../../../modules/profile/selector'
 import { toJS } from '../../../utils/immutableToJs'
 import { Text, Left, Right} from 'native-base'
 
-import ProfileInfo from './ProfileInfo.jsx'
+import ProfileInfo from './ProfileItemInfo.jsx'
 
 import i18n from '../../../translations/i18n'
 

@@ -1,11 +1,7 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import FeedScreen from './Feed/FeedScreen';
 import FeedScreen from './Feed/index.jsx';
 import NotificationsScreen from './NotificationsScreen';
-import ProfileListScreen from './Profiles/ProfileList.jsx';
-// import ProfileListScreen from './ProfileListScreen';
-// import ProfileScreen from './Profiles/ProfileScreen';
 import ProfileHub from './Profiles/index.jsx';
 import InfoScreen from './InfoScreen';
 import LanguageScreen from './LanguageScreen';

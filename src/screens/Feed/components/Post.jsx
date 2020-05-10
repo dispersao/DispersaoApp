@@ -34,14 +34,20 @@ const Post = (props) => {
   const {
     element,
     updated_at,
-    comments
+    comments,
+    currentProfile
   } = props
   
   const handleHeaderClick = (id) => {
-    navigate('Profiles', {
-      screen: 'Profile',
-      params: { id },
-    })
+    if( id === currentProfile) {
+      console.log('should scroll up')
+    } else {
+      navigate('Profiles', {
+        screen: 'Profile',
+        params: { id },
+      })
+    }
+    
   }
 
   return (
@@ -79,7 +85,7 @@ const Post = (props) => {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  element: getPostByPostId(state, ownProps),
+  element: ownProps.postElement || getPostByPostId(state, ownProps),
   comments: getCommentsByPostId(state, ownProps)
 })
 

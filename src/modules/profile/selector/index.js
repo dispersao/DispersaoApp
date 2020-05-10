@@ -1,4 +1,5 @@
 import createCachedSelector from 're-reselect'
+import config from '../../../../config.json'
 
 const getState = (state) => state.profiles
 const getProfileId = (state, props) => props.profile
@@ -10,7 +11,7 @@ export const getProfileByProfileId = createCachedSelector(
     if (!profiles || !profiles.size || !id) {
       return
     }
-    return profiles.get(id.toString())
+    return formatProfile(profiles.get(id.toString()))
   }
 )(getProfileId)
 
@@ -20,7 +21,15 @@ export const getProfileByContentcreatorId = createCachedSelector(
     if (!profiles || !profiles.size || !contentcreator) {
       return
     }
-    console.log(profiles)
     return profiles.find(profile => profile.get('contentcreator') === contentcreator)
   }
 )(getContentcreatorId)
+
+const formatProfile = (profile) => {
+  if (profile.get('photo')) {
+    const imageUrl = profile.getIn(['photo', 'url'])
+    return profile.setIn(['photo', 'url'], `${config.api.url}${imageUrl}`)
+  } else {
+    return profile
+  }
+}

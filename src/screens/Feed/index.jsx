@@ -1,5 +1,4 @@
 import React, {
-  useState,
   useCallback
 } from 'react'
 
@@ -8,16 +7,14 @@ import { connect } from 'react-redux'
 import { 
   SafeAreaView, 
   StyleSheet,
-  RefreshControl
+  RefreshControl,
 } from 'react-native'
+
+import { Content } from 'native-base'
 
 import Constants from 'expo-constants'
 
 import { getSessioncontentListByType } from '../../modules/sessioncontent/selector'
-
-import {  
-  Content
-} from 'native-base'
 
 import Post from './components/Post.jsx'
 
@@ -31,17 +28,10 @@ const styles = StyleSheet.create({
   }
 })
 
-function wait(timeout) {
-  return new Promise(resolve => {
-    setTimeout(resolve, timeout)
-  })
-}
-
 const Feed = ({ 
   posts,
   loading,
-  fetch,
-  navigation
+  fetch
 }) => {
   const onRefresh = useCallback(() => {
     fetch && fetch()

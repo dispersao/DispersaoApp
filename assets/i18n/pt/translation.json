@@ -1,4 +1,7 @@
 {
+  "general": {
+    "noposts": "Ainda não há nenhuma atualização"
+  },
   "splash": {
     "notDevice": "Você deveria usar um devide real para habilitar as Notificações e apreciar toda a a experiência",
     "notGranted": "Você deveria permitir as notificações para obter uma experiência completa."
@@ -45,6 +48,7 @@
     }
   },  
   "profiles" : {
-    "seeProfile": "Ver Perfil"
+    "seeProfile": "Ver Perfil",
+    "lastPosts": "Últimas postagens"
   }
 }

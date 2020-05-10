@@ -7,8 +7,7 @@ import {
   Text, 
   Body, 
   Thumbnail,
-  Left,
-  Button
+  Left
 } from 'native-base'
 
 import { toJS } from '../../../utils/immutableToJs'

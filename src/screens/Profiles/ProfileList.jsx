@@ -24,9 +24,10 @@ const ProfileList = ({
   navigation: { navigate },
   profiles
 }) => {
-  const handleProfileItemClick = (profile) => {
-    navigate('Profile', {
-      id: profile
+  const handleProfileItemClick = (id) => {
+    navigate('Profiles',{
+      screen: 'Profile',
+      params: { id },
     })
   }
 

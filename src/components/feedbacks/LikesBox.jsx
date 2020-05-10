@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from "react"
 import { connect } from "react-redux"
+import { View, StyleSheet } from 'react-native'
 
 import {
   likeCreate,
   likeUpdate,
   likeDelete,
-} from "../../../modules/likes/actions"
+} from "../../modules/likes/actions"
 
-import { Likes, Dislikes } from "../../../components/feedbacks/index.jsx"
+import { Likes, Dislikes } from "./index.jsx"
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'row'
+  }
+})
 
 const LikesBox = ({
   likes,
@@ -47,7 +55,7 @@ const LikesBox = ({
   return (
     <>
       {myLikeStatus === "loaded" && (
-        <>
+        <View style={styles.container}>
           <Likes
             amount={likes}
             marked={myLikeType === likeStr}
@@ -58,7 +66,7 @@ const LikesBox = ({
             marked={myLikeType === dislikeStr}
             onClick={() => onClick(dislikeStr)}
           />
-        </>
+        </View>
       )}
     </>
   )
