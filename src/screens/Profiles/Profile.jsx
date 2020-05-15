@@ -1,25 +1,17 @@
-import React from 'react'
+import React, { useRef } from 'react'
+
 import { Ionicons } from '@expo/vector-icons'
 import Constants from 'expo-constants'
 import { connect } from 'react-redux'
 
-import { 
-  SafeAreaView, 
-  StyleSheet,
-  Image,
-  View
-} from 'react-native'
+import ScrollUpContext from './context'
 
 import { 
-  Content, 
-  Card, 
-  CardItem, 
-  Text, 
-  Body, 
-  Left, 
-  Right, 
-  Thumbnail
-} from 'native-base'
+  SafeAreaView, 
+  StyleSheet
+} from 'react-native'
+
+import { Content } from 'native-base'
 
 import { getSessioncontentByContentId } from '../../modules/sessioncontent/selector'
 import { getProfileByProfileId } from '../../modules/profile/selector'
@@ -49,26 +41,35 @@ const Profile = ({
   sessioncontent,
   profile
 }) => {
+
+  const scrollerRef = useRef(null)
+
   const onHandleClick = () => {
     navigation.goBack()
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Content style={styles.content}>
-        <Ionicons.Button
-          style={styles.button}
-          name="ios-arrow-back"
-          color="#999999"
-          backgroundColor="rgba(255,255,255,0)"
-          size={25}
-          onPress={onHandleClick}/>
-        <ProfileInfo 
-          profile={profile} 
-          sessioncontent={sessioncontent}/>
-        <ProfilePostList {...profile} />
-      </Content>
-    </SafeAreaView>
+    <ScrollUpContext.Provider value={{
+      scrollUp: () => {
+        scrollerRef.current._root.scrollToPosition(0, 0,true)
+      }
+    }}>
+      <SafeAreaView style={styles.container}>
+        <Content style={styles.content} ref={scrollerRef}>
+          <Ionicons.Button
+            style={styles.button}
+            name="ios-arrow-back"
+            color="#999999"
+            backgroundColor="rgba(255,255,255,0)"
+            size={25}
+            onPress={onHandleClick}/>
+          <ProfileInfo 
+            profile={profile} 
+            sessioncontent={sessioncontent}/>
+          <ProfilePostList {...profile} />
+        </Content>
+      </SafeAreaView>
+    </ScrollUpContext.Provider>
   )
 }
 

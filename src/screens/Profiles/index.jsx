@@ -1,13 +1,19 @@
 import 'react-native-gesture-handler'
-import React from 'react'
+import { useFocusEffect } from '@react-navigation/native'
+import React, { useCallback } from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import ProfileList from './ProfileList.jsx'
 import ProfileScreen from './Profile.jsx'
 
-const ProfileHub = (props) => {
+const ProfileHub = ({ navigation }) => {
   const Stack = createStackNavigator()
-  console.log('ProfileHub', props)
+ 
+  useFocusEffect(
+    useCallback(() => {
+      return () => navigation.setParams({ screen: undefined })
+    }, [navigation])
+  )
   return (
     <Stack.Navigator
       screenOptions={{

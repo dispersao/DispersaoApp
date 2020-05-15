@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { toJS } from '../../../utils/immutableToJs'
 import { StyleSheet } from 'react-native'
-import { useNavigation } from '@react-navigation/native'
 
 import { 
   Card, 
@@ -27,28 +26,14 @@ const styles = StyleSheet.create({
 })
 
 const Post = (props) => {
-
   const [commentsOpened, setCommentsOpened] = useState(false)
-  const { navigate } = useNavigation()
 
   const {
     element,
     updated_at,
     comments,
-    currentProfile
+    headerClick
   } = props
-  
-  const handleHeaderClick = (id) => {
-    if( id === currentProfile) {
-      console.log('should scroll up')
-    } else {
-      navigate('Profiles', {
-        screen: 'Profile',
-        params: { id },
-      })
-    }
-    
-  }
 
   return (
     <Card >
@@ -57,7 +42,7 @@ const Post = (props) => {
           <PostHeader 
             {...element}
             time={updated_at}
-            onClick={handleHeaderClick}
+            onClick={headerClick}
           />
         }
       </CardItem>

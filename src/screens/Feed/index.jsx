@@ -31,11 +31,19 @@ const styles = StyleSheet.create({
 const Feed = ({ 
   posts,
   loading,
-  fetch
+  fetch,
+  navigation: { navigate }
 }) => {
   const onRefresh = useCallback(() => {
     fetch && fetch()
   }, [loading])
+
+  const handleHeaderClick = (id) => {
+    navigate('Profiles', {
+      screen: 'Profile',
+      params: { id },
+    })
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -50,7 +58,11 @@ const Feed = ({
         }>
         {posts && posts.length && 
           posts.map((post, index) => {
-            return <Post key={index} {...post} />
+            return <Post 
+              key={index}
+              headerClick={handleHeaderClick}
+              {...post} 
+            />
           })
         }
       </Content>
