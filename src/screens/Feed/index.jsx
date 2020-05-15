@@ -1,5 +1,4 @@
 import React, {
-  useState,
   useCallback
 } from 'react'
 
@@ -8,16 +7,14 @@ import { connect } from 'react-redux'
 import { 
   SafeAreaView, 
   StyleSheet,
-  RefreshControl
+  RefreshControl,
 } from 'react-native'
+
+import { Content } from 'native-base'
 
 import Constants from 'expo-constants'
 
 import { getSessioncontentListByType } from '../../modules/sessioncontent/selector'
-
-import {  
-  Content
-} from 'native-base'
 
 import Post from './components/Post.jsx'
 
@@ -31,20 +28,22 @@ const styles = StyleSheet.create({
   }
 })
 
-function wait(timeout) {
-  return new Promise(resolve => {
-    setTimeout(resolve, timeout)
-  })
-}
-
 const Feed = ({ 
   posts,
   loading,
-  fetch
+  fetch,
+  navigation: { navigate }
 }) => {
   const onRefresh = useCallback(() => {
     fetch && fetch()
   }, [loading])
+
+  const handleHeaderClick = (id) => {
+    navigate('Profiles', {
+      screen: 'Profile',
+      params: { id },
+    })
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -59,7 +58,11 @@ const Feed = ({
         }>
         {posts && posts.length && 
           posts.map((post, index) => {
-            return <Post key={index} {...post} />
+            return <Post 
+              key={index}
+              headerClick={handleHeaderClick}
+              {...post} 
+            />
           })
         }
       </Content>
@@ -76,6 +79,6 @@ export default connect(
   mapStateToProps,
   null
   )(WithLoadedElement(toJS(Feed), {
-  types: ['post', 'comment']
+  types: ['post', 'comment', 'profile']
 }))
 

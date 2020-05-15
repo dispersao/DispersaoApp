@@ -8,11 +8,11 @@ import {
 axios.defaults.baseURL = config.api.url
 axios.defaults.headers.post['Content-Type'] = 'json'
 
-export const fetchSessioncontents = async ({ script, type = [] }) => {
+export const fetchSessioncontents = async ({ script, types = [] }) => {
   let query = `sessioncontents?script.token=${script}`
   let queries = []
-  if (type.length) {
-    queries = type.map(t => `${query}&${t}_null`)
+  if (types.length) {
+    queries = types.map(t => `${query}&${t}_null`)
   } else {
     queries.push(query)
   }

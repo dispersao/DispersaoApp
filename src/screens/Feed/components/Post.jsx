@@ -26,13 +26,13 @@ const styles = StyleSheet.create({
 })
 
 const Post = (props) => {
-
   const [commentsOpened, setCommentsOpened] = useState(false)
 
   const {
     element,
     updated_at,
-    comments
+    comments,
+    headerClick
   } = props
 
   return (
@@ -42,6 +42,7 @@ const Post = (props) => {
           <PostHeader 
             {...element}
             time={updated_at}
+            onClick={headerClick}
           />
         }
       </CardItem>
@@ -61,14 +62,15 @@ const Post = (props) => {
       </CardItem>
       {commentsOpened && comments.length &&
         <CommentList 
-          comments={comments} />
+          comments={comments}
+        />
       }
     </Card>
   )
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  element: getPostByPostId(state, ownProps),
+  element: ownProps.postElement || getPostByPostId(state, ownProps),
   comments: getCommentsByPostId(state, ownProps)
 })
 

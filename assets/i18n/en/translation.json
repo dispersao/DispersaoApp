@@ -1,4 +1,7 @@
 {
+  "general": {
+    "noposts": "No published content yet"
+  },
   "splash": {
     "notDevice": "EN-Você deveria usar um devide real para habilitar as Notificações e apreciar toda a a experiência",
     "notGranted": "EN-Você deveria permitir as notificações para obter uma experiência completa."
@@ -42,6 +45,10 @@
           "other": "aproximately %{amount} year ago"
         }
       }
+    },
+    "profiles" : {
+      "seeProfile": "See Profile",
+      "lastPosts": "Last posts"
     }
   }
 }

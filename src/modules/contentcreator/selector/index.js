@@ -19,5 +19,7 @@ const formatContentCreator = (contentcreator) => {
   if (contentcreator.get('icon')) {
     const imageUrl = contentcreator.getIn(['icon', 'url'])
     return contentcreator.setIn(['icon', 'url'], `${config.api.url}${imageUrl}`)
+  } else {
+    return contentcreator
   }
 }

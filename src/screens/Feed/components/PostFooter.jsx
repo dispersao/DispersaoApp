@@ -6,7 +6,7 @@ import { toJS } from '../../../utils/immutableToJs.jsx'
 
 import { getLikesByLikeIds } from '../../../modules/likes/selector'
 
-import LikesBox from './LikesBox.jsx'
+import LikesBox from '../../../components/feedbacks/LikesBox.jsx'
 import CommentsBox from './CommentsBox.jsx'
 
 import { 

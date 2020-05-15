@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { useNavigation } from '@react-navigation/native'
 
 import {
   getSessioncontentByContentId
@@ -15,6 +16,15 @@ const Comment = ({
   sessioncontent,
   content
 }) => {
+  const { navigate } = useNavigation()
+
+  const handleHeaderClick = (id) => {
+    navigate('Profiles', {
+      screen: 'Profile',
+      params: { id },
+    })
+  }
+
   return (
     <Grid>
       <Row style={{paddingBottom: 10}}>
@@ -22,6 +32,7 @@ const Comment = ({
           contentcreator={contentcreator}
           time={sessioncontent.updated_at}
           style='small'
+          onClick={handleHeaderClick}
         />
       </Row>
       <Row>
