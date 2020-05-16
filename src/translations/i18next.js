@@ -12,15 +12,10 @@ const languageDetector = {
   type: 'languageDetector',
   async: true, // flags below detection to be async
   detect: callback => {
-  //   return Localization.getLocalizationAsync()
-  //   .then(({ locale }) => {
-  //   callback(locale)
-  // })
     return retrieveData('language')
     .then(locale => {
       return (locale && { locale }) || Localization.getLocalizationAsync()
     }).then(({locale}) => {
-      console.log('setting locale ', locale)
       callback(locale)
     })
   },
