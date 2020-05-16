@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 
 import {
   Container,
@@ -27,8 +28,6 @@ import Informative from './components/Informative.jsx'
 import SiteLink from '../../components/socialMedia/site'
 import InitButton from './components/InitButton.jsx'
 
-import i18n from '../../translations/i18n'
-
 const styles = StyleSheet.create({
   contentStyles: {
     height: '100%',
@@ -51,7 +50,7 @@ const JabaScreen = ({
   haveAvailableScripts,
   navigation,
 }) => {
-  
+  const { t } = useTranslation()
 
   useEffect(()=> {
     if (userScript) {
@@ -86,19 +85,19 @@ const JabaScreen = ({
             </Row>
             <Row size={1}>
               <Informative 
-                text={i18n.translate('jaba.infoText')} />
+                text={t('jaba.infoText')} />
             </Row>
             <Row size={1} style={styles.paddingRow}>
               <ButtonRow socialMedias={socialMedia} />
             </Row>
             <Row size={1}>
               <SiteLink 
-                text={i18n.translate('jaba.siteLink')} />
+                text={t('jaba.siteLink')} />
             </Row>
             {availableScript.amount > 0 &&
               <Row size={1} style={styles.paddingRow}>
                 <InitButton 
-                  text={i18n.translate('jaba.initText')}
+                  text={t('jaba.initText')}
                   onPress={navigateToApp}/>
               </Row>
             }

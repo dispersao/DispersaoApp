@@ -3,6 +3,8 @@ import { StyleSheet, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import { timeDifference } from '../../../utils/stringUtils'
 
+import { useTranslation } from 'react-i18next'
+
 import { 
   Text, 
   Body, 
@@ -11,8 +13,6 @@ import {
 } from 'native-base'
 
 import { toJS } from '../../../utils/immutableToJs'
-
-import i18n from '../../../translations/i18n'
 
 import { getContentcreatorByContentcreatorId } from '../../../modules/contentcreator/selector'
 import { getProfileByContentcreatorId } from '../../../modules/profile/selector'
@@ -29,6 +29,7 @@ const generalStyles = StyleSheet.create({
    flex: 1
   }
 })
+
 const bigStyles = StyleSheet.create({
   thumb: {
     width: 40,
@@ -69,6 +70,8 @@ const PostHeader = ({
   onClick,
   style = 'big'
 }) => {
+  const { t } = useTranslation()
+
   const timeDiff = timeDifference(new Date(), new Date(time))
   const translationPath = `feed.time.${timeDiff.unity}.${timeDiff.amount === 1 ? 'one' : 'other'}`
 
@@ -100,7 +103,7 @@ const PostHeader = ({
               </Text>
               <Text 
                 style={combineStyle('description')}>
-                  {i18n.translate(translationPath, timeDiff)}
+                  {t(translationPath, timeDiff )}
               </Text>
             </Body>
           </TouchableOpacity>

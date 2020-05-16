@@ -3,6 +3,7 @@ import React, {
   useState
 } from 'react'
 
+
 import PropTypes from 'prop-types'
 import { toJS } from '../utils/immutableToJs.jsx'
 
@@ -19,8 +20,7 @@ import { getAvailableScripts } from '../modules/script/selector'
 import { fetchAvailableScripts } from '../modules/script/actions'
 
 import SplashScreen from '../screens/Splash/index.jsx'
-
-import i18n from '../translations/i18n'
+import { useTranslation } from 'react-i18next'
 
 const TIMEOUT_SPLASH = 1000
 
@@ -31,6 +31,8 @@ const DataLoader = ({
   availableScript,
   getAvailableScripts,
 }) => {
+
+  const { t } = useTranslation()
 
   const [timeUp, setTimeUp] = useState(false)
 
@@ -47,16 +49,12 @@ const DataLoader = ({
         finalStatus = status
       }
       if (finalStatus !== 'granted') {
-        alert(i18n.translate('splash.notGranted'))
+        alert(t('splash.notGranted'))
         return
       }
     } else {
-      alert(i18n.translate('splash.notDevice'))
+      alert(t('splash.notDevice'))
     }
-  }
-
-  const setLocale = async () => {
-   
   }
 
   const registerExpoToken = async () => {
@@ -86,9 +84,7 @@ const DataLoader = ({
     const timer = setTimeout(() => {
       setTimeUp(true)
     }, TIMEOUT_SPLASH)
-
-    setLocale()
-
+    
     return () => {
       clearTimeout(timer)
     }

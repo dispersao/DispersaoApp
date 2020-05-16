@@ -11,14 +11,14 @@ import {
   Button
 } from 'native-base'
 
+import { useTranslation } from 'react-i18next'
+
 import { Row } from 'react-native-easy-grid'
 
 import { updateAppuser } from '../../../modules/appuser/actions/'
 import { getError } from '../../../modules/appuser/selector'
 
 import { toJS } from '../../../utils/immutableToJs.jsx'
-
-import i18n from '../../../translations/i18n'
 
 const styles = StyleSheet.create({
   paddingRow: {
@@ -70,7 +70,7 @@ const TokenCheck = ({
   tokenError
 }) => {
   let [inputValue, setInputValue] = useState(null)
-
+  const { t } = useTranslation()
   return (
     <>
       <Row 
@@ -78,7 +78,7 @@ const TokenCheck = ({
         style={styles.textRow}>
         { tokenError && tokenError.message &&
           <Text style={styles.text}>
-            {i18n.translate(`token.error.${tokenError.message}`)}
+            {t(`token.error.${tokenError.message}`)}
           </Text>
         }
       </Row>
@@ -90,7 +90,7 @@ const TokenCheck = ({
           style={styles.itemInput}>
           <Input 
             keyboardType='number-pad'
-            placeholder={i18n.translate('token.placeholder')} 
+            placeholder={t('token.placeholder')} 
             autoCapitalize="characters" 
             style={styles.input}
             onChangeText={(val)=> setInputValue(val)} />
@@ -106,7 +106,7 @@ const TokenCheck = ({
           onPress={() => associateToken(inputValue)}>
           <Text 
             style={styles.buttonText}>
-              {i18n.translate('token.send')}
+              {t('token.send')}
             </Text>
         </Button>
       </Row>
