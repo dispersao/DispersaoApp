@@ -12,7 +12,7 @@ const Tab = createBottomTabNavigator()
 const AppScreen = () => {
   return (
     <Tab.Navigator screenOptions={({ route }) => ({
-        tabBarIcon: ({  tintColor }) => {
+        tabBarIcon: ({color}) => {
           let iconName
           let routeName = route.name
           if (routeName === 'Feed') {
@@ -26,15 +26,27 @@ const AppScreen = () => {
           } else if (routeName === 'Language') {
             iconName = 'ios-globe'
           }
-          return <Ionicons name={iconName} size={25} color={tintColor} />
+          return (
+          <Ionicons 
+            name={iconName} 
+            size={25} 
+            color={color}
+            />)
         },
       })}
         tabBarOptions={{
-          activeTintColor: 'tomato',
+          activeTintColor: 'rgb(217, 98, 53)',
           inactiveTintColor: 'gray',
+          activeBackgroundColor: 'black',
+          inactiveBackgroundColor: 'black',
+          showLabel: false
         }}>
-        <Tab.Screen name="Feed" component={FeedScreen} />
-        <Tab.Screen name="Notifications" component={NotificationsScreen} />
+        <Tab.Screen 
+          name="Feed" 
+          component={FeedScreen} />
+        <Tab.Screen 
+          name="Notifications" 
+            component={NotificationsScreen} />
         <Tab.Screen 
           name="Profiles" 
           component={ProfileHub}
@@ -42,7 +54,9 @@ const AppScreen = () => {
           options={{
             unmountOnBlur: true
           }} />
-        <Tab.Screen name="Language" component={LanguageScreen} />
+        <Tab.Screen 
+          name="Language" 
+          component={LanguageScreen} />
       </Tab.Navigator> 
   )
   
