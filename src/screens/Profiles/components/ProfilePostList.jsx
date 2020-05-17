@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 })
 
 const ProfilePostList = ({
-  id,
+  contentcreator,
   postList
 }) => {
   const { t } = useTranslation()
@@ -49,7 +49,7 @@ const ProfilePostList = ({
               return <ProfilePost 
                 key={index} 
                 post={post} 
-                currentProfile={id} />
+                currentContentcreator={contentcreator} />
             })}
           </View>
         </>

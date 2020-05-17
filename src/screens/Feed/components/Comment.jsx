@@ -18,10 +18,10 @@ const Comment = ({
 }) => {
   const { navigate } = useNavigation()
 
-  const handleHeaderClick = (id) => {
+  const handleHeaderClick = (contentcreator) => {
     navigate('Profiles', {
       screen: 'Profile',
-      params: { id },
+      params: { contentcreator },
     })
   }
 

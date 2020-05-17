@@ -15,6 +15,7 @@ import { Content } from 'native-base'
 
 import { getSessioncontentByContentId } from '../../modules/sessioncontent/selector'
 import { getProfileByProfileId } from '../../modules/profile/selector'
+import { getProfileByContentcreatorId } from '../../modules/profile/selector'
 
 import { toJS } from '../../utils/immutableToJs.jsx'
 
@@ -74,10 +75,11 @@ const Profile = ({
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { route: { params : { id } } } = ownProps
+  const { route: { params : { contentcreator, id } } } = ownProps
+  let profile = id ? getProfileByProfileId(state, { profile: id }) : getProfileByContentcreatorId(state, { contentcreator })
   return {
-    sessioncontent: getSessioncontentByContentId(state, {id , type: 'profile'}),
-    profile: getProfileByProfileId(state, { profile: id })
+    sessioncontent: getSessioncontentByContentId(state, {id: profile?.get('id') , type: 'profile'}),
+    profile
   }
 }
 

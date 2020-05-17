@@ -15,7 +15,6 @@ import {
 import { toJS } from '../../../utils/immutableToJs'
 
 import { getContentcreatorByContentcreatorId } from '../../../modules/contentcreator/selector'
-import { getProfileByContentcreatorId } from '../../../modules/profile/selector'
 
 const generalStyles = StyleSheet.create({
   title: {
@@ -65,7 +64,6 @@ const styles = {
 
 const PostHeader = ({
   contentcreatorElement,
-  profile,
   time,
   onClick,
   style = 'big'
@@ -76,7 +74,7 @@ const PostHeader = ({
   const translationPath = `feed.time.${timeDiff.unity}.${timeDiff.amount === 1 ? 'one' : 'other'}`
 
   const handleClick = ()=> {
-    onClick && profile && onClick(profile.id)
+    onClick && contentcreatorElement && onClick(contentcreatorElement.id)
   }
 
   const combineStyle = (field) => {
@@ -115,7 +113,6 @@ const PostHeader = ({
 
 const mapStateToProps = (state, ownProps) => ({
   contentcreatorElement: getContentcreatorByContentcreatorId(state, ownProps),
-  profile: getProfileByContentcreatorId(state, ownProps)
 })
 
 export default connect(

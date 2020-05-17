@@ -11,19 +11,19 @@ import Post from '../../Feed/components/Post.jsx'
 const ProfilePost = ({
   sessioncontent,
   post,
-  currentProfile
+  currentContentcreator
 }) => {
   const { navigate } = useNavigation()
 
   const context = useContext(ScrollUpContext)
 
-  const handleClick = (id) => {
-    if (id === currentProfile) {
+  const handleClick = (contentcreator) => {
+    if (contentcreator === currentContentcreator) {
       context.scrollUp()
     } else {
       navigate('Profiles', {
         screen: 'Profile',
-        params: { id },
+        params: { contentcreator },
       })
     }
   }
