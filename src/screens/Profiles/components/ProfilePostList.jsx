@@ -8,7 +8,7 @@ import ProfilePost from './ProfilePost.jsx'
 
 import { getPostsByContentcreatorId } from '../../../modules/post/selector'
 
-import i18n from '../../../translations/i18n'
+import { useTranslation } from 'react-i18next'
 
 const styles = StyleSheet.create({
   container: {
@@ -35,12 +35,14 @@ const ProfilePostList = ({
   id,
   postList
 }) => {
+  const { t } = useTranslation()
+
   return (
     <View style={styles.container}>
       { (postList.length || null) &&
         <>
           <Text style={styles.listTitle}>
-            {i18n.translate('profiles.lastPosts')}
+            {t('profiles.lastPosts')}
           </Text>
           <View>
             {postList.length && postList.map((post, index) => {
@@ -55,7 +57,7 @@ const ProfilePostList = ({
       {(!postList.length || null) && 
         <View style={styles.emptyTextContainer}>
           <Text style={styles.emptyText}>
-            {i18n.translate('general.noposts')}
+            {t('general.noposts')}
           </Text>
         </View>
       }

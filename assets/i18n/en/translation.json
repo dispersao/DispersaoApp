@@ -1,52 +1,55 @@
 {
-  "general": {
-    "noposts": "No published content yet"
-  },
-  "splash": {
-    "notDevice": "EN-Você deveria usar um devide real para habilitar as Notificações e apreciar toda a a experiência",
-    "notGranted": "EN-Você deveria permitir as notificações para obter uma experiência completa."
-  },
-  "jaba": {
-    "infoText": "ENSaiba mais sobre o filme",
-    "initText": "ENIniciar",
-    "siteLink": "ENConheça o site"
-  },
-  "token": {
-    "placeholder": "Token da Sessao",
-    "send": "Começar",
-    "error": {
-      "invalidToken": "Invalid session token",
-      "invalidState": "This session is not available"
+  "translation": {
+    "general": {
+      "languageName": "English",
+      "noposts": "No published content yet"
+    },
+    "splash": {
+      "notDevice": "Você deveria usar um devide real para habilitar as Notificações e apreciar toda a a experiência",
+      "notGranted": "Você deveria permitir as notificações para obter uma experiência completa."
+    },
+    "jaba": {
+      "infoText": "Know more about the film",
+      "initText": "Start",
+      "siteLink": "Visit the website"
+    },
+    "token": {
+      "placeholder": "Session Token",
+      "send": "Start",
+      "error": {
+        "invalidToken": "Invalid session token",
+        "invalidState": "This session is not available"
+      }
     },
     "feed": {
-      "time" : {
-        "second" : {
-          "one": "%{amount} second ago",
-          "other": "%{amount} second ago"
+      "time": {
+        "second": {
+          "one": "{{amount}} second ago",
+          "other": "{{amount}} second ago"
         },
-        "minute" : {
-          "one": "%{amount} minute ago",
-          "other": "%{amount} minutes ago"
+        "minute": {
+          "one": "{{amount}} minute ago",
+          "other": "{{amount}} minutes ago"
         },
-        "hour" : {
-          "one": "%{amount} hour ago",
-          "other": "%{amount} hours ago"
+        "hour": {
+          "one": "{{amount}} hour ago",
+          "other": "{{amount}} hours ago"
         },
-        "day" : {
-          "one":"aproximately %{amount} day ago",
-          "other":"aproximately %{amount} day ago"
+        "day": {
+          "one": "aproximately {{amount}} day ago",
+          "other": "aproximately {{amount}} day ago"
         },
-        "month" : {
-          "one": "aproximately %{amount} month ago",
-          "other": "aproximately %{amount} months ago"
+        "month": {
+          "one": "aproximately {{amount}} month ago",
+          "other": "aproximately {{amount}} months ago"
         },
-        "year" : {
-          "one": "aproximately %{amount} year ago",
-          "other": "aproximately %{amount} year ago"
+        "year": {
+          "one": "aproximately {{amount}} year ago",
+          "other": "aproximately {{amount}} year ago"
         }
       }
     },
-    "profiles" : {
+    "profiles": {
       "seeProfile": "See Profile",
       "lastPosts": "Last posts"
     }

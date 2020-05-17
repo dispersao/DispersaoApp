@@ -8,7 +8,7 @@ import { Text, Left, Right} from 'native-base'
 
 import ProfileInfo from './ProfileItemInfo.jsx'
 
-import i18n from '../../../translations/i18n'
+import { useTranslation } from 'react-i18next'
 
 const styles = StyleSheet.create({
   linkText: {
@@ -20,6 +20,8 @@ const ProfileItem = ({
   element,
   onPress
 }) => {
+  const { t } = useTranslation()
+
   return(
     <>
       <Left>
@@ -29,7 +31,7 @@ const ProfileItem = ({
         <Text 
           style={styles.linkText} 
           onPress={() => onPress && onPress(element.id)}>
-            {i18n.translate('profiles.seeProfile')}
+            {t('profiles.seeProfile')}
         </Text>
       </Right>
     </>
