@@ -2,7 +2,8 @@
   "translation": {
     "general": {
       "languageName": "Português",
-      "noposts": "Ainda não há nenhuma atualização"
+      "noposts": "Ainda não há nenhuma atualização",
+      "logoDescription": "um filme interativo sobre amor e política"
     },
     "splash": {
       "notDevice": "Você deveria usar um devide real para habilitar as Notificações e apreciar toda a a experiência",
@@ -51,7 +52,8 @@
     },
     "profiles": {
       "seeProfile": "Ver Perfil",
-      "lastPosts": "Últimas postagens"
+      "lastPosts": "Últimas postagens",
+      "forbiddenProfile": "O perfil desde usuário está disponível somente para amigos."
     }
   }
 }

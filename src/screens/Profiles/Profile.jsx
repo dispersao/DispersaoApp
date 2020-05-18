@@ -21,6 +21,7 @@ import { toJS } from '../../utils/immutableToJs.jsx'
 
 import ProfileInfo from './components/ProfileInfo.jsx'
 import ProfilePostList from './components/ProfilePostList.jsx'
+import ContentcreatorProfile from './components/ContentcreatorProfile.jsx'
 
 const styles = StyleSheet.create({
   container: {
@@ -40,7 +41,8 @@ const styles = StyleSheet.create({
 const Profile = ({
   navigation,
   sessioncontent,
-  profile
+  profile,
+  contentcreator
 }) => {
 
   const scrollerRef = useRef(null)
@@ -64,10 +66,19 @@ const Profile = ({
             backgroundColor="rgba(255,255,255,0)"
             size={25}
             onPress={onHandleClick}/>
-          <ProfileInfo 
-            profile={profile} 
-            sessioncontent={sessioncontent}/>
-          <ProfilePostList {...profile} />
+          {(profile || null) && 
+            <>
+              <ProfileInfo 
+                profile={profile} 
+                sessioncontent={sessioncontent}/>
+              <ProfilePostList {...profile} />
+            </>
+          } 
+          {(!profile || null) && 
+            <ContentcreatorProfile
+              contentcreator={contentcreator}
+            />
+          }
         </Content>
       </SafeAreaView>
     </ScrollUpContext.Provider>
@@ -79,7 +90,8 @@ const mapStateToProps = (state, ownProps) => {
   let profile = id ? getProfileByProfileId(state, { profile: id }) : getProfileByContentcreatorId(state, { contentcreator })
   return {
     sessioncontent: getSessioncontentByContentId(state, {id: profile?.get('id') , type: 'profile'}),
-    profile
+    profile,
+    contentcreator
   }
 }
 

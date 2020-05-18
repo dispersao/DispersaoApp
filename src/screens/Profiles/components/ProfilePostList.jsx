@@ -27,7 +27,9 @@ const styles = StyleSheet.create({
   emptyTextContainer: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 50
   }
 })
 
@@ -39,7 +41,7 @@ const ProfilePostList = ({
 
   return (
     <View style={styles.container}>
-      { (postList.length || null) &&
+      {(postList.length || null) &&
         <>
           <Text style={styles.listTitle}>
             {t('profiles.lastPosts')}
