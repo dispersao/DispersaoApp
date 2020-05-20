@@ -4,16 +4,13 @@ import { Button } from 'native-base'
 
 const styles = StyleSheet.create({
   button: { 
-    width: '100%', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    backgroundColor: 'rgb(217, 98, 53)' 
+    width: '100%',
+    backgroundColor: 'rgb(217, 98, 53)',
+    padding: 10
   },
   text: { 
     fontSize: 15, 
-    color: 'white', 
-    justifyContent: 'center', 
-    alignItems: 'center' 
+    color: 'white'
   }
 })
 
@@ -24,7 +21,7 @@ const InitButton = ({
   
   return (
     <Button 
-      rounded 
+      block 
       style={styles.button} 
       onPress={onPress}>
       <Text style={styles.text}>

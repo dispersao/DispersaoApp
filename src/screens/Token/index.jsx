@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { StyleSheet } from 'react-native'
+import Constants from 'expo-constants'
 
 import {
   Container,
@@ -30,7 +31,7 @@ const TokenScreen = ({
   }, [script])
 
   return (
-    <Container >
+    <Container style={styles.container} >
       <Content contentContainerStyle={styles.contentStyles}>
         <Grid style={styles.grid} >
           <Row size={1} />
@@ -45,6 +46,13 @@ const TokenScreen = ({
 }
 
 const styles = StyleSheet.create({
+  container: {
+    marginTop: Constants.statusBarHeight,
+    height: '100%',
+    width: '100%',
+    backgroundColor: 'black',
+    paddingHorizontal: 10,
+  },
   contentStyles: {
     alignItems: 'center',
     justifyContent: 'center',
