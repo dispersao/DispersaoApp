@@ -21,7 +21,7 @@ export const getProfileByContentcreatorId = createCachedSelector(
     if (!profiles || !profiles.size || !contentcreator) {
       return
     }
-    return profiles.find(profile => profile.get('contentcreator') === contentcreator)
+    return formatProfile(profiles.find(profile => profile.get('contentcreator') === contentcreator))
   }
 )(getContentcreatorId)
 

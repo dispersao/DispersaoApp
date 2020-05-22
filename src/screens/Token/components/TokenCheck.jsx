@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { 
   StyleSheet,
-  Text
+  Text,
+  View
 } from 'react-native'
 
 import { 
@@ -41,15 +42,18 @@ const styles = StyleSheet.create({
     marginVertical: 5
   },
   itemInput: { 
-    width: '90%', 
     justifyContent: 'center', 
-    color: 'white'
+    color: 'white',
+    width: '95%',
+    padding: 10
   },
   input: { 
     textTransform: 'uppercase', 
     justifyContent: 'center', 
     color: 'white', 
-    borderColor: 'gray'
+    borderColor: 'gray',
+    height: 70,
+    width: '100%'
   },
   button: {
     width: '100%', 
@@ -100,7 +104,7 @@ const TokenCheck = ({
         size={1} 
         style={styles.paddingHorizontal}>
         <Button 
-          rounded
+          block
           disabled={!inputValue}
           style={styles.button}
           onPress={() => associateToken(inputValue)}>

@@ -52,13 +52,11 @@ const mapStateToProps = (state, ownProps) => ({
   profiles : getSessioncontentListByType(state, {types: ['profile']})
 })
 
-const mapDispatchToProps = (dispatch) => ({
 
-})
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(WithLoadedElement(toJS(ProfileList), {
   types: ['profile'],
   noEmptyList: true

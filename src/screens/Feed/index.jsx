@@ -38,10 +38,10 @@ const Feed = ({
     fetch && fetch()
   }, [loading])
 
-  const handleHeaderClick = (id) => {
+  const handleHeaderClick = (contentcreator) => {
     navigate('Profiles', {
       screen: 'Profile',
-      params: { id },
+      params: { contentcreator },
     })
   }
 

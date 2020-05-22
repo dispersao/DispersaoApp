@@ -2,7 +2,8 @@
   "translation": {
     "general": {
       "languageName": "English",
-      "noposts": "No published content yet"
+      "noposts": "No published content yet",
+      "logoDescription": "an interactive film\nabout love and politics"
     },
     "splash": {
       "notDevice": "Você deveria usar um devide real para habilitar as Notificações e apreciar toda a a experiência",
@@ -51,7 +52,8 @@
     },
     "profiles": {
       "seeProfile": "See Profile",
-      "lastPosts": "Last posts"
+      "lastPosts": "Last posts",
+      "forbiddenProfile": "This profile is only available for friends."
     }
   }
 }

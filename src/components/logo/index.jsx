@@ -1,25 +1,51 @@
 import React from 'react'
-import { Image } from 'react-native'
+import { 
+  Image, 
+  View, 
+  StyleSheet, 
+  Text
+} from 'react-native'
 
-import { StyleSheet } from 'react-native'
+import { useTranslation } from 'react-i18next'
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    marginBottom: 0,
+    paddingHorizontal: 30
+  },
   img: {
     resizeMode: 'contain', 
-    paddingHorizontal: 50, 
-    width: "100%", 
-    height: "100%"
+    width: '100%'
+  },
+  text: {
+    fontSize: 16,
+    color: 'white',
+    lineHeight: 25,
+    textTransform: 'uppercase',
+    textAlign: 'center'
   }
 })
 
-const imgSrc = '../../../assets/images/dispersao_jaba.png'
+const imgSrc = '../../../assets/images/dispersao.png'
 
 const Logo = () => {
+  const { t } = useTranslation()
+
   return (
-    <Image 
-      source={require(imgSrc)} 
-      style={styles.img } 
-    />
+    <View style={styles.container}>
+      <Image 
+        style={styles.img}
+        source={require('../../../assets/images/dispersao.png')}
+      />
+      <Text style={styles.text}>
+        {t('general.logoDescription')}
+      </Text>
+    </View>
   )
 }
 

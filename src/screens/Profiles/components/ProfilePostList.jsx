@@ -27,19 +27,21 @@ const styles = StyleSheet.create({
   emptyTextContainer: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 50
   }
 })
 
 const ProfilePostList = ({
-  id,
+  contentcreator,
   postList
 }) => {
   const { t } = useTranslation()
 
   return (
     <View style={styles.container}>
-      { (postList.length || null) &&
+      {(postList.length || null) &&
         <>
           <Text style={styles.listTitle}>
             {t('profiles.lastPosts')}
@@ -49,7 +51,7 @@ const ProfilePostList = ({
               return <ProfilePost 
                 key={index} 
                 post={post} 
-                currentProfile={id} />
+                currentContentcreator={contentcreator} />
             })}
           </View>
         </>

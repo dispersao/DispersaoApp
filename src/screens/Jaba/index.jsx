@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { connect } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+
+import Constants from 'expo-constants'
 
 import {
   Container,
@@ -29,17 +31,24 @@ import SiteLink from '../../components/socialMedia/site'
 import InitButton from './components/InitButton.jsx'
 
 const styles = StyleSheet.create({
-  contentStyles: {
+  container: {
+    marginTop: Constants.statusBarHeight,
     height: '100%',
+    width: '100%',
+    backgroundColor: 'black',
+    paddingHorizontal: 10,
+  },
+  contentStyles: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'black'
+    height: '100%'
   },
   paddingRow: {
     paddingHorizontal: 10
   },
   grid: {
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
 
@@ -75,11 +84,10 @@ const JabaScreen = ({
   }
 
   return (
-    <Container >
+    <Container style={styles.container}>
       <Content contentContainerStyle={styles.contentStyles}>
         {(!userScript || userScript.state === 'finished') && 
-          <Grid style={styles.grid} >
-            <Row size={1} />
+          <Grid style={styles.grid}>
             <Row size={5}>
               <Logo />
             </Row>
@@ -87,15 +95,15 @@ const JabaScreen = ({
               <Informative 
                 text={t('jaba.infoText')} />
             </Row>
-            <Row size={1} style={styles.paddingRow}>
+            <Row size={1}>
               <ButtonRow socialMedias={socialMedia} />
             </Row>
             <Row size={1}>
               <SiteLink 
                 text={t('jaba.siteLink')} />
             </Row>
-            {availableScript.amount > 0 &&
-              <Row size={1} style={styles.paddingRow}>
+            { availableScript.amount > 0 &&
+              <Row size={1}>
                 <InitButton 
                   text={t('jaba.initText')}
                   onPress={navigateToApp}/>
