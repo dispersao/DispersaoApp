@@ -6,7 +6,6 @@ import { toJS } from '../../../utils/immutableToJs'
 import { 
   StyleSheet, 
   View,
-  Content
 } from 'react-native'
 
 import { 
