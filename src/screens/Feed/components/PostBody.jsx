@@ -1,52 +1,52 @@
 import React from "react"
 import { 
   StyleSheet, 
-  Image 
+  Image,
+  View
 } from "react-native"
 
 import { Body, Text } from "native-base"
 
 const styles = StyleSheet.create({
+  container: {
+    padding: 0
+  },
   postImage: {
     flex: 1,
-    aspectRatio: 1,
     resizeMode: "contain",
     alignSelf: "center",
+    width: '100%',
+    height: 230
   },
-  textBody: {
-    paddingHorizontal: 5,
-  },
+  
   text: {
-    fontSize: 14
+    fontSize: 14,
+    paddingHorizontal: 5,
+    paddingBottom: 10
   }
 })
 
 const PostBody = ({ 
-  imageUrl, 
-  videoUrl, 
+  media, 
   content 
 }) => {
     const onHandleImageClick = () => {
-      console.log('onclick image', videoUrl)
+      console.log('onclick image', media.url)
     }
   return (
-    <>
+    <Body style={styles.container}>
       {content &&
-        <Body style={styles.textBody}>
-          <Text style={styles.text}>
-            {content}
-          </Text>
-        </Body>
+        <Text style={styles.text}>
+          {content}
+        </Text>
       }
-      {imageUrl && (
-        <Body>
-          <Image 
-            style={styles.postImage}
-            source={imageUrl} 
-            onClick={onHandleImageClick}/>
-        </Body>
+      {media && (
+        <Image 
+          style={styles.postImage}
+          source={{uri: media.url}}
+          onClick={onHandleImageClick}/>
       )}
-    </>
+    </Body>
   )
 }
 
