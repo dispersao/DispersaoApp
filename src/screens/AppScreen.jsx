@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import FeedScreen from './Feed/index.jsx'
 import NotificationsScreen from './NotificationsScreen'
 import ProfileHub from './Profiles/index.jsx'
-import InfoScreen from './InfoScreen'
+import InfoScreen from './Info/index.jsx'
 import LanguageScreen from '../screens/Languages/index.jsx'
 import { Ionicons } from '@expo/vector-icons'
 
@@ -54,6 +54,10 @@ const AppScreen = () => {
           options={{
             unmountOnBlur: true
           }} />
+        <Tab.Screen
+          name="Info"
+          component={InfoScreen}
+        />
         <Tab.Screen 
           name="Language" 
           component={LanguageScreen} />

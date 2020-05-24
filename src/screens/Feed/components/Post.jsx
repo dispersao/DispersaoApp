@@ -48,7 +48,7 @@ const Post = (props) => {
       </CardItem>
       <CardItem 
         cardBody 
-        style={StyleSheet.compose(styles.card, styles.cardBody)}>
+        style={styles.card}>
         <PostBody {...element}  />
       </CardItem>
       <CardItem 

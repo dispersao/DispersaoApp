@@ -5,7 +5,6 @@ import { openBrowserAsync } from 'expo-web-browser'
 const styles = StyleSheet.create({
   text: {
     fontSize: 15,
-    color: 'white',
     justifyContent: 'center',
     alignItems: 'center'
   }

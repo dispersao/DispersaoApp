@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 
@@ -38,10 +38,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     paddingHorizontal: 10,
   },
-  contentStyles: {
+  content: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: '100%'
+    height: '100%',
+    color: 'white'
   },
   paddingRow: {
     paddingHorizontal: 10
@@ -49,6 +50,9 @@ const styles = StyleSheet.create({
   grid: {
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  linkContainer: {
+    color: 'white'
   }
 })
 
@@ -85,7 +89,7 @@ const JabaScreen = ({
 
   return (
     <Container style={styles.container}>
-      <Content contentContainerStyle={styles.contentStyles}>
+      <Content contentContainerStyle={styles.content}>
         {(!userScript || userScript.state === 'finished') && 
           <Grid style={styles.grid}>
             <Row size={5}>
@@ -99,8 +103,10 @@ const JabaScreen = ({
               <ButtonRow socialMedias={socialMedia} />
             </Row>
             <Row size={1}>
-              <SiteLink 
-                text={t('jaba.siteLink')} />
+              <Text style={styles.linkContainer}>
+                <SiteLink 
+                  text={t('jaba.siteLink')} />
+              </Text>
             </Row>
             { availableScript.amount > 0 &&
               <Row size={1}>

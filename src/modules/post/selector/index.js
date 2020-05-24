@@ -1,4 +1,5 @@
 import createCachedSelector from 're-reselect'
+import config from '../../../../config.json'
 
 const getState = (state) => state.posts
 const getPostId = (state, props) => props.post
@@ -10,7 +11,7 @@ export const getPostByPostId = createCachedSelector(
     if (!posts || !posts.size || !id) {
       return
     }
-    return posts.get(id.toString())
+    return formatPost(posts.get(id.toString()))
   }
 )(getPostId)
 
@@ -22,6 +23,16 @@ export const getPostsByContentcreatorId = createCachedSelector(
     }
     return posts
       .filter(post => post.get('contentcreator') === contentcreator)
+      .map(post => formatPost(post))
       .valueSeq()
   }
 )(getContentcreatorId)
+
+const formatPost = (post) => {
+  if (post.get('media')) {
+    const imageUrl = post.getIn(['media', 'url'])
+    return post.setIn(['media', 'url'], `${config.api.url}${imageUrl}`)
+  } else {
+    return post
+  }
+}
