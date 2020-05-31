@@ -12,26 +12,26 @@ const Tab = createBottomTabNavigator()
 const AppScreen = () => {
   return (
     <Tab.Navigator screenOptions={({ route }) => ({
-        tabBarIcon: ({color}) => {
-          let iconName
-          let routeName = route.name
-          if (routeName === 'Feed') {
-            iconName = 'ios-paper' //Ionicons
-          } else if (routeName === 'Notifications') {
-            iconName = 'ios-notifications'
-          } else if (routeName === 'Profiles') {
-            iconName = 'ios-people'
-          } else if (routeName === 'Info') {
-            iconName = 'ios-information-circle'
-          } else if (routeName === 'Language') {
-            iconName = 'ios-globe'
-          }
-          return (
-          <Ionicons 
-            name={iconName} 
-            size={25} 
-            color={color}
-            />)
+      tabBarIcon: ({color}) => {
+        let iconName
+        let routeName = route.name
+        if (routeName === 'Feed') {
+          iconName = 'ios-paper' //Ionicons
+        } else if (routeName === 'Notifications') {
+          iconName = 'ios-notifications'
+        } else if (routeName === 'Profiles') {
+          iconName = 'ios-people'
+        } else if (routeName === 'Info') {
+          iconName = 'ios-information-circle'
+        } else if (routeName === 'Language') {
+          iconName = 'ios-globe'
+        }
+        return (
+        <Ionicons 
+          name={iconName} 
+          size={25} 
+          color={color}
+          />)
         },
       })}
         tabBarOptions={{
