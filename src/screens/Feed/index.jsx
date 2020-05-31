@@ -86,7 +86,7 @@ const Feed = ({
             </Text>
           </View>
         }
-        {posts && posts.length && 
+        {(posts && posts.length && 
           posts.map((post, index) => {
             return <Post 
               key={index}
@@ -94,7 +94,7 @@ const Feed = ({
               {...post} 
             />
           })
-        }
+        ) || null}
       </Content>
     </SafeAreaView>
   )
