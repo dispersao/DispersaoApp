@@ -11,11 +11,9 @@ const reducer = (state = fromJS({
   switch(action.type) {
     
     case FETCH_SCRIPT_SUCCESS:
-      if (action.payload.scripts.length){
-        script = action.payload.scripts[action.payload.scripts.length - 1]
+      if (Object.keys(action.payload.scripts).length){
         return state.mergeDeep(fromJS({
-          id: script.id,
-          token: script.token,
+          ...action.payload.scripts,
           loaded: true
         })
         )

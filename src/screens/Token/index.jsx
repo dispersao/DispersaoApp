@@ -17,18 +17,21 @@ import { toJS } from '../../utils/immutableToJs.jsx'
 
 import Logo from '../../components/logo'
 import TokenCheck from './components/TokenCheck.jsx'
-import { getScript as getAppuserScript } from '../../modules/appuser/selector'
+import { getCurrentUserScript as getAppuserScript } from '../../modules/appuser/selector'
 
 const TokenScreen = ({
   navigation,
-  script
+  userScript
 }) => {
 
+  const acceptedState = ['started', 'paused','playing']
+  const playingScript = userScript && acceptedState.includes(userScript.state)
+
   useEffect(() => {
-    if (script) {
+    if (playingScript) {
       navigation.navigate('App')
     }
-  }, [script])
+  }, [userScript])
 
   return (
     <Container style={styles.container} >
@@ -79,7 +82,7 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = (state) => ({
-  script: getAppuserScript(state)
+  userScript: getAppuserScript(state)
 })
 
 export default connect(

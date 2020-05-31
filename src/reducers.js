@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-import script from './modules/script/reducer'
+import scripts from './modules/script/reducer'
 import appuser from './modules/appuser/reducer'
 import contentcreators from './modules/contentcreator/reducer'
 import posts from './modules/post/reducer'
@@ -10,7 +10,7 @@ import sessioncontents from './modules/sessioncontent/reducer'
 import likes from './modules/likes/reducer'
 
 const reducer = combineReducers({
-  script,
+  scripts,
   appuser,
   contentcreators,
   posts,

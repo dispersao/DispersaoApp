@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect'
 
+import { getState as getScripts} from '../../script/selector'
+
 const getState = (state) => state.appuser
 
 export const getId = createSelector(
@@ -17,6 +19,16 @@ export const getExpotoken = createSelector(
       return
     }
     return appuser.get('expotoken')
+  }
+)
+
+export const getCurrentUserScript = createSelector(
+  [getState, getScripts],
+  (appuser, scripts) => {
+    if (!appuser || !appuser.size) {
+      return
+    }
+    return scripts.get(appuser.get('script'))
   }
 )
 

@@ -15,7 +15,7 @@ import {
   Grid
 } from 'react-native-easy-grid'
 
-import { getScript as getAppuserScript } from '../../modules/appuser/selector'
+import { getCurrentUserScript as getAppuserScript } from '../../modules/appuser/selector'
 import { getAvailableScripts } from '../../modules/script/selector'
 import { toJS } from '../../utils/immutableToJs.jsx'
 
@@ -64,9 +64,12 @@ const JabaScreen = ({
   navigation,
 }) => {
   const { t } = useTranslation()
+  const acceptedState = ['started', 'paused','playing']
+  const playingScript = userScript && acceptedState.includes(userScript.state)
+  const finishedScript = userScript && userScript.state === 'finished'
 
   useEffect(()=> {
-    if (userScript) {
+    if (playingScript) {
       navigation.navigate('App')
     }
   }, [])
@@ -86,6 +89,8 @@ const JabaScreen = ({
   const navigateToApp = () => {
     navigation.navigate('Token')
   }
+
+  const initButtonText =  finishedScript ? t('jaba.restartText') : t('jaba.startText')
 
   return (
     <Container style={styles.container}>
@@ -108,13 +113,12 @@ const JabaScreen = ({
                   text={t('jaba.siteLink')} />
               </Text>
             </Row>
-            { availableScript.amount > 0 &&
-              <Row size={1}>
-                <InitButton 
-                  text={t('jaba.initText')}
-                  onPress={navigateToApp}/>
-              </Row>
-            }
+            <Row size={1}>
+              <InitButton 
+                enabled={availableScript.amount}
+                text={initButtonText}
+                onPress={navigateToApp}/>
+            </Row>
           </Grid>
         }
       </Content>
