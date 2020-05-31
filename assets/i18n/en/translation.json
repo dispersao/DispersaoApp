@@ -12,7 +12,8 @@
     },
     "jaba": {
       "infoText": "Know more about the film",
-      "initText": "Start",
+      "startText": "Start",
+      "restartText": "Start new session",
       "siteLink": "Visit the website"
     },
     "token": {
