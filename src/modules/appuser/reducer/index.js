@@ -7,7 +7,7 @@ import {
   CREATE_APPUSER_ERROR,
   UPDATE_APPUSER_ERROR
 } from '../actions'
-let uappuser
+
 const reducer = (state = fromJS({
 }), action) => {
   switch(action.type) {

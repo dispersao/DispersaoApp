@@ -40,10 +40,11 @@ const entitiesMap = {
 function* findSessioncontents(action) {
   try {
     const script = yield select(getScript)
-    let { entities} = yield fetchSessioncontentsAPI({
+    let { entities } = yield fetchSessioncontentsAPI({
       script,
       ...action.payload
     })
+    entities.sessioncontents = entities.sessioncontents || {}
     yield mapSuccess(entities)
   } catch(e) {
     console.log(e)

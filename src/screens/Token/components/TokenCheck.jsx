@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center', 
     color: 'white',
     width: '95%',
-    padding: 10
+    padding: 5
   },
   input: { 
     textTransform: 'uppercase', 

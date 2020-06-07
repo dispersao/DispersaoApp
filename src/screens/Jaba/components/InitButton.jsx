@@ -5,8 +5,13 @@ import { Button } from 'native-base'
 const styles = StyleSheet.create({
   button: { 
     width: '100%',
-    backgroundColor: 'rgb(217, 98, 53)',
     padding: 10
+  },
+  buttonActive: {
+    backgroundColor: 'rgb(217, 98, 53)',
+  },
+  buttonInactive: {
+    backgroundColor: 'gray',
   },
   text: { 
     fontSize: 15, 
@@ -16,13 +21,17 @@ const styles = StyleSheet.create({
 
 const InitButton = ({
   text,
+  enabled,
   onPress
 }) => {
+
+  const buttonType = enabled ? styles.buttonActive : styles.buttonInactive
   
   return (
     <Button 
       block 
-      style={styles.button} 
+      style={StyleSheet.compose(styles.button, buttonType)} 
+      disabled={!enabled}
       onPress={onPress}>
       <Text style={styles.text}>
         {text}

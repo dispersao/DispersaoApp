@@ -1,15 +1,6 @@
 import { createSelector } from 'reselect'
 
-const getState = (state) => state.script
-
-export const getScriptState = createSelector(
-  [getState], script => {
-    if (!script || !script.size) {
-      return
-    }
-    return script.get('state')
-  }
-)
+export const getState = (state) => state.scripts
 
 export const getLoaded = createSelector(
   [getState], script => {
