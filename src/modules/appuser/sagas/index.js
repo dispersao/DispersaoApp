@@ -5,13 +5,15 @@ import {
 } from 'redux-saga/effects'
 
 import {
-  FIND_OR_CREATE_APPUSER,
+  FIND_APPUSER,
+  CREATE_APPUSER,
   UPDATE_APPUSER,
   createAppuserSuccess,
   createAppuserError,
   findAppuserSuccess,
   updateAppuserSuccess,
-  updateAppuserError
+  updateAppuserError,
+  findAppuserError
 } from '../actions'
 
 import {
@@ -26,29 +28,45 @@ import {
 
 import { getId as getAppuserId } from '../selector'
 
+export function* watchFindAppuser() {
+  yield takeLeading(FIND_APPUSER, findAppuser)
+}
+
 export function* watchCreateAppuser() {
-  yield takeLeading(FIND_OR_CREATE_APPUSER, findOrCreateAppUser)
+  yield takeLeading(CREATE_APPUSER, createAppuser)
 }
 
 export function* watchUpdateAppuser() {
   yield takeLeading(UPDATE_APPUSER, updateAppuser)
 }
 
-function* findOrCreateAppUser(action) {
+function* findAppuser(action) {
   try {
-    let {result, entities} = yield findAppuserAPI(action.payload.expotoken)
-    if (result.length){
-      yield put(findAppuserSuccess(entities.appusers[result[0]]))
-      if(entities.scripts) {
-        yield put(fetchScriptSuccess(entities.scripts))
+    let { result, entities: { appusers, scripts } } = yield findAppuserAPI(action.payload)
+    const resultId = result && result.length ? result[0] : result
+    if (resultId && appusers){
+      console.log('finding user', scripts)
+      if(scripts) {
+        yield put(fetchScriptSuccess(scripts))
       }
-    } else {
-      let { entities, result } = yield createAppuserAPI(action.payload)
-      yield put(createAppuserSuccess(entities.appusers[result]))
+      yield put(findAppuserSuccess(appusers[resultId]))
     }
-  } catch(e) {
-    console.log(e)
-    yield put(createAppuserError(e))
+  } catch (e) {
+    const error = e?.response || e
+    yield put(findAppuserError(error))
+  }
+}
+
+
+function* createAppuser(action) {
+  try {
+    let { result, entities: { appusers } } = yield createAppuserAPI(action.payload)
+    if (appusers){
+      yield put(createAppuserSuccess(appusers[result]))
+    }
+  } catch (e) {
+    const error = e?.response || e
+    yield put(createAppuserError(error))
   }
 }
 
@@ -64,7 +82,7 @@ function* updateAppuser(action) {
       yield put(fetchScriptSuccess(entities.scripts))
     }
   } catch(e) {
-    console.log(e)
-    yield put(updateAppuserError(e))
+    const error = e?.response || e
+    yield put(createAppuserError(error))
   }
 }

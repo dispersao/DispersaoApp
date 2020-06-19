@@ -3,18 +3,34 @@ import React, {
   useState
 } from 'react'
 
+import { 
+  storeData, 
+  retrieveData,
+  removeData
+} from '../modules/asyncStorage'
 
 import PropTypes from 'prop-types'
 import { toJS } from '../utils/immutableToJs.jsx'
 
 import { connect } from 'react-redux'
 import { Notifications } from 'expo'
+import { Alert } from "react-native"
 
 import * as Permissions from 'expo-permissions'
 import Constants from 'expo-constants'
 
-import { findOrCreateAppUser } from '../modules/appuser/actions'
-import { getExpotoken } from '../modules/appuser/selector'
+import { 
+  findAppUser, 
+  createAppUser,
+  FIND_APPUSER_ERROR,
+  CREATE_APPUSER_ERROR
+} from '../modules/appuser/actions'
+
+import { 
+  getId, 
+  getExpotoken,
+  getError as getAppuserError 
+} from '../modules/appuser/selector'
 
 import { getAvailableScripts } from '../modules/script/selector'
 import { fetchAvailableScripts } from '../modules/script/actions'
@@ -26,21 +42,62 @@ const TIMEOUT_SPLASH = 1000
 
 const DataLoader = ({ 
   children, 
-  findOrCreateUser,
+  findUser,
+  createUser,
+  userError,
+  userId,
   userToken,
   availableScript,
-  getAvailableScripts,
+  getAvailableScripts
 }) => {
 
   const { t } = useTranslation()
 
   const [timeUp, setTimeUp] = useState(false)
+  const [expotoken, setExpotoken] = useState(null)
+  const [storedId, setStoredId] = useState(null)
+  const [creationError, setCraetionerror] = useState(false)
+
+  const getStoredUser = async () => {
+    let id = await retrieveData('appid')
+    id = id && parseInt(id)
+    setStoredId(id || false)
+  }
+
+  const setStoredUser = async () => {
+    await storeData('appid', userId.toString())
+    if(userToken ) {
+      Notifications.addListener(
+        notification => console.log(notification)
+      )
+    }
+    await getStoredUser()
+  }
+
+  const fetchUser = () => {
+    if (Number.isInteger(storedId)) {
+      findUser({id: storedId})
+    } else if (expotoken) {
+      findUser({expotoken})
+    } else {
+      createUser({expotoken: null})
+    }
+  }
+
+  const clearDataAndCreateUser = async () => {
+    await removeData('appid')
+    const data = {
+      expotoken: (expotoken || null)
+    }
+    createUser(data)
+  }
 
   const registerForPushNotificationsAsync = async () => {
     if (Constants.isDevice) {
       const { status: existingStatus } = await Permissions.getAsync(
         Permissions.NOTIFICATIONS
       )
+      
       let finalStatus = existingStatus
       if (existingStatus !== 'granted') {
         const { status } = await Permissions.askAsync(
@@ -49,23 +106,27 @@ const DataLoader = ({
         finalStatus = status
       }
       if (finalStatus !== 'granted') {
-        alert(t('splash.notGranted'))
-        return
+        Alert.alert(t('splash.permission'),
+          t('splash.notGranted'), 
+          [{
+            text: 'OK',
+            onPress: () => setExpotoken(false)
+          }]
+        )
+      } else {
+        let token = await Notifications.getExpoPushTokenAsync()
+        setExpotoken(token)
       }
     } else {
-      alert(t('splash.notDevice'))
+      Alert.alert(
+        t('splash.permission'),
+        t('splash.notDevice'), 
+        [{
+          text: 'OK',
+          onPress: () => setExpotoken(false)
+        }]
+      )
     }
-  }
-
-  const registerExpoToken = async () => {
-    let token = await Notifications.getExpoPushTokenAsync()
-
-    findOrCreateUser(token)
-  }
-
-  _handleNotification = notification => {
-    // Vibration.vibrate()
-    console.log(notification)
   }
 
   useEffect(() => {
@@ -73,13 +134,8 @@ const DataLoader = ({
       getAvailableScripts()
     }
 
+    getStoredUser()
     registerForPushNotificationsAsync()
-
-    registerExpoToken()
-    
-    Notifications.addListener(
-      _handleNotification
-    )
 
     const timer = setTimeout(() => {
       setTimeUp(true)
@@ -90,32 +146,65 @@ const DataLoader = ({
     }
   }, [])
 
+  useEffect(() => {
+    if (!userId && expotoken!== null && storedId!== null) {
+      fetchUser()
+    }
+  }, [expotoken, storedId])
 
-  return (
-    <>
-      {timeUp && userToken && availableScript &&
-        children
-      } 
-      {(!timeUp || !userToken || !availableScript) &&
-        <SplashScreen />
-      }
-    </>
-  )
+  useEffect(() => {
+    if(userError?.type === FIND_APPUSER_ERROR) {
+      clearDataAndCreateUser()
+    } else if (userError?.type === CREATE_APPUSER_ERROR) {
+      Alert.alert(
+        t('general.error.title'),
+        t('general.error.userCreation'), 
+        [{
+          text: 'OK',
+          onPress: () => setCraetionerror(true)
+        }]
+      )
+    }
+  }, [userError])
+
+  useEffect(() => {
+    if (userId && userId !== storedId) {
+      setStoredUser()
+    }
+  }, [userId])
+
+  const userStored = (userId && storedId && userId === storedId) || creationError
+
+  if (timeUp && availableScript && userStored) {
+    return (
+      <>
+        {children}
+      </>
+    )
+  } else {
+    return  <SplashScreen />
+  }
 }
 
 DataLoader.propTypes = {
   children: PropTypes.node,
-  findOrCreateUser: PropTypes.func,
-  userToken: PropTypes.string
+  findUser: PropTypes.func,
+  createUser: PropTypes.func,
+  userId: PropTypes.number,
+  userToken: PropTypes.string,
+  userError: PropTypes.object
 }
 
 const mapStateToProps = (state) => ({
-  userToken: getExpotoken(state),
-  availableScript: getAvailableScripts(state)
+  userId: getId(state),
+  userToken : getExpotoken(state),
+  availableScript: getAvailableScripts(state),
+  userError: getAppuserError(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  findOrCreateUser: (expotoken) => dispatch(findOrCreateAppUser({expotoken})),
+  findUser: (search) => dispatch(findAppUser(search)),
+  createUser: (data) => dispatch(createAppUser(data)),
   getAvailableScripts: () => dispatch(fetchAvailableScripts()),
 }) 
 

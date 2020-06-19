@@ -41,13 +41,13 @@ const ProfilePostList = ({
 
   return (
     <View style={styles.container}>
-      {(postList.length || null) &&
+      {(postList?.length || null) &&
         <>
           <Text style={styles.listTitle}>
             {t('profiles.lastPosts')}
           </Text>
           <View>
-            {postList.length && postList.map((post, index) => {
+            {postList?.length && postList.map((post, index) => {
               return <ProfilePost 
                 key={index} 
                 post={post} 
@@ -56,7 +56,7 @@ const ProfilePostList = ({
           </View>
         </>
       }
-      {(!postList.length || null) && 
+      {(!postList?.length || null) && 
         <View style={styles.emptyTextContainer}>
           <Text style={styles.emptyText}>
             {t('general.noposts')}

@@ -16,9 +16,20 @@ export const createAppuser = async (appuser) => {
   return normalizeAppuser(user.data)
 }
 
-export const findAppuser = async (expotoken) => {
-  const user = await axios.get(`/appusers?expotoken=${expotoken}`)
-  return normalizeAppuserList(user.data)
+export const findAppuser = async (options) => {
+  let query = '/appusers'
+  if (options.id) {
+    query = `${query}/${options.id}`
+  } else if (options.expotoken) {
+    query = `${query}?expotoken=${options.expotoken}`
+  }
+  const user = await axios.get(query)
+  
+  if (Array.isArray(user.data)) {
+    return normalizeAppuserList(user.data)
+  } else {
+    return normalizeAppuser(user.data)
+  }
 }
 
 export const updateAppuser = async (options) => {

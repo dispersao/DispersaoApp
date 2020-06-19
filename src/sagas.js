@@ -9,6 +9,7 @@ import {
 
 import {
   watchCreateAppuser,
+  watchFindAppuser,
   watchUpdateAppuser  
 } from './modules/appuser/sagas'
 
@@ -25,6 +26,7 @@ export default function* rootSaga() {
     watchFetchAvailableScripts(),
     watchPollAvailableScripts(),
     watchCreateAppuser(),
+    watchFindAppuser(),
     watchUpdateAppuser(),
     watchSessioncontentsFetch(),
     watchCreateDeleteUpdateLike()

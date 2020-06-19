@@ -15,7 +15,10 @@ import {
   Grid
 } from 'react-native-easy-grid'
 
-import { getCurrentUserScript as getAppuserScript } from '../../modules/appuser/selector'
+import { 
+  getCurrentUserScript as getAppuserScript,
+  getId
+ } from '../../modules/appuser/selector'
 import { getAvailableScripts } from '../../modules/script/selector'
 import { toJS } from '../../utils/immutableToJs.jsx'
 
@@ -58,6 +61,7 @@ const styles = StyleSheet.create({
 
 const JabaScreen = ({
   userScript,
+  userId,
   availableScript,
   pollAvailableScripts,
   haveAvailableScripts,
@@ -115,7 +119,7 @@ const JabaScreen = ({
             </Row>
             <Row size={1}>
               <InitButton 
-                enabled={availableScript.amount}
+                enabled={availableScript.amount && userId}
                 text={initButtonText}
                 onPress={navigateToApp}/>
             </Row>
@@ -127,6 +131,7 @@ const JabaScreen = ({
 }
 
 const mapStateToProps = (state) => ({
+  userId: getId(state),
   userScript: getAppuserScript(state),
   availableScript: getAvailableScripts(state)
 })
