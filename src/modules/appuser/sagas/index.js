@@ -83,6 +83,7 @@ function* updateAppuser(action) {
     }
   } catch(e) {
     const error = e?.response || e
-    yield put(createAppuserError(error))
+    const message = updateAppuserError(error)
+    yield put(message)
   }
 }

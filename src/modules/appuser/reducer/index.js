@@ -6,13 +6,24 @@ import {
   FIND_APPUSER_ERROR,
   UPDATE_APPUSER_SUCCESS,
   CREATE_APPUSER_ERROR,
-  UPDATE_APPUSER_ERROR
+  UPDATE_APPUSER_ERROR,
+  FIND_APPUSER,
+  CREATE_APPUSER,
+  UPDATE_APPUSER
 } from '../actions'
 
 const reducer = (state = fromJS({
   data: null, error: null
 }), action) => {
   switch(action.type) {
+    case FIND_APPUSER:
+    case CREATE_APPUSER:
+    case UPDATE_APPUSER:
+      return state.mergeDeep(
+        fromJS({
+          error: null
+        })
+      ) 
     
     case CREATE_APPUSER_SUCCESS:
     case FIND_APPUSER_SUCCESS:

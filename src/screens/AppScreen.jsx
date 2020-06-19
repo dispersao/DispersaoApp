@@ -1,7 +1,7 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import FeedScreen from './Feed/index.jsx'
-import NotificationsScreen from './NotificationsScreen'
+// import NotificationsScreen from './NotificationsScreen'
 import ProfileHub from './Profiles/index.jsx'
 import InfoScreen from './Info/index.jsx'
 import LanguageScreen from '../screens/Languages/index.jsx'
@@ -44,9 +44,9 @@ const AppScreen = () => {
         <Tab.Screen 
           name="Feed" 
           component={FeedScreen} />
-        <Tab.Screen 
+        {/* <Tab.Screen 
           name="Notifications" 
-            component={NotificationsScreen} />
+            component={NotificationsScreen} /> */}
         <Tab.Screen 
           name="Profiles" 
           component={ProfileHub}
