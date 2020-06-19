@@ -4,11 +4,16 @@
       "languageName": "Português",
       "noposts": "Ainda não há nenhuma atualização",
       "loading": "Atualizando a informação...",
-      "logoDescription": "um filme interativo\nsobre amor e política"
+      "logoDescription": "um filme interativo\nsobre amor e política",
+      "error": {
+        "title": "Something went wrong...",
+        "userCreation": "Couldn't create a user."
+      }
     },
     "splash": {
       "notDevice": "Você deveria usar um devide real para habilitar as Notificações e apreciar toda a a experiência",
-      "notGranted": "Você deveria permitir as notificações para obter uma experiência completa."
+      "notGranted": "Você deveria permitir as notificações para obter uma experiência completa.",
+      "permission": "Permission"
     },
     "jaba": {
       "infoText": "Saiba mais sobre o filme",

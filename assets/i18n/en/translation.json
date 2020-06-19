@@ -4,11 +4,16 @@
       "languageName": "English",
       "noposts": "No published content yet",
       "loading": "Fetching information...",
-      "logoDescription": "an interactive film\nabout love and politics"
+      "logoDescription": "an interactive film\nabout love and politics",
+      "error": {
+        "title": "Something went wrong...",
+        "userCreation": "Couldn't create a user."
+      }
     },
     "splash": {
-      "notDevice": "Você deveria usar um devide real para habilitar as Notificações e apreciar toda a a experiência",
-      "notGranted": "Você deveria permitir as notificações para obter uma experiência completa."
+      "notDevice": "Essa app funciona melhor com notificações. Para isso use um deviec real.",
+      "notGranted": "Essa app funciona melhor com notificações.",
+      "permission": "Permission"
     },
     "jaba": {
       "infoText": "Know more about the film",
