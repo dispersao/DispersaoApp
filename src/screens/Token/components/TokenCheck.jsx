@@ -73,7 +73,6 @@ const TokenCheck = ({
   associateToken,
   tokenError
 }) => {
-  console.log('tokenError', tokenError)
   let [inputValue, setInputValue] = useState(null)
   const { t } = useTranslation()
   return (
