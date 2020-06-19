@@ -7,9 +7,6 @@ const getState = (state) => state.appuser
 const getStateData = createSelector(
   [getState], appuser => appuser.get('data')
 )
-// const getStateError = createSelector(
-//   [getState], appuser => appuser.get('error')
-// )
 
 export const getId = createSelector(
   [getStateData], appuser => {
