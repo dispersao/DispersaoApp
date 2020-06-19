@@ -27,7 +27,6 @@ const SocialButton = ({
   style
 }) => {
   const navigateTo = () => {
-    console.log(url)
     Linking.openURL(url)
   }
 
