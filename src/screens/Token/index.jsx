@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { StyleSheet } from 'react-native'
 import Constants from 'expo-constants'
+import { Ionicons } from '@expo/vector-icons'
+
 
 import {
   Container,
@@ -33,8 +35,19 @@ const TokenScreen = ({
     }
   }, [userScript])
 
+  const onHandleClick = () => {
+    navigation.goBack()
+  }
+
   return (
     <Container style={styles.container} >
+      <Ionicons.Button
+        style={styles.button}
+        name="ios-arrow-back"
+        color="#999999"
+        backgroundColor="rgba(255,255,255,0)"
+        size={25}
+        onPress={onHandleClick}/>
       <Content contentContainerStyle={styles.contentStyles}>
         <Grid style={styles.grid} >
           <Row size={1} />
