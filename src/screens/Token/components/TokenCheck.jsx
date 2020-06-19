@@ -73,6 +73,7 @@ const TokenCheck = ({
   associateToken,
   tokenError
 }) => {
+  console.log('tokenError', tokenError)
   let [inputValue, setInputValue] = useState(null)
   const { t } = useTranslation()
   return (
@@ -80,9 +81,9 @@ const TokenCheck = ({
       <Row 
         size={1} 
         style={styles.textRow}>
-        { tokenError?.error?.message &&
+        { tokenError?.message &&
           <Text style={styles.text}>
-            {t(`token.error.${tokenError.error.message}`)}
+            {t(`token.error.${tokenError.message}`)}
           </Text>
         }
       </Row>

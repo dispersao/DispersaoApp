@@ -94,29 +94,41 @@ const DataLoader = ({
 
   const registerForPushNotificationsAsync = async () => {
     if (Constants.isDevice) {
-      const { status: existingStatus } = await Permissions.getAsync(
-        Permissions.NOTIFICATIONS
-      )
-      
-      let finalStatus = existingStatus
-      if (existingStatus !== 'granted') {
-        const { status } = await Permissions.askAsync(
+      try {
+        const { status: existingStatus } = await Permissions.getAsync(
           Permissions.NOTIFICATIONS
         )
-        finalStatus = status
-      }
-      if (finalStatus !== 'granted') {
-        Alert.alert(t('splash.permission'),
-          t('splash.notGranted'), 
+        
+        let finalStatus = existingStatus
+        if (existingStatus !== 'granted') {
+          const { status } = await Permissions.askAsync(
+            Permissions.NOTIFICATIONS
+          )
+          finalStatus = status
+        }
+        if (finalStatus !== 'granted') {
+          Alert.alert(t('splash.permission'),
+            t('splash.notGranted'), 
+            [{
+              text: 'OK',
+              onPress: () => setExpotoken(false)
+            }]
+          )
+        } else {
+          let token = await Notifications.getExpoPushTokenAsync()
+          setExpotoken(token)
+        }
+      } catch (e) {
+        Alert.alert(
+          t('splash.permission'),
+          t(e.message), 
           [{
             text: 'OK',
             onPress: () => setExpotoken(false)
           }]
         )
-      } else {
-        let token = await Notifications.getExpoPushTokenAsync()
-        setExpotoken(token)
       }
+      
     } else {
       Alert.alert(
         t('splash.permission'),
