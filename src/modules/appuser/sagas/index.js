@@ -45,14 +45,17 @@ function* findAppuser(action) {
     let { result, entities: { appusers, scripts } } = yield findAppuserAPI(action.payload)
     const resultId = result && result.length ? result[0] : result
     if (resultId && appusers){
-      console.log('finding user', scripts)
       if(scripts) {
         yield put(fetchScriptSuccess(scripts))
       }
       yield put(findAppuserSuccess(appusers[resultId]))
+    } else {
+      yield put(findAppuserError({message: 'cant find any matching users'}))
+      console.log('error finding user with token' )
     }
   } catch (e) {
     const error = e?.response || e
+    console.log('error finding user', error)
     yield put(findAppuserError(error))
   }
 }
@@ -66,6 +69,7 @@ function* createAppuser(action) {
     }
   } catch (e) {
     const error = e?.response || e
+    console.log('error creating user', error)
     yield put(createAppuserError(error))
   }
 }
@@ -83,7 +87,7 @@ function* updateAppuser(action) {
     }
   } catch(e) {
     const error = e?.response || e
-    const message = updateAppuserError(error)
-    yield put(message)
+    console.log('error updating user', eror)
+    yield put(updateAppuserError(error))
   }
 }
