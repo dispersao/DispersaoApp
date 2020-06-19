@@ -4,8 +4,15 @@ import { getState as getScripts} from '../../script/selector'
 
 const getState = (state) => state.appuser
 
+const getStateData = createSelector(
+  [getState], appuser => appuser.get('data')
+)
+// const getStateError = createSelector(
+//   [getState], appuser => appuser.get('error')
+// )
+
 export const getId = createSelector(
-  [getState], appuser => {
+  [getStateData], appuser => {
     if (!appuser || !appuser.size) {
       return
     }
@@ -14,7 +21,7 @@ export const getId = createSelector(
 )
 
 export const getExpotoken = createSelector(
-  [getState], appuser => {
+  [getStateData], appuser => {
     if (!appuser || !appuser.size) {
       return
     }
@@ -23,7 +30,7 @@ export const getExpotoken = createSelector(
 )
 
 export const getCurrentUserScript = createSelector(
-  [getState, getScripts],
+  [getStateData, getScripts],
   (appuser, scripts) => {
     if (!appuser || !appuser.size) {
       return
@@ -33,7 +40,7 @@ export const getCurrentUserScript = createSelector(
 )
 
 export const getScript = createSelector(
-  [getState], appuser => {
+  [getStateData], appuser => {
     if (!appuser || !appuser.size) {
       return
     }
