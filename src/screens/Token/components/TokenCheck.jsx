@@ -80,9 +80,9 @@ const TokenCheck = ({
       <Row 
         size={1} 
         style={styles.textRow}>
-        { tokenError && tokenError.message &&
+        { tokenError?.error?.message &&
           <Text style={styles.text}>
-            {t(`token.error.${tokenError.message}`)}
+            {t(`token.error.${tokenError.error.message}`)}
           </Text>
         }
       </Row>
