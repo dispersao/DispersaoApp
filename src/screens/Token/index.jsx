@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, KeyboardAvoidingView, Platform } from 'react-native'
 import Constants from 'expo-constants'
 import { Ionicons } from '@expo/vector-icons'
 
@@ -17,7 +17,7 @@ import {
 
 import { toJS } from '../../utils/immutableToJs.jsx'
 
-import Logo from '../../components/logo'
+import SmallLogo from '../../components/smallLogo'
 import TokenCheck from './components/TokenCheck.jsx'
 import { getCurrentUserScript as getAppuserScript } from '../../modules/appuser/selector'
 
@@ -49,13 +49,17 @@ const TokenScreen = ({
         size={25}
         onPress={onHandleClick}/>
       <Content contentContainerStyle={styles.contentStyles}>
-        <Grid style={styles.grid} >
-          <Row size={1} />
-          <Row size={5}>
-            <Logo />
-          </Row>
-          <TokenCheck />
-        </Grid>
+        <KeyboardAvoidingView
+          behavior={Platform.OS == "ios" ? "padding" : "height"} >
+          <Grid style={styles.grid} >
+            <Row size={1} />
+            <Row size={4}>
+              <SmallLogo />
+            </Row>
+            <TokenCheck />
+            <Row size={1} />
+          </Grid>
+        </KeyboardAvoidingView>
       </Content>
     </Container>
   )
@@ -86,9 +90,9 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   text: {
-    fontSize: 15, 
-    color: '#D96235', 
-    justifyContent: 'center', 
+    fontSize: 15,
+    color: '#D96235',
+    justifyContent: 'center',
     alignItems: 'center'
   }
 })
