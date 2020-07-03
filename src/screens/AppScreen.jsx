@@ -27,9 +27,9 @@ const AppScreen = () => {
           iconName = 'ios-globe'
         }
         return (
-        <Ionicons 
-          name={iconName} 
-          size={25} 
+        <Ionicons
+          name={iconName}
+          size={25}
           color={color}
           />)
         },
@@ -41,14 +41,14 @@ const AppScreen = () => {
           inactiveBackgroundColor: 'black',
           showLabel: false
         }}>
-        <Tab.Screen 
-          name="Feed" 
+        <Tab.Screen
+          name="Feed"
           component={FeedScreen} />
-        {/* <Tab.Screen 
-          name="Notifications" 
+        {/* <Tab.Screen
+          name="Notifications"
             component={NotificationsScreen} /> */}
-        <Tab.Screen 
-          name="Profiles" 
+        <Tab.Screen
+          name="Profiles"
           component={ProfileHub}
           unmountOnBlur={true}
           options={{
@@ -58,11 +58,11 @@ const AppScreen = () => {
           name="Info"
           component={InfoScreen}
         />
-        <Tab.Screen 
-          name="Language" 
+        <Tab.Screen
+          name="Language"
           component={LanguageScreen} />
-      </Tab.Navigator> 
+      </Tab.Navigator>
   )
-  
+
 }
  export default AppScreen
