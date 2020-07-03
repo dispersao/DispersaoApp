@@ -13,7 +13,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/icons/app-icon.png",
     "loading": {
       "icon": "https://d1wp6m56sqw74a.cloudfront.net/~assets/c9aa1be8a6a6fe81e20c3ac4106a2ebc",
       "hideExponentText": false
@@ -27,11 +27,15 @@
       ]
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "net.dispersao.filmeapp"
     },
     "android": {
       "package":"com.mairasala.dispersao",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "permissions": [
+        "VIBRATE"
+      ]
     },
     "updates": {
       "fallbackToCacheTimeout": 0
