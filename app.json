@@ -38,6 +38,7 @@
       ],
       "adaptiveIcon" : {
         "backgroundImage": "./assets/images/app_icon.png"
+      }
     },
     "updates": {
       "fallbackToCacheTimeout": 0
