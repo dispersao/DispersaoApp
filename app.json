@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Dispersão App",
+    "name": "Dispersão",
     "description": "Aplicativo do filme Dispersão",
     "slug": "snack-db27b3e3-a2d5-4324-abd4-efd904fac69c",
     "privacy": "unlisted",
@@ -13,7 +13,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
-    "icon": "./assets/icons/app-icon.png",
+    "icon": "./assets/images/app_icon.png",
     "loading": {
       "icon": "https://d1wp6m56sqw74a.cloudfront.net/~assets/c9aa1be8a6a6fe81e20c3ac4106a2ebc",
       "hideExponentText": false
@@ -35,13 +35,15 @@
       "googleServicesFile": "./google-services.json",
       "permissions": [
         "VIBRATE"
-      ]
+      ],
+      "adaptiveIcon" : {
+        "backgroundImage": "./assets/images/app_icon.png"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": [
-      "**/*"
+      "./assets/*"
     ]
   }
 }
