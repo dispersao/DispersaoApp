@@ -13,7 +13,7 @@ import PropTypes from 'prop-types'
 import { toJS } from '../utils/immutableToJs.jsx'
 
 import { connect } from 'react-redux'
-import { Notifications } from 'expo'
+import * as Notifications from 'expo-notifications'
 import { Alert } from "react-native"
 
 import * as Permissions from 'expo-permissions'
