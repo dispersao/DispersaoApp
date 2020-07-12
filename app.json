@@ -4,7 +4,6 @@
     "description": "Aplicativo do filme Dispersão",
     "slug": "snack-db27b3e3-a2d5-4324-abd4-efd904fac69c",
     "privacy": "unlisted",
-    "sdkVersion": "35.0.0",
     "platforms": [
       "ios",
       "android",
@@ -31,12 +30,12 @@
       "bundleIdentifier": "net.dispersao.filmeapp"
     },
     "android": {
-      "package":"com.mairasala.dispersao",
+      "package": "net.dispersao.filmeapp",
       "googleServicesFile": "./google-services.json",
       "permissions": [
         "VIBRATE"
       ],
-      "adaptiveIcon" : {
+      "adaptiveIcon": {
         "backgroundImage": "./assets/images/app_icon.png"
       }
     },
