@@ -13,7 +13,7 @@ import PropTypes from 'prop-types'
 import { toJS } from '../utils/immutableToJs.jsx'
 
 import { connect } from 'react-redux'
-import { Notifications } from 'expo'
+import * as Notifications from 'expo-notifications'
 import { Alert } from "react-native"
 
 import * as Permissions from 'expo-permissions'
@@ -67,7 +67,7 @@ const DataLoader = ({
   const setStoredUser = async () => {
     await storeData('appid', userId.toString())
     if(userToken ) {
-      Notifications.addListener(
+      Notifications.addNotificationReceivedListener(
         notification => console.log(notification)
       )
     }
@@ -87,7 +87,7 @@ const DataLoader = ({
   const clearDataAndCreateUser = async () => {
     await removeData('appid')
     const data = {
-      expotoken: (expotoken || null)
+      expotoken: (expotoken?.data|| null)
     }
     createUser(data)
   }

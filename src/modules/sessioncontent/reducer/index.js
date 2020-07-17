@@ -27,7 +27,7 @@ const reducer = (state = Map({loading: false}), action) => {
         let likesList = state.getIn(['data', l.sessioncontent.toString(), 'likes']).push(l.id)
         newState = newState.setIn(['data', l.sessioncontent.toString(), 'likes'], likesList)
         })
-      return newState.set('data', false)
+      return newState.set('loading', false)
     default:
       return state
   }
