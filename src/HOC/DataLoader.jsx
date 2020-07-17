@@ -67,7 +67,7 @@ const DataLoader = ({
   const setStoredUser = async () => {
     await storeData('appid', userId.toString())
     if(userToken ) {
-      Notifications.addListener(
+      Notifications.addNotificationReceivedListener(
         notification => console.log(notification)
       )
     }
@@ -87,7 +87,7 @@ const DataLoader = ({
   const clearDataAndCreateUser = async () => {
     await removeData('appid')
     const data = {
-      expotoken: (expotoken || null)
+      expotoken: (expotoken?.data|| null)
     }
     createUser(data)
   }
@@ -116,6 +116,7 @@ const DataLoader = ({
           )
         } else {
           let token = await Notifications.getExpoPushTokenAsync()
+          console.log(token)
           setExpotoken(token)
         }
       } catch (e) {
@@ -168,6 +169,7 @@ const DataLoader = ({
     if(userError?.type === FIND_APPUSER_ERROR) {
       clearDataAndCreateUser()
     } else if (userError?.type === CREATE_APPUSER_ERROR) {
+      console.log(userError)
       Alert.alert(
         t('general.error.title'),
         t('general.error.userCreation'), 
