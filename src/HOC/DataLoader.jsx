@@ -116,7 +116,6 @@ const DataLoader = ({
           )
         } else {
           let token = await Notifications.getExpoPushTokenAsync()
-          console.log(token)
           setExpotoken(token)
         }
       } catch (e) {
@@ -169,7 +168,6 @@ const DataLoader = ({
     if(userError?.type === FIND_APPUSER_ERROR) {
       clearDataAndCreateUser()
     } else if (userError?.type === CREATE_APPUSER_ERROR) {
-      console.log(userError)
       Alert.alert(
         t('general.error.title'),
         t('general.error.userCreation'), 
