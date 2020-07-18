@@ -29,10 +29,14 @@ export const getPostsByContentcreatorId = createCachedSelector(
 )(getContentcreatorId)
 
 const formatPost = (post) => {
+  let retValue = post
   if (post.get('media')) {
     const imageUrl = post.getIn(['media', 'url'])
-    return post.setIn(['media', 'url'], `${config.api.url}${imageUrl}`)
-  } else {
-    return post
+    retValue =  retValue.setIn(['media', 'url'], `${config.api.url}${imageUrl}`)
   }
+  if (post.get('video')) {
+    const videoUrl = post.getIn(['video', 'url'])
+    retValue =  retValue.setIn(['video', 'url'], `${config.api.url}${videoUrl}`)
+  }
+  return retValue
 }
