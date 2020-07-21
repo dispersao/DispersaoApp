@@ -4,8 +4,7 @@ import { Entypo } from '@expo/vector-icons'
 import { 
   StyleSheet, 
 } from 'react-native'
-import { Linking } from 'expo'
-
+import * as Linking from 'expo-linking'
 
 const styles = StyleSheet.create({
   button: {

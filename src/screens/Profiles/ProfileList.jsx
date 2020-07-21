@@ -8,6 +8,8 @@ import {
   ListItem
 } from 'native-base'
 import { StyleSheet } from 'react-native'
+
+import Constants from 'expo-constants'
  
 import { getSessioncontentListByType } from '../../modules/sessioncontent/selector'
 
@@ -17,7 +19,7 @@ import ProfileItem from './components/ProfileItem.jsx'
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Expo.Constants.statusBarHeight
+    paddingTop: Constants.statusBarHeight
   }
 })
 const ProfileList = ({
