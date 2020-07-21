@@ -17,8 +17,7 @@
       "icon": "https://d1wp6m56sqw74a.cloudfront.net/~assets/c9aa1be8a6a6fe81e20c3ac4106a2ebc",
       "hideExponentText": false
     },
-    "packagerOpts": {
-    },
+    "packagerOpts": {},
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "net.dispersao.filmeapp"
@@ -39,6 +38,7 @@
     },
     "assetBundlePatterns": [
       "./assets/*"
-    ]
+    ],
+    "entryPoint": "node_modules/expo/AppEntry.js"
   }
 }
