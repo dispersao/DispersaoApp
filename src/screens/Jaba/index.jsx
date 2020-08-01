@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { StyleSheet, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+import { StackActions } from '@react-navigation/native'
+
 
 import Constants from 'expo-constants'
 
@@ -74,7 +76,9 @@ const JabaScreen = ({
 
   useEffect(()=> {
     if (playingScript) {
-      navigation.navigate('App')
+      navigation.dispatch(
+        StackActions.replace('App')
+      )
     }
   }, [])
 

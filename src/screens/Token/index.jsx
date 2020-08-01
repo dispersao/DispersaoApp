@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { StyleSheet, KeyboardAvoidingView, Platform } from 'react-native'
 import Constants from 'expo-constants'
 import { Ionicons } from '@expo/vector-icons'
-
+import { CommonActions } from '@react-navigation/native'
 
 import {
   Container,
@@ -31,7 +31,14 @@ const TokenScreen = ({
 
   useEffect(() => {
     if (playingScript) {
-      navigation.navigate('App')
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{
+            name: 'App'
+          }],
+        })
+      )
     }
   }, [userScript])
 
