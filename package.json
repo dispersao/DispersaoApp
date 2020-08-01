@@ -1,13 +1,14 @@
 {
   "name": "dispersao",
-  "version": "0.0.0",
+  "version": "1.0.3",
   "description": "No description",
   "author": "Maíra Sala & Bruno Vianna",
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "ifconfig": "node bin/ifconfig.js",
-    "start": "node bin/ifconfig.js && expo start",
+    "start": "expo start",
+    "start:dev": "node bin/ifconfig.js && expo start",
     "android": "node bin/ifconfig.js && expo start --android",
     "ios": "node bin/ifconfig.js && expo start --ios",
     "web": "expo start --web",
