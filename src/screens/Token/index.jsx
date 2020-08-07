@@ -77,7 +77,7 @@ const TokenScreen = ({
 
 const styles = StyleSheet.create({
   container: {
-    // marginTop: Constants.statusBarHeight,
+    paddingTop: Constants.statusBarHeight,
     height: '100%',
     width: '100%',
     backgroundColor: 'black',
