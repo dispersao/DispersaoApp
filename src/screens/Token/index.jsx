@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { StyleSheet, KeyboardAvoidingView, Platform } from 'react-native'
 import Constants from 'expo-constants'
+import { StatusBar } from 'expo-status-bar';
+
 import { Ionicons } from '@expo/vector-icons'
 import { CommonActions } from '@react-navigation/native'
 
@@ -68,13 +70,14 @@ const TokenScreen = ({
           </Grid>
         </KeyboardAvoidingView>
       </Content>
+      <StatusBar style="light" />
     </Container>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: Constants.statusBarHeight,
+    paddingTop: Constants.statusBarHeight,
     height: '100%',
     width: '100%',
     backgroundColor: 'black',

@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { StackActions } from '@react-navigation/native'
 
+import { StatusBar } from 'expo-status-bar';
 
 import Constants from 'expo-constants'
 
@@ -37,7 +38,7 @@ import InitButton from './components/InitButton.jsx'
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: Constants.statusBarHeight,
+    // marginTop: Constants.statusBarHeight,
     height: '100%',
     width: '100%',
     backgroundColor: 'black',
@@ -108,7 +109,7 @@ const JabaScreen = ({
             <Row size={5}>
               <Logo />
             </Row>
-            <Row size={1}>
+            {/* <Row size={1}>
               <Informative 
                 text={t('jaba.infoText')} />
             </Row>
@@ -120,7 +121,7 @@ const JabaScreen = ({
                 <SiteLink 
                   text={t('jaba.siteLink')} />
               </Text>
-            </Row>
+            </Row> */}
             <Row size={1}>
               <InitButton 
                 enabled={availableScript.amount && userId}
@@ -130,6 +131,7 @@ const JabaScreen = ({
           </Grid>
         }
       </Content>
+      <StatusBar style="light" />
     </Container>
   )
 }
