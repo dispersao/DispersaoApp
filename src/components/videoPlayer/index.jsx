@@ -56,7 +56,7 @@ const PlayerVideo = ({
       setIsPlaying(true)
     } else {
       if(status.didJustFinish) {
-        playerRef.stopAsync()
+        videoRef.stopAsync()
       }
       setIsPlaying(false)
       
@@ -95,10 +95,9 @@ const PlayerVideo = ({
         posterSource={{uri: posterUrl}}
         usePoster={true}
         rate={1.0}
-        volume={1.0}
-        isMuted={false}
+        isMuted={true}
         resizeMode={Video.RESIZE_MODE_CONTAIN}
-        isLooping={false}
+        isLooping
         useNativeControls={false}
         style={{
           width:'100%',
