@@ -25,6 +25,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  video: {
+    width: '100%',
+    height: '100%'
   }
 })
 const PlayerVideo = ({
@@ -103,10 +107,7 @@ const PlayerVideo = ({
         resizeMode={Video.RESIZE_MODE_CONTAIN}
         isLooping
         useNativeControls={false}
-        style={{
-          width:'100%',
-          height:'100%'
-        }}
+        style={styles.video}
         onPlaybackStatusUpdate={updateStatus}
         onLoadStart={onLoadStart}
         onLoad={onLoaded}
