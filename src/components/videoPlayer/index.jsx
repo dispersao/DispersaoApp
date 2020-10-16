@@ -88,6 +88,10 @@ const PlayerVideo = ({
     }
   }
 
+  const onVideoReady = (status) => {
+    // console.log(status)
+  }
+
   return (
     <View style={style}>
       <Video
@@ -106,6 +110,7 @@ const PlayerVideo = ({
         onPlaybackStatusUpdate={updateStatus}
         onLoadStart={onLoadStart}
         onLoad={onLoaded}
+        onReadyForDisplay={onVideoReady}
         ref={setVideoRef}
       />
       <TouchableOpacity

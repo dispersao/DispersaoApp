@@ -10,7 +10,7 @@
       "web"
     ],
     "version": "1.0.4",
-    "orientation": "portrait",
+    "orientation": "default",
     "primaryColor": "#cccccc",
     "icon": "./assets/images/app_icon.png",
     "loading": {
@@ -21,7 +21,8 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "net.dispersao.filmeapp"
+      "bundleIdentifier": "net.dispersao.filmeapp",
+      "requireFullScreen": true
     },
     "android": {
       "package": "net.dispersao.filmeapp",
