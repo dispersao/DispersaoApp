@@ -48,6 +48,8 @@ const Feed = ({
   fetch,
   navigation: { navigate }
 }) => {
+
+  
   const { t } = useTranslation()
 
   const onRefresh = useCallback(() => {
@@ -57,7 +59,7 @@ const Feed = ({
   const handleHeaderClick = (contentcreator) => {
     navigate('Profiles', {
       screen: 'Profile',
-      params: { contentcreator },
+      params: { contentcreator }
     })
   }
 

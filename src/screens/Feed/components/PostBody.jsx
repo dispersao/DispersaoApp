@@ -1,11 +1,23 @@
-import React from "react"
+import React, {
+  useState,
+  useCallback
+} from "react"
+
+import { useFocusEffect } from '@react-navigation/native'
+
 import { 
   StyleSheet, 
-  Image,
-  View
+  Image
 } from "react-native"
 
-import { Body, Text } from "native-base"
+
+import {
+   Body, 
+   Text 
+} from "native-base"
+
+import VideoPlayer from '../../../components/videoPlayer'
+
 
 const styles = StyleSheet.create({
   container: {
@@ -15,6 +27,13 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "contain",
     alignSelf: "center",
+    width: '100%',
+    height: 230,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  video: {
     width: '100%',
     height: 230
   },
@@ -28,11 +47,19 @@ const styles = StyleSheet.create({
 
 const PostBody = ({ 
   media, 
-  content 
+  content,
+  video
 }) => {
-    const onHandleImageClick = () => {
-      console.log('onclick image', media.url)
+
+  const [pageIsMounted, setPageIsMounted] = useState(true)
+
+  useFocusEffect(useCallback(() => {
+    setPageIsMounted(true)
+    return () => {
+      setPageIsMounted(false)
     }
+  }), [])
+
   return (
     <Body style={styles.container}>
       {content &&
@@ -40,12 +67,20 @@ const PostBody = ({
           {content}
         </Text>
       }
-      {media && (
-        <Image 
+      {(media && video && 
+        <VideoPlayer
+          posterUrl={media.url}
+          videoUrl={video.url}
+          style={styles.video}
+          mounted={pageIsMounted}
+        />
+        ) || null }
+        {(media && !video &&
+         <Image 
           style={styles.postImage}
-          source={{uri: media.url}}
-          onClick={onHandleImageClick}/>
-      )}
+          source={{uri: media.url}}/>
+        ) || null}
+     
     </Body>
   )
 }
