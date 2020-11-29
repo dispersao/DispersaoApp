@@ -1,5 +1,8 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next' 
+import { connect } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+
+import { updateAppuser } from '../../modules/appuser/actions'
 
 import { storeData } from '../../modules/asyncStorage'
 
@@ -24,12 +27,13 @@ const styles = StyleSheet.create({
   }
 })
 
-const Languages = () => {
+const Languages = ({ updateUser }) => {
   const { i18n } = useTranslation()
 
   const handleClick = (lang) => {
     i18n.changeLanguage(lang)
     storeData('language', lang)
+    updateUser(lang)
   }
 
  return (
@@ -48,4 +52,11 @@ const Languages = () => {
  )
 }
 
-export default Languages
+const mapDispatchToProps = (dispatch) => ({
+  updateUser: (locale) => dispatch(updateAppuser({ locale }))
+})
+
+export default connect(
+  null,
+  mapDispatchToProps)
+  (Languages)

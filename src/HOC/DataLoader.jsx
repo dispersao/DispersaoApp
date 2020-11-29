@@ -74,13 +74,14 @@ const DataLoader = ({
     await getStoredUser()
   }
 
-  const fetchUser = () => {
+  const fetchUser = async () => {
     if (Number.isInteger(storedId)) {
       findUser({id: storedId})
     } else if (expotoken) {
       findUser({expotoken})
     } else {
-      createUser({expotoken: null})
+      const locale = await retrieveData('language')
+      createUser({ expotoken: null, locale })
     }
   }
 
