@@ -1,6 +1,7 @@
 import React, { 
   useEffect,
-  useState
+  useState,
+  useRef
 } from 'react'
 
 import { 
@@ -13,8 +14,18 @@ import PropTypes from 'prop-types'
 import { toJS } from '../utils/immutableToJs.jsx'
 
 import { connect } from 'react-redux'
-import * as Notifications from 'expo-notifications'
-import { Alert } from "react-native"
+
+import { 
+  setNotificationHandler,
+  addNotificationReceivedListener,
+  getExpoPushTokenAsync,
+  removeNotificationSubscription,
+  addNotificationResponseReceivedListener,
+  AndroidImportance,
+  setNotificationChannelAsync
+} from 'expo-notifications'
+
+import { Alert, Platform } from "react-native"
 
 import * as Permissions from 'expo-permissions'
 import Constants from 'expo-constants'
@@ -53,11 +64,22 @@ const DataLoader = ({
 
   const { t } = useTranslation()
 
+  const notificationListener = useRef()
+  const responseListener = useRef()
+
   const [timeUp, setTimeUp] = useState(false)
   const [expotoken, setExpotoken] = useState(null)
   const [storedId, setStoredId] = useState(null)
   const [creationError, setCraetionerror] = useState(false)
 
+  setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: false
+    }),
+  })
+  
   const getStoredUser = async () => {
     let id = await retrieveData('appid')
     id = id && parseInt(id)
@@ -66,11 +88,11 @@ const DataLoader = ({
 
   const setStoredUser = async () => {
     await storeData('appid', userId.toString())
-    if(userToken ) {
-      Notifications.addNotificationReceivedListener(
-        notification => console.log(notification)
-      )
-    }
+    // if(userToken ) {
+    //   addNotificationReceivedListener(
+    //     notification => console.log(notification)
+    //   )
+    // }
     await getStoredUser()
   }
 
@@ -116,7 +138,7 @@ const DataLoader = ({
             }]
           )
         } else {
-          let token = await Notifications.getExpoPushTokenAsync()
+          let token = await getExpoPushTokenAsync()
           setExpotoken(token)
         }
       } catch (e) {
@@ -142,6 +164,26 @@ const DataLoader = ({
     }
   }
 
+  const setNotificationSettings = () => {
+    console.log('adding listeners')
+
+    notificationListener.current = addNotificationReceivedListener(notification => {
+      console.log('received on foreground', notification)
+    })
+
+    responseListener.current = addNotificationResponseReceivedListener(response => {
+      console.log('interacted with notification', response)
+    })
+
+    if (Platform.OS === 'android') {
+      setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250]
+      });
+    }
+  }
+
   useEffect(() => {
     if (!availableScript) {
       getAvailableScripts()
@@ -149,12 +191,16 @@ const DataLoader = ({
 
     getStoredUser()
     registerForPushNotificationsAsync()
+    setNotificationSettings()
 
     const timer = setTimeout(() => {
       setTimeUp(true)
     }, TIMEOUT_SPLASH)
     
     return () => {
+      console.log('removing listeners')
+      removeNotificationSubscription(notificationListener)
+      removeNotificationSubscription(responseListener)
       clearTimeout(timer)
     }
   }, [])

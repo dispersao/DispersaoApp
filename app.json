@@ -17,6 +17,10 @@
       "icon": "https://d1wp6m56sqw74a.cloudfront.net/~assets/c9aa1be8a6a6fe81e20c3ac4106a2ebc",
       "hideExponentText": false
     },
+    "notification": {
+      "icon": "./assets/images/notification_icon.png",
+      "iosDisplayInForeground": true
+    },
     "packagerOpts": {
     },
     "ios": {
@@ -33,7 +37,8 @@
       ],
       "adaptiveIcon": {
         "backgroundImage": "./assets/images/app_icon.png"
-      }
+      },
+      "useNextNotificationsApi": true
     },
     "updates": {
       "fallbackToCacheTimeout": 0
