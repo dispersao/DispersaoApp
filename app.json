@@ -13,10 +13,6 @@
     "orientation": "default",
     "primaryColor": "#cccccc",
     "icon": "./assets/images/app_icon.png",
-    "loading": {
-      "icon": "https://d1wp6m56sqw74a.cloudfront.net/~assets/c9aa1be8a6a6fe81e20c3ac4106a2ebc",
-      "hideExponentText": false
-    },
     "notification": {
       "icon": "./assets/images/notification_icon.png",
       "iosDisplayInForeground": true
