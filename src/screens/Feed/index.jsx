@@ -1,5 +1,6 @@
 import React, {
-  useCallback
+  useCallback,
+  useState
 } from 'react'
 import { connect } from 'react-redux'
 import Constants from 'expo-constants'
@@ -48,9 +49,10 @@ const Feed = ({
   fetch,
   navigation: { navigate }
 }) => {
-
   
   const { t } = useTranslation()
+
+  const [postYs, setPostYs] = useState({})
 
   const onRefresh = useCallback(() => {
     fetch && fetch()
@@ -61,6 +63,11 @@ const Feed = ({
       screen: 'Profile',
       params: { contentcreator }
     })
+  }
+
+  const onLayoutEvent = (post, y) => {
+    postYs[post.id] = y
+    setPostYs(postYs)
   }
 
   let text
@@ -90,11 +97,15 @@ const Feed = ({
         }
         {(posts && posts.length && 
           posts.map((post, index) => {
-            return <Post 
-              key={index}
-              headerClick={handleHeaderClick}
-              {...post} 
-            />
+            return (
+              <View 
+                key={index} 
+                onLayout={(event) => onLayoutEvent(post.id, event.nativeEvent.layout.y)}>
+                <Post 
+                  headerClick={handleHeaderClick}
+                  {...post} 
+                />
+            </View>)
           })
         ) || null}
       </Content>

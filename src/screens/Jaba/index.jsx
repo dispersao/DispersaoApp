@@ -8,6 +8,11 @@ import { StatusBar } from 'expo-status-bar';
 
 import Constants from 'expo-constants'
 
+import { 
+  removeData,
+  retrieveData
+} from '../../modules/asyncStorage'
+
 import {
   Container,
   Content,
@@ -70,6 +75,13 @@ const JabaScreen = ({
   haveAvailableScripts,
   navigation,
 }) => {
+
+  const deleteUser = async () => {
+    await removeData("appid")
+    let id = await retrieveData('appid')
+    console.log('is id deleted? ', id)
+  }
+
   const { t } = useTranslation()
   const acceptedState = ['started', 'paused','playing']
   const playingScript = userScript && acceptedState.includes(userScript.state)
@@ -108,6 +120,12 @@ const JabaScreen = ({
           <Grid style={styles.grid}>
             <Row size={5}>
               <Logo />
+            </Row>
+           <Row size={1}>
+              <InitButton 
+                enabled={true}
+                text={'delete user'}
+                onPress={deleteUser}/>
             </Row>
             {/* <Row size={1}>
               <Informative 

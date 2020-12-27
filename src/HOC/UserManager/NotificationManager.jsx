@@ -57,7 +57,7 @@ const NotificationManager = ({
 
   setNotificationHandler({
     handleNotification: async () => ({
-      shouldShowAlert: true,
+      shouldShowAlert: false,
       shouldPlaySound: true,
       shouldSetBadge: false
     }),
@@ -112,6 +112,7 @@ const NotificationManager = ({
     })
 
     responseListener.current = addNotificationResponseReceivedListener(response => {
+      const {notification: {request: {content: { data }}}} = response
       console.log('interacted with notification', response)
     })
 
@@ -119,7 +120,9 @@ const NotificationManager = ({
       setNotificationChannelAsync('default', {
         name: 'default',
         importance: AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250]
+        vibrationPattern: [0, 250, 250, 250],
+        sound: 'default',
+        priority: AndroidImportance.MAX
       });
     }
   }

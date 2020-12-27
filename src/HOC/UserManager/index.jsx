@@ -61,6 +61,7 @@ const UserManager = ({
 
   useEffect(() => {
     if(timeUp && availableScript && userId){
+      console.log('render children')
       setReady(true)
     }
   }, [timeUp, availableScript, userId])
