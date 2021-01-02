@@ -108,12 +108,12 @@ const NotificationManager = ({
     console.log('adding listeners')
 
     notificationListener.current = addNotificationReceivedListener(notification => {
-      console.log('received on foreground', notification)
+      Alert.alert(`received in foreground`, JSON.stringify(notification.request.content.data))
     })
 
     responseListener.current = addNotificationResponseReceivedListener(response => {
       const {notification: {request: {content: { data }}}} = response
-      console.log('interacted with notification', response)
+      Alert.alert(`interacted with `, JSON.stringify(data))
     })
 
     if (Platform.OS === 'android') {
