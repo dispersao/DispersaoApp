@@ -17,17 +17,34 @@ import {
   removeNotificationSubscription,
   addNotificationResponseReceivedListener,
   AndroidImportance,
-  setNotificationChannelAsync
+  setNotificationChannelAsync,
+  useLastNotificationResponse,
+  DEFAULT_ACTION_IDENTIFIER
 } from 'expo-notifications'
 
 import { useTranslation } from 'react-i18next'
+
+let responseListener 
+if(Platform.OS === 'android') {
+  setNotificationChannelAsync('default', {
+    name: 'dispersao-posts',
+    vibrationPattern: [0, 250, 250, 250],
+    sound: 'default',
+    priority: AndroidImportance.MAX
+  });
+
+  responseListener = addNotificationResponseReceivedListener(response => {
+    const {notification: {request: {content: { data }}}} = response
+    Alert.alert(`interacted with `, JSON.stringify(data))
+  })
+}
 
 const NotificationManager = ({
   children,
   expotoken,
   onToken
 }) => {
-
+  const lastNotificationResponse = useLastNotificationResponse()
   const { t } = useTranslation()
 
   const setExpotoken = (token) => {
@@ -35,16 +52,27 @@ const NotificationManager = ({
   }
 
   const notificationListener = useRef()
-  const responseListener = useRef()
+  // const responseListener = useRef()
 
   useEffect(() => {
+    Alert.alert(`fire mount when coming from background`, 'mount')
     registerForPushNotificationsAsync()
+    // console.log('lastNotificationResponse', lastNotificationResponse)
+    // Alert.alert('last notification', JSON.stringify(lastNotificationResponse))
+    if (
+      lastNotificationResponse &&
+      lastNotificationResponse.notification.request
+    ){
+      Alert.alert(`last notification`, JSON.stringify(lastNotificationResponse.request))
+    }
 
     return () => {
       if(expotoken){
         console.log('removing listeners')
-        removeNotificationSubscription(notificationListener)
-        removeNotificationSubscription(responseListener)
+        notificationListener?.current?.remove()
+        responseListener?.remove()
+        // removeNotificationSubscription(notificationListener)
+        // removeNotificationSubscription(responseListener)
       }
     }
   }, [])
@@ -111,20 +139,20 @@ const NotificationManager = ({
       Alert.alert(`received in foreground`, JSON.stringify(notification.request.content.data))
     })
 
-    responseListener.current = addNotificationResponseReceivedListener(response => {
-      const {notification: {request: {content: { data }}}} = response
-      Alert.alert(`interacted with `, JSON.stringify(data))
-    })
+    /*if (Platform.OS === 'android') {
 
-    if (Platform.OS === 'android') {
       setNotificationChannelAsync('default', {
-        name: 'default',
-        importance: AndroidImportance.MAX,
+        name: 'dispersao-posts',
         vibrationPattern: [0, 250, 250, 250],
         sound: 'default',
         priority: AndroidImportance.MAX
       });
-    }
+
+      responseListener.current = addNotificationResponseReceivedListener(response => {
+        const {notification: {request: {content: { data }}}} = response
+        Alert.alert(`interacted with `, JSON.stringify(data))
+      })
+    }*/
   }
 
   return (
