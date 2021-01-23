@@ -67,7 +67,7 @@ const PostBody = ({
     return () => {
       setPageIsMounted(false)
     }
-  }), [])
+  }, []))
 
   const renderText = (matchingString, matches) => {
     let match = matchingString.match(pattern)
