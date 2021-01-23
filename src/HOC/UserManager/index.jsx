@@ -9,6 +9,9 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 
+import AppLoading from 'expo-app-loading'
+import { hideAsync } from 'expo-splash-screen'
+
 import SplashScreen from '../../screens/Splash/index.jsx'
 const TIMEOUT_SPLASH = 500
 
@@ -31,7 +34,6 @@ const UserManager = ({
   const [ ready, setReady ] = useState(false)
 
   useEffect(() => {
-    console.log('init timer')
     if (!availableScript) {
       getAvailableScripts()
     }
@@ -63,6 +65,7 @@ const UserManager = ({
     if(timeUp && availableScript && userId){
       console.log('render children')
       setReady(true)
+      hideAsync()
     }
   }, [timeUp, availableScript, userId])
   
@@ -81,7 +84,10 @@ const UserManager = ({
         children
       )|| null}
       {(!ready && 
-        <SplashScreen />
+        /*<SplashScreen />*/
+        <AppLoading 
+          onError={console.warn}
+        />
       )|| null}
     </>
   )

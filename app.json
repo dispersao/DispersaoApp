@@ -1,5 +1,6 @@
 {
   "expo": {
+    "owner": "dispersao",
     "name": "Dispersão",
     "description": "Aplicativo do filme Dispersão",
     "slug": "snack-db27b3e3-a2d5-4324-abd4-efd904fac69c",
@@ -14,6 +15,7 @@
     "primaryColor": "#cccccc",
     "icon": "./assets/images/app_icon.png",
     "notification": {
+      "color": "#cccccc",
       "icon": "./assets/images/notification_icon.png",
       "iosDisplayInForeground": true
     },
@@ -38,6 +40,11 @@
     },
     "updates": {
       "fallbackToCacheTimeout": 0
+    },
+    "splash": {
+      "image": "./assets/images/dispersao_splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
     },
     "assetBundlePatterns": [
       "./assets/*"
