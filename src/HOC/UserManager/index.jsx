@@ -19,7 +19,7 @@ const TIMEOUT_SPLASH = 500
 import { getAvailableScripts } from '../../modules/script/selector'
 import { fetchAvailableScripts } from '../../modules/script/actions'
 
-import NotificationManager from './NotificationManager.jsx'
+import NotificationManager from './NotificationManager/index.jsx'
 import UserCreator from './UserCreator.jsx'
 
 const UserManager = ({
@@ -73,7 +73,7 @@ const UserManager = ({
     <>
       <NotificationManager 
         expotoken={expotoken}
-        onToken={tokenFetched}/>
+        onToken={tokenFetched}>
       {expotoken!== null && 
         <UserCreator 
           expotoken={expotoken}
@@ -89,6 +89,7 @@ const UserManager = ({
           onError={console.warn}
         />
       )|| null}
+      </NotificationManager>
     </>
   )
 }

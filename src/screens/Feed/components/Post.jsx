@@ -1,70 +1,79 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { toJS } from '../../../utils/immutableToJs'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 
-import { 
-  Card, 
-  CardItem
-} from 'native-base'
+import { Card, CardItem } from 'native-base'
 
 import PostHeader from './PostHeader.jsx'
 import PostBody from './PostBody.jsx'
 import PostFooter from './PostFooter.jsx'
-import CommentList from './CommentList.jsx'
+import Comment from './Comment.jsx'
 
 import { getPostByPostId } from '../../../modules/post/selector'
 import { getCommentsByPostId } from '../../../modules/comment/selector'
 
 const styles = StyleSheet.create({
   card: {
-    padding: 16,
+    padding: 16
   },
   cardBody: {
-    paddingBottom: 20,
+    paddingBottom: 20
   }
 })
 
 const Post = (props) => {
-  const [commentsOpened, setCommentsOpened] = useState(false)
+  const { id, element, updated_at, comments, headerClick, onLayout } = props
 
-  const {
-    element,
-    updated_at,
-    comments,
-    headerClick
-  } = props
+  const [elementY, setElementY] = useState(null)
+  const [commentsY, setCommentsY] = useState({})
+
+  const onLayoutEvent = (event) => {
+    const y = event.nativeEvent.layout.y
+    setElementY(y)
+    if (onLayout) {
+      onLayout(id, y)
+      if (Object.keys(commentsY).length) {
+        Object.entries(commentsY).forEach(([key, value]) => {
+          onLayout(key, value + y)
+        })
+      }
+    }
+  }
+
+  const onCommentLayout = (id, y) => {
+    if(onLayout) {
+      if(elementY) {
+        onLayout(id, elementY + y)
+      } else {
+        setCommentsY({
+          ...commentsY,
+          [id]: y
+        })
+      }
+    }
+  }
 
   return (
-    <Card >
+    <Card onLayout={onLayoutEvent}>
       <CardItem header style={styles.card}>
-        {element && 
-          <PostHeader 
-            {...element}
-            time={updated_at}
-            onClick={headerClick}
-          />
-        }
+        {element && (
+          <PostHeader {...element} time={updated_at} onClick={headerClick} />
+        )}
       </CardItem>
-      <CardItem 
-        cardBody 
-        style={styles.card}>
-        <PostBody {...element}  />
+      <CardItem cardBody style={styles.card}>
+        <PostBody {...element} />
       </CardItem>
-      <CardItem 
-        footer={!commentsOpened} 
-        bordered 
-        style={styles.card}>
-        <PostFooter 
-          {...props}
-          commentsOpened={commentsOpened}
-          onCommentsToggle={val => setCommentsOpened(val)} />
+      <CardItem footer={Boolean(comments.length)} bordered style={styles.card}>
+        <PostFooter {...props} />
       </CardItem>
-      {commentsOpened && comments.length &&
-        <CommentList 
-          comments={comments}
-        />
-      }
+      {comments.map((comment, index) => {
+        return (<Comment 
+          key={index}
+          footer={index === comments.length - 1}
+          onLayout={onCommentLayout} 
+          {...comment} />)
+      })}
     </Card>
   )
 }
@@ -74,7 +83,4 @@ const mapStateToProps = (state, ownProps) => ({
   comments: getCommentsByPostId(state, ownProps)
 })
 
-export default connect(
-  mapStateToProps,
-  null
-)(toJS(Post))
+export default connect(mapStateToProps, null)(toJS(Post))

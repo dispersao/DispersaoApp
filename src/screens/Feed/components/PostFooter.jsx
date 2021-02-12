@@ -7,7 +7,7 @@ import { toJS } from '../../../utils/immutableToJs.jsx'
 import { getLikesByLikeIds } from '../../../modules/likes/selector'
 
 import LikesBox from '../../../components/feedbacks/LikesBox.jsx'
-import CommentsBox from './CommentsBox.jsx'
+import { Comments } from '../../../components/feedbacks/index.jsx'
 
 import { 
   Left,
@@ -25,19 +25,13 @@ const styles = StyleSheet.create({
 const PostFooter = ({
   id,
   processedLikes,
-  comments,
-  commentsOpened,
-  onCommentsToggle
+  comments
 }) => {
   const likes = processedLikes.filter(l => !l.dislike)
   const dislikes = processedLikes.filter(l => l.dislike)
 
   const myLikes = processedLikes.filter(l => l.appuser)
   const myLike = myLikes.length && myLikes[0]
-
-  const toggleCommentList = () => {
-    onCommentsToggle(!commentsOpened)
-  }
   
   return (
     <>
@@ -50,10 +44,7 @@ const PostFooter = ({
       </Left>
       {comments && comments.length > 0 &&
         <Right style={styles.commentsBox}>
-          <CommentsBox 
-            comments={comments.length} 
-            opened={commentsOpened}
-            onArrowPress={toggleCommentList}/>
+          <Comments amount={comments.length} />
         </Right>
       }
     </>

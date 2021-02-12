@@ -1,17 +1,33 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import FeedScreen from './Feed/index.jsx'
-// import NotificationsScreen from './NotificationsScreen'
 import ProfileHub from './Profiles/index.jsx'
 import InfoScreen from './Info/index.jsx'
 import LanguageScreen from '../screens/Languages/index.jsx'
 import { Ionicons } from '@expo/vector-icons'
 
 import { StatusBar } from 'expo-status-bar'
+import { useNavigation } from '@react-navigation/native'
+import { Text } from 'react-native'
+
+import NotificationContext from '../HOC/UserManager/NotificationManager/context'
 
 const Tab = createBottomTabNavigator()
 
 const AppScreen = () => {
+  const notificationContext = useContext(NotificationContext)
+
+  const { navigate } = useNavigation()
+
+  const interactedNotification = notificationContext?.lastInteracted?.value
+
+  useEffect(() => {
+    if(interactedNotification) {
+      navigate('Feed', {
+        interacted: interactedNotification
+      })
+    }
+  }, [JSON.stringify(interactedNotification)])
   return (
     <>
       <Tab.Navigator screenOptions={({ route }) => ({
@@ -65,6 +81,9 @@ const AppScreen = () => {
             name="Language"
             component={LanguageScreen} />
         </Tab.Navigator>
+        <Text>
+          {JSON.stringify(interactedNotification)}
+        </Text>
         <StatusBar style="dark" />
       </>
   )

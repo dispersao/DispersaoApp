@@ -1,12 +1,16 @@
 import React, {
   useCallback,
-  useState
+  useEffect,
+  useState,
+  useRef,
+  useContext
 } from 'react'
 import { connect } from 'react-redux'
 import Constants from 'expo-constants'
+import NotificationContext from '../../HOC/UserManager/NotificationManager/context'
 
-import { 
-  SafeAreaView, 
+import {
+  SafeAreaView,
   StyleSheet,
   RefreshControl,
   View,
@@ -27,7 +31,7 @@ import { useTranslation } from 'react-i18next'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Constants.statusBarHeight,
+    marginTop: Constants.statusBarHeight
   },
   text: {
     fontSize: 12,
@@ -43,16 +47,29 @@ const styles = StyleSheet.create({
   }
 })
 
-const Feed = ({ 
-  posts,
-  loading,
-  fetch,
-  navigation: { navigate }
-}) => {
-  
+const Feed = ({ posts, loading, fetch, navigation: { navigate }, route }) => {
   const { t } = useTranslation()
 
-  const [postYs, setPostYs] = useState({})
+  const notificationContext = useContext(NotificationContext)
+
+  const interactedContent = route?.params?.interacted?.sessioncontent
+
+  const [contentYs, setContentYs] = useState({})
+  const [scrollTo, setScrollTo] = useState({})
+  const contentRef = useRef(null)
+
+  useEffect(() => {
+    if (interactedContent && contentYs.hasOwnProperty(interactedContent)) {
+      setScrollTo(contentYs[interactedContent])
+    }
+  }, [interactedContent, contentYs])
+
+  useEffect(() => {
+    if (scrollTo && contentRef?.current?._root) {
+      contentRef.current._root.scrollToPosition(0, scrollTo, false)
+      notificationContext.lastInteracted.clear()
+    }
+  }, [scrollTo, contentRef])
 
   const onRefresh = useCallback(() => {
     fetch && fetch()
@@ -65,9 +82,11 @@ const Feed = ({
     })
   }
 
-  const onLayoutEvent = (post, y) => {
-    postYs[post.id] = y
-    setPostYs(postYs)
+  const onLayoutEvent = (sessioncontent, y) => {
+    setContentYs({
+      ...contentYs,
+      [sessioncontent]: y
+    })
   }
 
   let text
@@ -79,49 +98,53 @@ const Feed = ({
 
   return (
     <SafeAreaView style={styles.container}>
-      <Content 
+      <Content
         padder
+        ref={contentRef}
         refreshControl={
-          <RefreshControl 
-            refreshing={loading} 
+          <RefreshControl
+            refreshing={loading}
             onRefresh={onRefresh}
             colors={['#999']}
-            />
-        }>
-        {text &&
-          <View style={styles.textContainer}>
-            <Text style={styles.text}>
-              {t(text)}
-            </Text>
-          </View>
+          />
         }
-        {(posts && posts.length && 
+      >
+        {(interactedContent && (
+          <Text>{JSON.stringify(interactedContent)}</Text>
+        )) ||
+          null}
+        {text && (
+          <View style={styles.textContainer}>
+            <Text style={styles.text}>{t(text)}</Text>
+          </View>
+        )}
+        {(posts &&
+          posts.length &&
           posts.map((post, index) => {
             return (
-              <View 
-                key={index} 
-                onLayout={(event) => onLayoutEvent(post.id, event.nativeEvent.layout.y)}>
-                <Post 
-                  headerClick={handleHeaderClick}
-                  {...post} 
-                />
-            </View>)
-          })
-        ) || null}
+              <Post
+                key={index}
+                headerClick={handleHeaderClick}
+                onLayout={onLayoutEvent}
+                {...post}
+              />
+            )
+          })) ||
+          null}
       </Content>
     </SafeAreaView>
   )
 }
 
 const mapStateToProps = (state) => ({
-  posts: getSessioncontentListByType(state, {types: ['post']}),
+  posts: getSessioncontentListByType(state, { types: ['post'] })
 })
-
 
 export default connect(
   mapStateToProps,
   null
-  )(WithLoadedElement(toJS(Feed), {
-  types: ['post', 'comment', 'profile']
-}))
-
+)(
+  WithLoadedElement(toJS(Feed), {
+    types: ['post', 'comment', 'profile']
+  })
+)
