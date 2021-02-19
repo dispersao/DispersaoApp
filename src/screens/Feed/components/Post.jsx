@@ -43,7 +43,7 @@ const Post = (props) => {
 
   const onCommentLayout = (id, y) => {
     if(onLayout) {
-      if(elementY) {
+      if(!Number.isNaN(elementY)) {
         onLayout(id, elementY + y)
       } else {
         setCommentsY({

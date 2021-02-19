@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 import { Alert, Platform, Text } from 'react-native'
 
@@ -8,9 +8,14 @@ import * as Permissions from 'expo-permissions'
 import Constants from 'expo-constants'
 import * as Notifications from 'expo-notifications'
 
-import NotificationContext from './context'
-
 import { useTranslation } from 'react-i18next'
+import {
+  addNotification,
+  setInteractedNotification,
+  setForegroundNotification
+} from '../../../modules/notification/actions'
+
+import { getNotificationsCount } from '../../../modules/notification/selector'
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -44,7 +49,14 @@ let backListener = Notifications.addNotificationResponseReceivedListener(
   }
 )
 
-const NotificationManager = ({ children, expotoken, onToken }) => {
+const NotificationManager = ({
+  totalNotifications = 0,
+  addNotification,
+  setInteractedNotification,
+  setForegroundNotification,
+  onToken,
+  children
+}) => {
   const [lastInteractedNotification, setLastInteractedNotification] = useState(
     ''
   )
@@ -76,6 +88,11 @@ const NotificationManager = ({ children, expotoken, onToken }) => {
       JSON.stringify(lastInteractedNotification)
     ) {
       setLastInteractedNotification(lastInterNoti)
+      addNotification({
+        ...lastInterNoti,
+        id: totalNotifications + 1
+      })
+      setInteractedNotification(totalNotifications + 1)
     }
   }, [JSON.stringify(lastInterNoti)])
 
@@ -90,8 +107,13 @@ const NotificationManager = ({ children, expotoken, onToken }) => {
           JSON.stringify(data) !== JSON.stringify(lastFrontReceivedNotification)
         ) {
           setLastFrontReceivedNotification(data)
+          addNotification({
+            ...data,
+            id: totalNotifications + 1
+          })
+          setForegroundNotification(totalNotifications + 1)
         }
-        console.log(`received in foreground`, JSON.stringify(data))
+        console.log(`received in foreground`, data)
       }
     )
 
@@ -144,32 +166,29 @@ const NotificationManager = ({ children, expotoken, onToken }) => {
     ])
   }
 
-  return (
-    <NotificationContext.Provider
-      value={{
-        lastInteracted: {
-          value: lastInteractedNotification,
-          clear: () => {
-            setLastInteractedNotification('')
-          }
-        },
-        lastFrontReceived: {
-          value: lastFrontReceivedNotification,
-          clear: () => {
-            setLastFrontReceivedNotification('')
-          }
-        }
-      }}
-    >
-      {children}
-    </NotificationContext.Provider>
-  )
+  return children
 }
 
 NotificationManager.propTypes = {
   children: PropTypes.node,
   onToken: PropTypes.func,
-  expotoken: PropTypes.string
+  expotoken: PropTypes.string,
+  totalNotifications: PropTypes.number,
+  addNotification: PropTypes.func,
+  setInteractedNotification: PropTypes.func,
+  setForegroundNotification: PropTypes.func
 }
 
-export default NotificationManager
+const mapStateToProps = (state) => ({
+  totalNotifications: getNotificationsCount(state)
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  addNotification: (notification) => dispatch(addNotification(notification)),
+  setForegroundNotification: (notification) =>
+    dispatch(setForegroundNotification(notification)),
+  setInteractedNotification: (notification) =>
+    dispatch(setInteractedNotification(notification))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(NotificationManager)

@@ -6,20 +6,21 @@ import InfoScreen from './Info/index.jsx'
 import LanguageScreen from '../screens/Languages/index.jsx'
 import { Ionicons } from '@expo/vector-icons'
 
+import { connect } from 'react-redux'
+
 import { StatusBar } from 'expo-status-bar'
 import { useNavigation } from '@react-navigation/native'
-import { Text } from 'react-native'
 
-import NotificationContext from '../HOC/UserManager/NotificationManager/context'
+import { toJS } from '../utils/immutableToJs'
 
+import { getLastInteractedNotification } from '../modules/notification/selector'
 const Tab = createBottomTabNavigator()
 
-const AppScreen = () => {
-  const notificationContext = useContext(NotificationContext)
+const AppScreen = ({
+  interactedNotification
+}) => {
 
   const { navigate } = useNavigation()
-
-  const interactedNotification = notificationContext?.lastInteracted?.value
 
   useEffect(() => {
     if(interactedNotification) {
@@ -28,8 +29,10 @@ const AppScreen = () => {
       })
     }
   }, [JSON.stringify(interactedNotification)])
+
   return (
     <>
+      <StatusBar style="dark" />
       <Tab.Navigator screenOptions={({ route }) => ({
         tabBarIcon: ({color}) => {
           let iconName
@@ -81,12 +84,12 @@ const AppScreen = () => {
             name="Language"
             component={LanguageScreen} />
         </Tab.Navigator>
-        <Text>
-          {JSON.stringify(interactedNotification)}
-        </Text>
-        <StatusBar style="dark" />
       </>
   )
-
 }
- export default AppScreen
+
+const mapStateToProps = (state) => ({
+  interactedNotification: getLastInteractedNotification(state),
+})
+
+ export default connect(mapStateToProps)(toJS(AppScreen))

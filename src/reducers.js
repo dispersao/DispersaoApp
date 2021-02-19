@@ -8,6 +8,7 @@ import comments from './modules/comment/reducer'
 import profiles from './modules/profile/reducer'
 import sessioncontents from './modules/sessioncontent/reducer'
 import likes from './modules/likes/reducer'
+import notifications from './modules/notification/reducer'
 
 const reducer = combineReducers({
   scripts,
@@ -17,7 +18,8 @@ const reducer = combineReducers({
   comments,
   profiles,
   sessioncontents,
-  likes
+  likes,
+  notifications
 })
 
 export default reducer

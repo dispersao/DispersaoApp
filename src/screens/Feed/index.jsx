@@ -2,12 +2,11 @@ import React, {
   useCallback,
   useEffect,
   useState,
-  useRef,
-  useContext
+  useRef
 } from 'react'
 import { connect } from 'react-redux'
 import Constants from 'expo-constants'
-import NotificationContext from '../../HOC/UserManager/NotificationManager/context'
+import { CommonActions } from '@react-navigation/native'
 
 import {
   SafeAreaView,
@@ -27,6 +26,7 @@ import WithLoadedElement from '../../HOC/WithLoadedData.jsx'
 import { toJS } from '../../utils/immutableToJs.jsx'
 
 import { useTranslation } from 'react-i18next'
+import { clearInteractedNotification } from '../../modules/notification/actions'
 
 const styles = StyleSheet.create({
   container: {
@@ -47,10 +47,8 @@ const styles = StyleSheet.create({
   }
 })
 
-const Feed = ({ posts, loading, fetch, navigation: { navigate }, route }) => {
+const Feed = ({ posts, loading, fetch, navigation: { navigate, dispatch }, route, clearNotification }) => {
   const { t } = useTranslation()
-
-  const notificationContext = useContext(NotificationContext)
 
   const interactedContent = route?.params?.interacted?.sessioncontent
 
@@ -65,14 +63,15 @@ const Feed = ({ posts, loading, fetch, navigation: { navigate }, route }) => {
   }, [interactedContent, contentYs])
 
   useEffect(() => {
-    if (scrollTo && contentRef?.current?._root) {
+    if (!Number.isNaN(scrollTo) && contentRef?.current?._root) {
       contentRef.current._root.scrollToPosition(0, scrollTo, false)
-      notificationContext.lastInteracted.clear()
+      clearNotification()
     }
   }, [scrollTo, contentRef])
 
   const onRefresh = useCallback(() => {
     fetch && fetch()
+    dispatch(CommonActions.setParams({ interacted: null }))
   }, [loading])
 
   const handleHeaderClick = (contentcreator) => {
@@ -140,9 +139,13 @@ const mapStateToProps = (state) => ({
   posts: getSessioncontentListByType(state, { types: ['post'] })
 })
 
+const mapDispatchToProps = (dispatch) => ({
+  clearNotification: ()=> dispatch(clearInteractedNotification())
+})
+
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(
   WithLoadedElement(toJS(Feed), {
     types: ['post', 'comment', 'profile']
