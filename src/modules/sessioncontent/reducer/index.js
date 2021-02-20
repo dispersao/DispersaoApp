@@ -9,7 +9,7 @@ import {
   LIKE_CREATED_SUCCESS
 } from '../../likes/actions'
 
-const reducer = (state = Map({loading: false, fetched_at: 0}), action) => {
+const reducer = (state = Map({loading: false, fetched_at: null}), action) => {
   switch(action.type) {
     case SESSIONCONTENTS_FETCH:
       return state.set('loading', true)
@@ -17,7 +17,7 @@ const reducer = (state = Map({loading: false, fetched_at: 0}), action) => {
       return state.mergeDeep(
         fromJS({
           loading: false,
-          fetched_at: performance.now(),
+          fetched_at: action.payload.fetched_at,
           data: action.payload.sessioncontents
         })
       )

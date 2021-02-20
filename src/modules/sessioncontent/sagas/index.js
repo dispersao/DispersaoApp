@@ -45,7 +45,7 @@ function* findSessioncontents(action) {
       ...action.payload
     })
     entities.sessioncontents = entities.sessioncontents || {}
-    yield mapSuccess(entities)
+    yield mapSuccess(entities, { fetched_at: performance.now() })
   } catch(e) {
     console.log(e)
     yield put(sessioncontentsFetchError(e))
@@ -53,10 +53,10 @@ function* findSessioncontents(action) {
 }
 
 
-function* mapSuccess (entities) {
+function* mapSuccess (entities, params) {
   function* map(key) {
     try{
-      const action = entitiesMap[key](entities[key])
+      const action = entitiesMap[key](entities[key], params)
       yield put(action)
     } catch (e) {
       console.log(e)

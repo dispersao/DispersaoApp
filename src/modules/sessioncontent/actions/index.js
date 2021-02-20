@@ -9,10 +9,11 @@ export const sessioncontentsFetch = ({script, types}) => ({
   }
 })
 
-export const sessioncontentsFetchSuccess = (sessioncontents) => ({
+export const sessioncontentsFetchSuccess = (sessioncontents, { fetched_at }) => ({
   type: SESSIONCONTENTS_FETCH_SUCCESS,
   payload: {
-    sessioncontents
+    sessioncontents,
+    fetched_at
   }
 })
 

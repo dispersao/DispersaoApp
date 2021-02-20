@@ -8,6 +8,7 @@ const getTypesJSON = (state, props) => JSON.stringify(props.types)
 const getTypeAndIdJSON = (state, props) => JSON.stringify({ [props.type] : props.id })
 
 export const getLoading = (state) => state.sessioncontents.get('loading')
+export const getFetchedAt = (state) => state.sessioncontents.get('fetched_at')
 
 export const getSessioncontentListByType = createCachedSelector(
   [getState, getTypes],

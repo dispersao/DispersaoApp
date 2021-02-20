@@ -90,7 +90,8 @@ const NotificationManager = ({
       setLastInteractedNotification(lastInterNoti)
       addNotification({
         ...lastInterNoti,
-        id: totalNotifications + 1
+        id: totalNotifications + 1,
+        received_at: performance.now()
       })
       setInteractedNotification(totalNotifications + 1)
     }
@@ -109,7 +110,8 @@ const NotificationManager = ({
           setLastFrontReceivedNotification(data)
           addNotification({
             ...data,
-            id: totalNotifications + 1
+            id: totalNotifications + 1,
+            received_at: performance.now()
           })
           setForegroundNotification(totalNotifications + 1)
         }

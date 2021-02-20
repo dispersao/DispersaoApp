@@ -18,7 +18,7 @@ import {
 
 import { Content } from 'native-base'
 
-import { getSessioncontentListByType } from '../../modules/sessioncontent/selector'
+import { getFetchedAt, getSessioncontentListByType } from '../../modules/sessioncontent/selector'
 
 import Post from './components/Post.jsx'
 
@@ -47,20 +47,27 @@ const styles = StyleSheet.create({
   }
 })
 
-const Feed = ({ posts, loading, fetch, navigation: { navigate, dispatch }, route, clearNotification }) => {
+const Feed = ({ posts, loading, fetchedAt, fetch, navigation: { navigate, dispatch }, route, clearNotification }) => {
   const { t } = useTranslation()
 
-  const interactedContent = route?.params?.interacted?.sessioncontent
+  const notification = route?.params?.interacted
+  const interactedContent = notification?.sessioncontent
+  const received_at = notification?.received_at
 
   const [contentYs, setContentYs] = useState({})
   const [scrollTo, setScrollTo] = useState({})
+  
   const contentRef = useRef(null)
 
   useEffect(() => {
-    if (interactedContent && contentYs.hasOwnProperty(interactedContent)) {
-      setScrollTo(contentYs[interactedContent])
+    if (interactedContent){
+      if (contentYs.hasOwnProperty(interactedContent)) {
+        setScrollTo(contentYs[interactedContent])
+      } else if(fetchedAt < received_at && !loading){
+        fetch && fetch()
+      }
     }
-  }, [interactedContent, contentYs])
+  }, [interactedContent, contentYs, fetchedAt, fetch, received_at])
 
   useEffect(() => {
     if (!Number.isNaN(scrollTo) && contentRef?.current?._root) {
@@ -136,7 +143,8 @@ const Feed = ({ posts, loading, fetch, navigation: { navigate, dispatch }, route
 }
 
 const mapStateToProps = (state) => ({
-  posts: getSessioncontentListByType(state, { types: ['post'] })
+  posts: getSessioncontentListByType(state, { types: ['post'] }),
+  fetchedAt: getFetchedAt(state)
 })
 
 const mapDispatchToProps = (dispatch) => ({
