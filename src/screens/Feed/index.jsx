@@ -7,7 +7,7 @@ import React, {
 import { connect } from 'react-redux'
 import Constants from 'expo-constants'
 import { CommonActions } from '@react-navigation/native'
-import NotificationDrawer from '../../components/notification'
+import ForegroundNotification from '../../components/notification'
 
 import {
   SafeAreaView,
@@ -105,7 +105,6 @@ const Feed = ({ posts, loading, fetchedAt, fetch, navigation: { navigate, dispat
 
   return (
     <>
-      
       <SafeAreaView style={styles.container}>
         <Content
           padder
@@ -142,7 +141,7 @@ const Feed = ({ posts, loading, fetchedAt, fetch, navigation: { navigate, dispat
             null}
         </Content>
       </SafeAreaView>
-      <NotificationDrawer />
+      <ForegroundNotification />
     </>
   )
 }

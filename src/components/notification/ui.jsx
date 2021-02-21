@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState } from 'react'
-import { SafeAreaView, StyleSheet, View, Animated } from 'react-native'
+import React, { useRef, useEffect } from 'react'
+import { StyleSheet, View, Animated } from 'react-native'
 import { Card, CardItem, Text, Thumbnail } from 'native-base'
 import Constants from 'expo-constants'
 
@@ -37,50 +37,49 @@ const styles = StyleSheet.create({
   }
 })
 
-const animationTiming = 300
+const animationTiming = 500
 
-const ForegroundNotification = ({ img, title, description, delay = 1500, onClose }) => {
-  const animatedEl = useRef()
+const ForegroundNotification = ({
+  img,
+  title,
+  description,
+  delay = 1500,
+  onClose
+}) => {
   let fadeAnim = useRef(new Animated.Value(0)).current
   let offsetAnim = useRef(new Animated.Value(0)).current
 
-
-  useEffect(() => {
-    if (animatedEl?.current) {
-      animatedEl.current.measure((x, y, width, height) => {
-        const startPoint = -height
-        offsetAnim.setValue(startPoint)
-
-        Animated.sequence([
-          Animated.parallel([
-            Animated.timing(offsetAnim, {
-              toValue: 0,
-              duration: animationTiming,
-              useNativeDriver: true
-            }),
-            Animated.timing(fadeAnim, {
-              toValue: 1,
-              duration: animationTiming / 2,
-              useNativeDriver: true
-            })
-          ]),
-          Animated.delay(delay),
-          Animated.parallel([
-            Animated.timing(offsetAnim, {
-              toValue: startPoint,
-              duration: animationTiming,
-              useNativeDriver: true
-            }),
-            Animated.timing(fadeAnim, {
-              toValue: 0,
-              duration: animationTiming / 2,
-              useNativeDriver: true
-            })
-          ])
-        ]).start(onClose)
-      })
-    }
-  }, [animatedEl, fadeAnim, offsetAnim])
+  onViewLayout = (event) => {
+    const startPoint = -event.nativeEvent.layout.height
+    offsetAnim.setValue(startPoint)
+    Animated.sequence([
+      Animated.parallel([
+        Animated.timing(offsetAnim, {
+          toValue: 0,
+          duration: animationTiming,
+          useNativeDriver: true
+        }),
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: animationTiming / 2,
+          useNativeDriver: true
+        })
+      ]),
+      Animated.delay(delay),
+      Animated.parallel([
+        Animated.timing(offsetAnim, {
+          toValue: startPoint,
+          duration: animationTiming,
+          useNativeDriver: true
+        }),
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: animationTiming * 2,
+          useNativeDriver: true
+        })
+      ])
+    ]).start(onClose)
+  }
 
   return (
     <Animated.View
@@ -95,7 +94,7 @@ const ForegroundNotification = ({ img, title, description, delay = 1500, onClose
           ]
         }
       ]}
-      ref={animatedEl}
+      onLayout={onViewLayout}
     >
       <Card style={styles.card}>
         <CardItem header style={styles.item}>
