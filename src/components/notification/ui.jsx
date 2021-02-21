@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from 'react'
-import { StyleSheet, View, Animated } from 'react-native'
+import React, { useRef } from 'react'
+import { StyleSheet, View, Animated, TouchableOpacity } from 'react-native'
 import { Card, CardItem, Text, Thumbnail } from 'native-base'
 import Constants from 'expo-constants'
 
@@ -44,15 +44,39 @@ const ForegroundNotification = ({
   title,
   description,
   delay = 1500,
-  onClose
+  onClose,
+  onClick
 }) => {
-  let fadeAnim = useRef(new Animated.Value(0)).current
-  let offsetAnim = useRef(new Animated.Value(0)).current
+  const fadeAnim = useRef(new Animated.Value(0)).current
+  const offsetAnim = useRef(new Animated.Value(0)).current
 
-  onViewLayout = (event) => {
+  let animationRef
+  let animationOutRef
+
+  const onPress = ()=> {
+    animationRef.stop()
+    animationOutRef.start()
+    onClick && onClick()
+  }
+
+  const onViewLayout = (event) => {
     const startPoint = -event.nativeEvent.layout.height
     offsetAnim.setValue(startPoint)
-    Animated.sequence([
+
+    animationOutRef = Animated.parallel([
+      Animated.timing(offsetAnim, {
+        toValue: startPoint,
+        duration: animationTiming,
+        useNativeDriver: true
+      }),
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: animationTiming * 2,
+        useNativeDriver: true
+      })
+    ])
+    
+    animationRef = Animated.sequence([
       Animated.parallel([
         Animated.timing(offsetAnim, {
           toValue: 0,
@@ -66,19 +90,10 @@ const ForegroundNotification = ({
         })
       ]),
       Animated.delay(delay),
-      Animated.parallel([
-        Animated.timing(offsetAnim, {
-          toValue: startPoint,
-          duration: animationTiming,
-          useNativeDriver: true
-        }),
-        Animated.timing(fadeAnim, {
-          toValue: 1,
-          duration: animationTiming * 2,
-          useNativeDriver: true
-        })
-      ])
-    ]).start(onClose)
+      animationOutRef
+    ])
+
+    animationRef.start(onClose)
   }
 
   return (
@@ -96,27 +111,29 @@ const ForegroundNotification = ({
       ]}
       onLayout={onViewLayout}
     >
-      <Card style={styles.card}>
-        <CardItem header style={styles.item}>
-          <Thumbnail small source={{ uri: img }} />
-          <View style={styles.body}>
-            <Text style={styles.text}>
-              {title.map(({ txt, type }, idx) => {
-                if (type && styles[type]) {
-                  return (
-                    <Text key={idx} style={styles[type]}>
-                      {txt}
-                    </Text>
-                  )
-                } else {
-                  return <Text key={idx}>{txt}</Text>
-                }
-              })}
-            </Text>
-            <Text style={styles.description}>{description}</Text>
-          </View>
-        </CardItem>
-      </Card>
+      <TouchableOpacity onPress={onPress}>
+        <Card style={styles.card}>
+          <CardItem header style={styles.item}>
+            <Thumbnail small source={{ uri: img }} />
+            <View style={styles.body}>
+              <Text style={styles.text}>
+                {title.map(({ txt, type }, idx) => {
+                  if (type && styles[type]) {
+                    return (
+                      <Text key={idx} style={styles[type]}>
+                        {txt}
+                      </Text>
+                    )
+                  } else {
+                    return <Text key={idx}>{txt}</Text>
+                  }
+                })}
+              </Text>
+              <Text style={styles.description}>{description}</Text>
+            </View>
+          </CardItem>
+        </Card>
+      </TouchableOpacity>
     </Animated.View>
   )
 }

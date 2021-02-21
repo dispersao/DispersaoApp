@@ -39,13 +39,15 @@ let backListener = Notifications.addNotificationResponseReceivedListener(
   (response) => {
     const {
       notification: {
-        request: {
-          content: { data }
-        }
+        request
       }
     } = response
+    const { data } = request.content
     console.log(`interacted with `, JSON.stringify(data))
-    lastInterNoti = data
+    lastInterNoti = {
+      ...data,
+      id: request.identifier
+    }
   }
 )
 
@@ -90,30 +92,31 @@ const NotificationManager = ({
       setLastInteractedNotification(lastInterNoti)
       addNotification({
         ...lastInterNoti,
-        id: totalNotifications + 1,
+        interacted: true, 
         received_at: performance.now()
       })
-      setInteractedNotification(totalNotifications + 1)
+      setInteractedNotification(lastInterNoti.id)
     }
   }, [JSON.stringify(lastInterNoti)])
 
   useEffect(() => {
     let frontListener = Notifications.addNotificationReceivedListener(
       ({
-        request: {
-          content: { data }
-        }
+        request
       }) => {
+        const {data} = request.content
+        console.log(request)
         if (
           JSON.stringify(data) !== JSON.stringify(lastFrontReceivedNotification)
         ) {
           setLastFrontReceivedNotification(data)
           addNotification({
             ...data,
-            id: totalNotifications + 1,
+            id: request.identifier,
+            interacted: false,
             received_at: performance.now()
           })
-          setForegroundNotification(totalNotifications + 1)
+          setForegroundNotification(request.identifier)
         }
         console.log(`received in foreground`, data)
       }

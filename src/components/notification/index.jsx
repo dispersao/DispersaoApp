@@ -3,13 +3,16 @@ import { connect } from 'react-redux'
 import { toJS } from '../../utils/immutableToJs'
 import UI from './ui'
 import { getLastForegroundNotification } from '../../modules/notification/selector'
-import { clearForegroundNotification } from '../../modules/notification/actions'
+import { clearForegroundNotification, setNotificationViewed } from '../../modules/notification/actions'
 import { useTranslation } from 'react-i18next'
+import { useNavigation } from '@react-navigation/native'
 
 import { timeDifference } from '../../utils/stringUtils'
 
-const NotificationDrawer = ({ notification, clearNotification }) => {
+const NotificationDrawer = ({ notification, clearNotification, setViewedNotification }) => {
   const { t } = useTranslation()
+  const { navigate } = useNavigation()
+
 
   let { thumb, published_at, type, author, refName } = notification || {}
 
@@ -20,6 +23,13 @@ const NotificationDrawer = ({ notification, clearNotification }) => {
 
   const onNotificationClosed = () => {
     clearNotification()
+  }
+
+  const navigateToNotification = () => {
+    setViewedNotification(notification.id)
+    navigate('Feed', {
+      interacted: notification
+    })
   }
 
   useEffect(()=>{
@@ -52,6 +62,7 @@ const NotificationDrawer = ({ notification, clearNotification }) => {
           delay={delay}
           description={description}
           onClose={onNotificationClosed}
+          onClick={navigateToNotification}
           />
       )|| null}
     </>
@@ -63,7 +74,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  clearNotification: ()=> dispatch(clearForegroundNotification())
+  clearNotification: ()=> dispatch(clearForegroundNotification()),
+  setViewedNotification: (id)=> dispatch(setNotificationViewed(id))
 })
 
 export default connect(

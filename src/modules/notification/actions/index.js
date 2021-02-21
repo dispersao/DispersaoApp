@@ -17,7 +17,7 @@ export const addNotification = (notification) => ({
 export const setNotificationViewed = (notification) => ({
   type: SET_NOTIFICATION_VIEWED,
   payload: {
-    notification: normalizeNotification(notification).entities
+    notification
   }
 })
 

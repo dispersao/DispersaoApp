@@ -13,18 +13,16 @@ const reducer = (state = Map({lastInteracted: null, lastForeground: null}), acti
   switch(action.type) {
     
     case ADD_NOTIFICATION:
-      return state.mergeDeep(
+      const newState = state.mergeDeep(
         fromJS({
           data: action.payload.notifications
         })
       )
+      console.log(state.toJS(), newState.toJS())
+      return newState
 
     case SET_NOTIFICATION_VIEWED:
-      return state.mergeDeep(
-        fromJS({
-          data: action.payload.notification
-        })
-      )
+      return state.setIn(['data', action.payload.notification, 'interacted'], true)
 
     case SET_INTERACTED_NOTIFICATION:
       return state.set('lastInteracted', action.payload.notification)

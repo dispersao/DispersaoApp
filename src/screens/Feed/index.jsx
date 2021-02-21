@@ -1,9 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useState,
-  useRef
-} from 'react'
+import React, { useCallback, useEffect, useState, useRef } from 'react'
 import { connect } from 'react-redux'
 import Constants from 'expo-constants'
 import { CommonActions } from '@react-navigation/native'
@@ -19,7 +14,10 @@ import {
 
 import { Content } from 'native-base'
 
-import { getFetchedAt, getSessioncontentListByType } from '../../modules/sessioncontent/selector'
+import {
+  getFetchedAt,
+  getSessioncontentListByType
+} from '../../modules/sessioncontent/selector'
 
 import Post from './components/Post.jsx'
 
@@ -48,7 +46,15 @@ const styles = StyleSheet.create({
   }
 })
 
-const Feed = ({ posts, loading, fetchedAt, fetch, navigation: { navigate, dispatch }, route, clearNotification }) => {
+const Feed = ({
+  posts,
+  loading,
+  fetchedAt,
+  fetch,
+  navigation: { navigate, dispatch },
+  route,
+  clearNotification
+}) => {
   const { t } = useTranslation()
 
   const notification = route?.params?.interacted
@@ -57,14 +63,14 @@ const Feed = ({ posts, loading, fetchedAt, fetch, navigation: { navigate, dispat
 
   const [contentYs, setContentYs] = useState({})
   const [scrollTo, setScrollTo] = useState({})
-  
+
   const contentRef = useRef(null)
 
   useEffect(() => {
-    if (interactedContent){
+    if (interactedContent) {
       if (contentYs.hasOwnProperty(interactedContent)) {
         setScrollTo(contentYs[interactedContent])
-      } else if(fetchedAt < received_at && !loading){
+      } else if (fetchedAt < received_at && !loading) {
         fetch && fetch()
       }
     }
@@ -117,10 +123,6 @@ const Feed = ({ posts, loading, fetchedAt, fetch, navigation: { navigate, dispat
             />
           }
         >
-          {(interactedContent && (
-            <Text>{JSON.stringify(interactedContent)}</Text>
-          )) ||
-            null}
           {text && (
             <View style={styles.textContainer}>
               <Text style={styles.text}>{t(text)}</Text>
@@ -152,7 +154,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  clearNotification: ()=> dispatch(clearInteractedNotification())
+  clearNotification: () => dispatch(clearInteractedNotification())
 })
 
 export default connect(

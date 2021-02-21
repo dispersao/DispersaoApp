@@ -30,7 +30,7 @@ export const getNotificationsCount = createSelector(
 export const getNotificationByNotificationId = createCachedSelector(
   [getState, getId],
   (notifications, id) => {
-    if (!notifications || !Number.isInteger(id)) {
+    if (!notifications || !id) {
       return
     }
     return formatNotification(notifications.get(id.toString()))
@@ -40,7 +40,7 @@ export const getNotificationByNotificationId = createCachedSelector(
 export const getLastInteractedNotification = createSelector(
   [getState, getLastInteracted],
   (notifications, id) => {
-    if (!notifications || !Number.isInteger(id)) {
+    if (!notifications || !id) {
       return
     }
     return formatNotification(notifications.get(id.toString()))
@@ -50,10 +50,20 @@ export const getLastInteractedNotification = createSelector(
 export const getLastForegroundNotification = createSelector(
   [getState, getLastForeground],
   (notifications, id) => {
-    if (!notifications || !Number.isInteger(id)) {
+    if (!notifications || !id) {
       return
     }
     return formatNotification(notifications.get(id.toString()))
+  }
+)
+
+export const getBadgeCount = createSelector(
+  [getState, getLastForeground],
+  (notifications, foreground) => {
+    if (!notifications) {
+      return
+    }
+    return notifications.filter(not => !not.get('interacted') && not.get('id') !== foreground).size
   }
 )
 

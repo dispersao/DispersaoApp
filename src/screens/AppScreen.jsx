@@ -14,10 +14,12 @@ import { useNavigation } from '@react-navigation/native'
 import { toJS } from '../utils/immutableToJs'
 
 import { getLastInteractedNotification } from '../modules/notification/selector'
+import { getBadgeCount } from '../modules/notification/selector'
 const Tab = createBottomTabNavigator()
 
 const AppScreen = ({
-  interactedNotification
+  interactedNotification,
+  feedBadgeCount
 }) => {
 
   const { navigate } = useNavigation()
@@ -65,7 +67,9 @@ const AppScreen = ({
           }}>
           <Tab.Screen
             name="Feed"
-            component={FeedScreen} />
+            component={FeedScreen}
+            options={{ tabBarBadge: feedBadgeCount || null }}
+             />
           {/* <Tab.Screen
             name="Notifications"
               component={NotificationsScreen} /> */}
@@ -90,6 +94,7 @@ const AppScreen = ({
 
 const mapStateToProps = (state) => ({
   interactedNotification: getLastInteractedNotification(state),
+  feedBadgeCount: getBadgeCount(state)
 })
 
  export default connect(mapStateToProps)(toJS(AppScreen))
