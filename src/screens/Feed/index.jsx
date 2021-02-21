@@ -7,6 +7,7 @@ import React, {
 import { connect } from 'react-redux'
 import Constants from 'expo-constants'
 import { CommonActions } from '@react-navigation/native'
+import NotificationDrawer from '../../components/notification'
 
 import {
   SafeAreaView,
@@ -103,42 +104,46 @@ const Feed = ({ posts, loading, fetchedAt, fetch, navigation: { navigate, dispat
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Content
-        padder
-        ref={contentRef}
-        refreshControl={
-          <RefreshControl
-            refreshing={loading}
-            onRefresh={onRefresh}
-            colors={['#999']}
-          />
-        }
-      >
-        {(interactedContent && (
-          <Text>{JSON.stringify(interactedContent)}</Text>
-        )) ||
-          null}
-        {text && (
-          <View style={styles.textContainer}>
-            <Text style={styles.text}>{t(text)}</Text>
-          </View>
-        )}
-        {(posts &&
-          posts.length &&
-          posts.map((post, index) => {
-            return (
-              <Post
-                key={index}
-                headerClick={handleHeaderClick}
-                onLayout={onLayoutEvent}
-                {...post}
-              />
-            )
-          })) ||
-          null}
-      </Content>
-    </SafeAreaView>
+    <>
+      
+      <SafeAreaView style={styles.container}>
+        <Content
+          padder
+          ref={contentRef}
+          refreshControl={
+            <RefreshControl
+              refreshing={loading}
+              onRefresh={onRefresh}
+              colors={['#999']}
+            />
+          }
+        >
+          {(interactedContent && (
+            <Text>{JSON.stringify(interactedContent)}</Text>
+          )) ||
+            null}
+          {text && (
+            <View style={styles.textContainer}>
+              <Text style={styles.text}>{t(text)}</Text>
+            </View>
+          )}
+          {(posts &&
+            posts.length &&
+            posts.map((post, index) => {
+              return (
+                <Post
+                  key={index}
+                  headerClick={handleHeaderClick}
+                  onLayout={onLayoutEvent}
+                  {...post}
+                />
+              )
+            })) ||
+            null}
+        </Content>
+      </SafeAreaView>
+      <NotificationDrawer />
+    </>
   )
 }
 

@@ -65,6 +65,10 @@
     "info": {
       "text": "Dispersão é uma experiência audiovisual interativa, com edição em tempo real, projetado para salas de exibição, onde a experiência imersiva do cinema é complementada – mas também destruída – pelas pequenas telas dos smartphones.\n\nAtravés de um aplicativo que simula o funcionamento de uma rede social, o público vai interagir e interferir na narrativa da tela grande. Na maior parte do tempo, essa tela tenta atrair o espectador para a história. Mas em outros instantes, uma câmera distraída, uma cena menos intensa, pode deixar o espectador livre para o devaneio. Esses momentos, somados ao instinto mecânico de conferir o celular a todo momento, são seminais para o projeto.\n\nEm Dispersão, a montagem do filme é decidida por algoritmos: um programa de computador avalia a reação do público em conjunto e dita os rumos da história, sem deixar de fazer uso de alguma aleatoriedade. O envio dos materiais ao celulares também são distribuídos através de uma mistura de acaso e inteligência artificial.\n\nO filme está sendo realizado graças ao patrocínio do Oi e apoio cultural do Oi Futuro, o instituto de inovação e criatividade da Oi. O aplicativo será desenvolvido graças ao patrocínio da Prefeitura de Niterói.",
       "link": "Conheça mais sobre o projeto no site do Dispersão."
+    },
+    "notifications": {
+      "post": " published something",
+      "comment": " commented a post from "
     }
   }
 }
