@@ -2,7 +2,8 @@ import { fromJS, Map } from 'immutable'
 
 import {
   SESSIONCONTENTS_FETCH_SUCCESS,
-  SESSIONCONTENTS_FETCH
+  SESSIONCONTENTS_FETCH,
+  SESSIONCONTENT_VIEWED
 } from '../actions'
 
 import {
@@ -21,6 +22,10 @@ const reducer = (state = Map({loading: false, fetched_at: null}), action) => {
           data: action.payload.sessioncontents
         })
       )
+
+    case SESSIONCONTENT_VIEWED:
+      return state.setIn(['data', action.payload.sessioncontent.toString(), 'viewed'], true)
+
     case LIKE_CREATED_SUCCESS:
       let newState = state
       const likes = Object.values(action.payload.like)

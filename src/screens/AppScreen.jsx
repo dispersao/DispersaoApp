@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import FeedScreen from './Feed/index.jsx'
 import ProfileHub from './Profiles/index.jsx'
@@ -70,9 +70,6 @@ const AppScreen = ({
             component={FeedScreen}
             options={{ tabBarBadge: feedBadgeCount || null }}
              />
-          {/* <Tab.Screen
-            name="Notifications"
-              component={NotificationsScreen} /> */}
           <Tab.Screen
             name="Profiles"
             component={ProfileHub}

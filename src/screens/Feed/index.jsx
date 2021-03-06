@@ -26,6 +26,7 @@ import { toJS } from '../../utils/immutableToJs.jsx'
 
 import { useTranslation } from 'react-i18next'
 import { clearInteractedNotification } from '../../modules/notification/actions'
+import { getBadgeCount } from '../../modules/notification/selector'
 
 const styles = StyleSheet.create({
   container: {
@@ -51,11 +52,14 @@ const Feed = ({
   loading,
   fetchedAt,
   fetch,
-  navigation: { navigate, dispatch },
+  navigation,
   route,
-  clearNotification
+  clearNotification,
+  badgeCount
 }) => {
   const { t } = useTranslation()
+
+  const { navigate, dispatch } = navigation
 
   const notification = route?.params?.interacted
   const interactedContent = notification?.sessioncontent
@@ -64,12 +68,21 @@ const Feed = ({
   const [contentYs, setContentYs] = useState({})
   const [scrollTo, setScrollTo] = useState({})
 
-  const contentRef = useRef(null)
+  const contentUIRef = useRef(null)
+
+  useEffect(() => {
+    const tabPress = e => fetch && fetch()
+    if (navigation && badgeCount) {
+      navigation.addListener('tabPress', tabPress)
+    }
+    return () => navigation.removeListener('tabPress', tabPress)
+  }, [navigation, badgeCount, fetch])
 
   useEffect(() => {
     if (interactedContent) {
       if (contentYs.hasOwnProperty(interactedContent)) {
-        setScrollTo(contentYs[interactedContent])
+        contentUIRef.current._root.scrollToPosition(0, contentYs[interactedContent], true)
+        //setScrollTo(contentYs[interactedContent])
       } else if (fetchedAt < received_at && !loading) {
         fetch && fetch()
       }
@@ -77,28 +90,28 @@ const Feed = ({
   }, [interactedContent, contentYs, fetchedAt, fetch, received_at])
 
   useEffect(() => {
-    if (!Number.isNaN(scrollTo) && contentRef?.current?._root) {
-      contentRef.current._root.scrollToPosition(0, scrollTo, false)
-      clearNotification()
+    if (!Number.isNaN(scrollTo) && contentUIRef?.current?._root) {
+      contentUIRef.current._root.scrollToPosition(0, scrollTo, false)
+      //clearNotification()
     }
-  }, [scrollTo, contentRef])
+  }, [scrollTo, contentUIRef])
 
   const onRefresh = useCallback(() => {
     fetch && fetch()
     dispatch(CommonActions.setParams({ interacted: null }))
   }, [loading])
 
-  const handleHeaderClick = (contentcreator) => {
+  const handleHeaderClick = contentcreator => {
     navigate('Profiles', {
       screen: 'Profile',
       params: { contentcreator }
     })
   }
 
-  const onLayoutEvent = (sessioncontent, y) => {
+  const onLayoutEvent = (contentId, y) => {
     setContentYs({
       ...contentYs,
-      [sessioncontent]: y
+      [contentId]: y
     })
   }
 
@@ -114,7 +127,7 @@ const Feed = ({
       <SafeAreaView style={styles.container}>
         <Content
           padder
-          ref={contentRef}
+          ref={contentUIRef}
           refreshControl={
             <RefreshControl
               refreshing={loading}
@@ -128,7 +141,7 @@ const Feed = ({
               <Text style={styles.text}>{t(text)}</Text>
             </View>
           )}
-          {(posts &&
+          {(posts && !loading &&
             posts.length &&
             posts.map((post, index) => {
               return (
@@ -136,6 +149,7 @@ const Feed = ({
                   key={index}
                   headerClick={handleHeaderClick}
                   onLayout={onLayoutEvent}
+                  animateOnMount={true}
                   {...post}
                 />
               )
@@ -148,12 +162,14 @@ const Feed = ({
   )
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   posts: getSessioncontentListByType(state, { types: ['post'] }),
-  fetchedAt: getFetchedAt(state)
+  comments: getSessioncontentListByType(state, { types: ['comments'] }),
+  fetchedAt: getFetchedAt(state),
+  badgeCount: getBadgeCount(state)
 })
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   clearNotification: () => dispatch(clearInteractedNotification())
 })
 

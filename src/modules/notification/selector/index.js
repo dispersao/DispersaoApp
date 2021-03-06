@@ -2,10 +2,13 @@ import { createSelector } from 'reselect'
 import createCachedSelector from 're-reselect'
 import config from '../../../../config.json'
 
+import { getState as getSessionContents } from '../../sessioncontent/selector'
 const getState = (state) => state.notifications.get('data')
 const getId = (state, props) => props.id
-export const getLastInteracted = (state, props) => state.notifications.get('lastInteracted')
-export const getLastForeground = (state, props) => state.notifications.get('lastForeground')
+export const getLastInteracted = (state, props) =>
+  state.notifications.get('lastInteracted')
+export const getLastForeground = (state, props) =>
+  state.notifications.get('lastForeground')
 
 export const getNotificationsAsList = createSelector(
   [getState],
@@ -13,7 +16,7 @@ export const getNotificationsAsList = createSelector(
     if (!notifications) {
       return
     }
-    return notifications.valueSeq().map(n => formatNotification(n))
+    return notifications.valueSeq().map((n) => formatNotification(n))
   }
 )
 
@@ -50,6 +53,7 @@ export const getLastInteractedNotification = createSelector(
 export const getLastForegroundNotification = createSelector(
   [getState, getLastForeground],
   (notifications, id) => {
+    console.log('getLastForegroundNotification', notifications, id)
     if (!notifications || !id) {
       return
     }
@@ -58,12 +62,17 @@ export const getLastForegroundNotification = createSelector(
 )
 
 export const getBadgeCount = createSelector(
-  [getState, getLastForeground],
-  (notifications, foreground) => {
+  [getState, getSessionContents, getLastForeground],
+  (notifications, sessioncontents, foreground) => {
     if (!notifications) {
       return
     }
-    return notifications.filter(not => !not.get('interacted') && not.get('id') !== foreground).size
+    return notifications.filter(
+      (not) =>{
+        const notificationSessioncontent = sessioncontents.get(not.get('sessioncontent').toString())
+        return not.get('id') !== foreground && (!notificationSessioncontent || !notificationSessioncontent.get('viewed'))
+      }
+    ).size
   }
 )
 
@@ -75,4 +84,3 @@ const formatNotification = (notification) => {
     return notification
   }
 }
-

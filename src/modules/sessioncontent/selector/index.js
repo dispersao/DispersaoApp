@@ -1,6 +1,6 @@
 import createCachedSelector from 're-reselect'
 
-const getState = (state) => state.sessioncontents.get('data')
+export const getState = (state) => state.sessioncontents.get('data')
 const getType = (state, props) => props.type
 const getTypes = (state, props) => props.types
 const getId = (state, props) => props.id
@@ -31,3 +31,13 @@ export const getSessioncontentByContentId = createCachedSelector(
     return sessioncontents.find(sescon => sescon.get(type) === contentId)
   }
 )(getTypeAndIdJSON)
+
+export const getSessionContentViewed = createCachedSelector(
+  [getState, getId],
+  (sessioncontents, id) => {
+    if (!sessioncontents || !id) {
+      return
+    }
+    return sessioncontents.get(id.toString()).get('viewed')
+  }
+)(getId)

@@ -25,9 +25,11 @@ const reducer = (state = Map({lastInteracted: null, lastForeground: null}), acti
       return state.setIn(['data', action.payload.notification, 'interacted'], true)
 
     case SET_INTERACTED_NOTIFICATION:
+      console.log('set interacted notification', action.payload.notification)
       return state.set('lastInteracted', action.payload.notification)
     
     case CLEAR_INTERACTED_NOTIFICATION:
+      console.log('clearing interacted notification')
       return state.set('lastInteracted', null)
 
     case SET_FOREGROUND_NOTIFICATION:

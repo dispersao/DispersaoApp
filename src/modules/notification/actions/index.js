@@ -1,4 +1,4 @@
-import { normalizeNotificationList, normalizeNotification } from '../schema'
+import { normalizeNotificationList } from '../schema'
 
 export const ADD_NOTIFICATION = 'ADD_NOTIFICATION'
 export const SET_NOTIFICATION_VIEWED = 'SET_NOTIFICATION_VIEWED'
