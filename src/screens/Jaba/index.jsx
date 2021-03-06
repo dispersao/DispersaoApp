@@ -121,12 +121,12 @@ const JabaScreen = ({
             <Row size={5}>
               <Logo />
             </Row>
-           <Row size={1}>
+           {/* <Row size={1}>
               <InitButton 
                 enabled={true}
                 text={'delete user'}
                 onPress={deleteUser}/>
-            </Row>
+            </Row> */}
             {/* <Row size={1}>
               <Informative 
                 text={t('jaba.infoText')} />

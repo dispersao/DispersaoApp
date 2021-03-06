@@ -25,7 +25,6 @@ import WithLoadedElement from '../../HOC/WithLoadedData.jsx'
 import { toJS } from '../../utils/immutableToJs.jsx'
 
 import { useTranslation } from 'react-i18next'
-import { clearInteractedNotification } from '../../modules/notification/actions'
 import { getBadgeCount } from '../../modules/notification/selector'
 
 const styles = StyleSheet.create({
@@ -54,7 +53,6 @@ const Feed = ({
   fetch,
   navigation,
   route,
-  clearNotification,
   badgeCount
 }) => {
   const { t } = useTranslation()
@@ -66,7 +64,6 @@ const Feed = ({
   const received_at = notification?.received_at
 
   const [contentYs, setContentYs] = useState({})
-  const [scrollTo, setScrollTo] = useState({})
 
   const contentUIRef = useRef(null)
 
@@ -82,19 +79,12 @@ const Feed = ({
     if (interactedContent) {
       if (contentYs.hasOwnProperty(interactedContent)) {
         contentUIRef.current._root.scrollToPosition(0, contentYs[interactedContent], true)
-        //setScrollTo(contentYs[interactedContent])
       } else if (fetchedAt < received_at && !loading) {
         fetch && fetch()
       }
     }
   }, [interactedContent, contentYs, fetchedAt, fetch, received_at])
 
-  useEffect(() => {
-    if (!Number.isNaN(scrollTo) && contentUIRef?.current?._root) {
-      contentUIRef.current._root.scrollToPosition(0, scrollTo, false)
-      //clearNotification()
-    }
-  }, [scrollTo, contentUIRef])
 
   const onRefresh = useCallback(() => {
     fetch && fetch()
@@ -169,13 +159,9 @@ const mapStateToProps = state => ({
   badgeCount: getBadgeCount(state)
 })
 
-const mapDispatchToProps = dispatch => ({
-  clearNotification: () => dispatch(clearInteractedNotification())
-})
-
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  null
 )(
   WithLoadedElement(toJS(Feed), {
     types: ['post', 'comment', 'profile']

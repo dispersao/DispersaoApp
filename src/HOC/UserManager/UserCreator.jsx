@@ -14,7 +14,7 @@ import { toJS } from '../../utils/immutableToJs.jsx'
 
 import { connect } from 'react-redux'
 
-import { Alert } from "react-native"
+import { Alert, BackHandler } from "react-native"
 
 import { 
   findAppUser, 
@@ -96,7 +96,10 @@ const UserCreator = ({
         t('general.error.userCreation'), 
         [{
           text: 'OK',
-          onPress: () => setCraetionerror(true)
+          onPress: () => {
+            setCraetionerror(true)
+            BackHandler.exitApp()
+          }
         }]
       )
     }

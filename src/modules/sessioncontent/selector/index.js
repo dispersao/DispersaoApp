@@ -18,6 +18,7 @@ export const getSessioncontentListByType = createCachedSelector(
     }
     return sessioncontents
       .filter(sescon => !types || !types.length || types.some(t => sescon.get(t)))
+      .sort((a, b) =>  new Date(b.get('updated_at')) - new Date(a.get('updated_at')))
       .valueSeq()
   }
 )(getTypesJSON)

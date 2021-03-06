@@ -30,11 +30,9 @@ const AnimatedOrangeBackground = ({
 }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current
   
-  console.log(id, interactedContent)
-
   const onClose = ()=> {
     if (interactedContent && interactedContent === id) {
-      //clearNotification()
+      clearNotification()
     }
   }
 
@@ -61,15 +59,11 @@ const AnimatedOrangeBackground = ({
   ]}/>
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const interactedContent = getLastInteractedNotification(state)
-  console.log('mapStateToProps', interactedContent)
-  return {
+const mapStateToProps = (state, ownProps) => ({
   viewed: getSessionContentViewed(state, ownProps),
   badgeCount: getBadgeCount(state),
-  interactedContent: interactedContent?.get('sessioncontent')
-  }
-}
+  interactedContent: getLastInteractedNotification(state)?.get('sessioncontent')
+})
 
 const mapDispatchToProps = (dispatch) => ({
   clearNotification: ()=> dispatch(clearInteractedNotification())

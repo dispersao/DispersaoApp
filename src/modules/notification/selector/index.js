@@ -53,7 +53,6 @@ export const getLastInteractedNotification = createSelector(
 export const getLastForegroundNotification = createSelector(
   [getState, getLastForeground],
   (notifications, id) => {
-    console.log('getLastForegroundNotification', notifications, id)
     if (!notifications || !id) {
       return
     }
