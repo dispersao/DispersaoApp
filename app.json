@@ -10,7 +10,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.4",
+    "version": "1.0.5",
     "orientation": "default",
     "primaryColor": "#cccccc",
     "icon": "./assets/images/app_icon.png",
@@ -29,12 +29,13 @@
     "android": {
       "package": "net.dispersao.filmeapp",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 3,
+      "versionCode": 5,
       "permissions": [
         "VIBRATE"
       ],
       "adaptiveIcon": {
-        "backgroundImage": "./assets/images/app_icon.png"
+        "foregroundImage": "./assets/images/app_icon.png",
+        "backgroundColor": "#d96235"
       },
       "useNextNotificationsApi": true
     },
