@@ -49,7 +49,9 @@ const Comment = ({
   return (
     <View
       onLayout={event => {
-        onLayout(id, event.nativeEvent.layout.y)
+        const h = event.nativeEvent.layout.height
+        const y = event.nativeEvent.layout.y
+        onLayout && onLayout(id, y, h)
       }}
       style={styles.itemContainer}
     >

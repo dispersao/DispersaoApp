@@ -9,7 +9,8 @@ import {
   StyleSheet,
   RefreshControl,
   View,
-  Text
+  Text,
+  Dimensions
 } from 'react-native'
 
 import { Content } from 'native-base'
@@ -83,18 +84,23 @@ const Feed = ({
   useEffect(() => {
     if (interactedContent) {
       if (contentYs.hasOwnProperty(interactedContent)) {
-        setScrollTo(contentYs[interactedContent])
+        setScrollTo(calculateScrollTo(contentYs[interactedContent]))
       } else if (fetchedAt < received_at && !loading) {
         fetch && fetch()
       }
     }
   }, [interactedContent, contentYs, fetchedAt, fetch, received_at])
 
-  useEffect(()=> {
-    if(contentUIRef.current){
+  useEffect(() => {
+    if (contentUIRef.current) {
       contentUIRef.current._root.scrollToPosition(0, scrollTo, true)
     }
   }, [scrollTo])
+
+  const calculateScrollTo = ({ y, h }) => {
+    const margin = (Dimensions.get('window').height - h) / 2
+    return Math.max(0, y - margin)
+  }
 
   const onRefresh = useCallback(() => {
     fetch && fetch()
@@ -108,10 +114,13 @@ const Feed = ({
     })
   }
 
-  const onLayoutEvent = (contentId, y) => {
+  const onLayoutEvent = (contentId, y, h) => {
     setContentYs({
       ...contentYs,
-      [contentId]: y
+      [contentId]: {
+        y,
+        h
+      }
     })
   }
 
@@ -141,7 +150,8 @@ const Feed = ({
               <Text style={styles.text}>{t(text)}</Text>
             </View>
           )}
-          {(posts && !loading &&
+          {(posts &&
+            !loading &&
             posts.length &&
             posts.map((post, index) => {
               return (

@@ -26,8 +26,8 @@ const styles = StyleSheet.create({
   }
 })
 
-const Post = (props) => {
-  const { 
+const Post = props => {
+  const {
     id,
     viewed,
     element,
@@ -48,29 +48,29 @@ const Post = (props) => {
     }
   }, [viewed])
 
-  const onLayoutEvent = (event) => {
+  const onLayoutEvent = event => {
     const y = event.nativeEvent.layout.y
+    const h = event.nativeEvent.layout.height
     setElementY(y)
     if (onLayout) {
-      onLayout(id, y)
+      onLayout(id, y, h)
       if (Object.keys(commentsY).length) {
         Object.entries(commentsY).forEach(([key, value]) => {
-          onLayout(key, value + y)
+          onLayout(key, value.y + y, value.h)
         })
       }
     }
   }
 
-  const onCommentLayout = (id, y) => {
-    if(onLayout) {
-      // if(!Number.isNaN(elementY)) {
-      //   onLayout(id, elementY + y)
-      // } else {
-        setCommentsY({
-          ...commentsY,
-          [id]: y
-        })
-      //}
+  const onCommentLayout = (id, y, h) => {
+    if (onLayout) {
+      setCommentsY({
+        ...commentsY,
+        [id]: {
+          y,
+          h
+        }
+      })
     }
   }
 
@@ -88,18 +88,20 @@ const Post = (props) => {
         <PostFooter {...props} />
       </CardItem>
       {comments.map((comment, index) => {
-        return (<Comment 
-          key={index}
-          footer={index === comments.length - 1}
-          onLayout={onCommentLayout}
-          animateOnMount={animateOnMount}
-          {...comment} />)
+        return (
+          <Comment
+            key={index}
+            footer={index === comments.length - 1}
+            onLayout={onCommentLayout}
+            animateOnMount={animateOnMount}
+            {...comment}
+          />
+        )
       })}
-      {animateOnMount  && <AnimatedOrangeBackground id={id} />}
+      {animateOnMount && <AnimatedOrangeBackground id={id} />}
     </Card>
   )
 }
-
 
 const mapStateToProps = (state, ownProps) => ({
   element: ownProps.postElement || getPostByPostId(state, ownProps),
