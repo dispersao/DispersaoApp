@@ -64,11 +64,16 @@ const Feed = ({
   const received_at = notification?.received_at
 
   const [contentYs, setContentYs] = useState({})
+  const [scrollTo, setScrollTo] = useState(0)
 
   const contentUIRef = useRef(null)
 
+  const tabPress = useCallback(() => {
+    fetch && fetch()
+    dispatch(CommonActions.setParams({ interacted: null }))
+  })
+
   useEffect(() => {
-    const tabPress = e => fetch && fetch()
     if (navigation && badgeCount) {
       navigation.addListener('tabPress', tabPress)
     }
@@ -78,13 +83,18 @@ const Feed = ({
   useEffect(() => {
     if (interactedContent) {
       if (contentYs.hasOwnProperty(interactedContent)) {
-        contentUIRef.current._root.scrollToPosition(0, contentYs[interactedContent], true)
+        setScrollTo(contentYs[interactedContent])
       } else if (fetchedAt < received_at && !loading) {
         fetch && fetch()
       }
     }
   }, [interactedContent, contentYs, fetchedAt, fetch, received_at])
 
+  useEffect(()=> {
+    if(contentUIRef.current){
+      contentUIRef.current._root.scrollToPosition(0, scrollTo, true)
+    }
+  }, [scrollTo])
 
   const onRefresh = useCallback(() => {
     fetch && fetch()
