@@ -16,6 +16,8 @@ import { connect } from 'react-redux'
 
 import { Alert, BackHandler } from "react-native"
 
+import { getCurrentLanguage } from '../../translations/i18next'
+
 import { 
   findAppUser, 
   createAppUser,
@@ -62,14 +64,15 @@ const UserCreator = ({
     } else if (expotoken) {
       findUser({expotoken})
     } else {
-      const locale = await retrieveData('language')
+      const locale = getCurrentLanguage()
+      console.log('language = ', locale)
       createUser({ expotoken: null, locale })
     }
   }
 
   const clearDataAndCreateUser = async () => {
     await removeData('appid')
-    const locale = await retrieveData('language')
+    const locale = getCurrentLanguage()
     const data = {
       expotoken: (expotoken || null),
       locale

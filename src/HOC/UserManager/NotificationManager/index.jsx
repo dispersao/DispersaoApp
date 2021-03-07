@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { Alert, Platform, Text } from 'react-native'
+import { Alert, Platform, Vibration } from 'react-native'
 
 import * as Permissions from 'expo-permissions'
 import Constants from 'expo-constants'
@@ -29,7 +29,7 @@ if (Platform.OS === 'android') {
   Notifications.setNotificationChannelAsync('default', {
     name: 'dispersao-posts',
     vibrationPattern: [0, 250, 250, 250],
-    sound: 'default',
+    sound: true,
     priority: Notifications.AndroidImportance.MAX
   })
 }
@@ -52,7 +52,6 @@ let backListener = Notifications.addNotificationResponseReceivedListener(
 )
 
 const NotificationManager = ({
-  totalNotifications = 0,
   addNotification,
   setInteractedNotification,
   setForegroundNotification,
@@ -109,6 +108,7 @@ const NotificationManager = ({
         if (
           JSON.stringify(data) !== JSON.stringify(lastFrontReceivedNotification)
         ) {
+          Vibration.vibrate()
           setLastFrontReceivedNotification(data)
           addNotification({
             ...data,

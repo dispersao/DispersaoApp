@@ -4,8 +4,6 @@ import { useTranslation } from 'react-i18next'
 
 import { updateAppuser } from '../../modules/appuser/actions'
 
-import { storeData } from '../../modules/asyncStorage'
-
 import ForegroundNotification from '../../components/notification'
 
 import { SafeAreaView, StyleSheet } from 'react-native'
@@ -28,7 +26,6 @@ const Languages = ({ updateUser }) => {
 
   const handleClick = (lang) => {
     i18n.changeLanguage(lang)
-    storeData('language', lang)
     updateUser(lang)
   }
 
