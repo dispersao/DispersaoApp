@@ -13,9 +13,9 @@ import {
   addNotification,
   setInteractedNotification,
   setForegroundNotification
-} from '../../../modules/notification/actions'
+} from '../../modules/notification/actions'
 
-import { getNotificationsCount } from '../../../modules/notification/selector'
+import { getNotificationsCount } from '../../modules/notification/selector'
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({

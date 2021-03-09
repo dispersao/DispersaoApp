@@ -19,7 +19,7 @@ const TIMEOUT_SPLASH = 500
 import { getAvailableScripts } from '../../modules/script/selector'
 import { fetchAvailableScripts } from '../../modules/script/actions'
 
-import NotificationManager from './NotificationManager/index.jsx'
+import NotificationManager from './NotificationManager.jsx'
 import UserCreator from './UserCreator.jsx'
 
 const UserManager = ({
