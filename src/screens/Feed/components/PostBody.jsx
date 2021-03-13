@@ -10,10 +10,12 @@ import {
   Image
 } from "react-native"
 
+import { useNavigation } from '@react-navigation/native'
+
+import ParsedText from 'react-native-parsed-text'
 
 import {
-   Body, 
-   Text 
+   Body 
 } from "native-base"
 
 import VideoPlayer from '../../../components/videoPlayer'
@@ -42,6 +44,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     paddingHorizontal: 5,
     paddingBottom: 10
+  },
+  username: {
+    color: '#d96235'
   }
 })
 
@@ -53,19 +58,50 @@ const PostBody = ({
 
   const [pageIsMounted, setPageIsMounted] = useState(true)
 
+  const { navigate } = useNavigation()
+
+  let pattern = /\[((@)([^:]+)):([^\]]+)\]/i
+
   useFocusEffect(useCallback(() => {
     setPageIsMounted(true)
     return () => {
       setPageIsMounted(false)
     }
-  }), [])
+  }, []))
+
+  const renderText = (matchingString, matches) => {
+    let match = matchingString.match(pattern)
+    return `${match[3]}`
+  }
+
+  const handleNamePress = (name, matchIndex) => {
+    let match = name.match(pattern)
+    
+    navigate('Profiles', {
+      screen: 'Profile',
+      params: { contentcreator: parseInt(match[4]) }
+    })
+  }
 
   return (
     <Body style={styles.container}>
       {content &&
-        <Text style={styles.text}>
+        <ParsedText
+          style={styles.text}
+          parse={
+            [
+              { 
+                pattern: /\[(@[^:]+):([^\]]+)\]/i, 
+                style: styles.username,
+                onPress: handleNamePress, 
+                renderText: renderText
+              },
+            ]
+          }
+          childrenProps={{allowFontScaling: false}}
+        >
           {content}
-        </Text>
+        </ParsedText>
       }
       {(media && video && 
         <VideoPlayer

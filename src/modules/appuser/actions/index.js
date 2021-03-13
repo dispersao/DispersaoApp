@@ -17,10 +17,11 @@ export const findAppUser = (search) => ({
   }
 })
 
-export const createAppUser = ({expotoken}) => ({
+export const createAppUser = ({expotoken, locale}) => ({
   type: CREATE_APPUSER,
   payload: {
-    expotoken
+    expotoken,
+    locale
   }
 })
 

@@ -1,19 +1,40 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import FeedScreen from './Feed/index.jsx'
-// import NotificationsScreen from './NotificationsScreen'
 import ProfileHub from './Profiles/index.jsx'
 import InfoScreen from './Info/index.jsx'
 import LanguageScreen from '../screens/Languages/index.jsx'
 import { Ionicons } from '@expo/vector-icons'
 
-import { StatusBar } from 'expo-status-bar'
+import { connect } from 'react-redux'
 
+import { StatusBar } from 'expo-status-bar'
+import { useNavigation } from '@react-navigation/native'
+
+import { toJS } from '../utils/immutableToJs'
+
+import { getLastInteractedNotification } from '../modules/notification/selector'
+import { getBadgeCount } from '../modules/notification/selector'
 const Tab = createBottomTabNavigator()
 
-const AppScreen = () => {
+const AppScreen = ({
+  interactedNotification,
+  feedBadgeCount
+}) => {
+
+  const { navigate } = useNavigation()
+
+  useEffect(() => {
+    if(interactedNotification) {
+      navigate('Feed', {
+        interacted: interactedNotification
+      })
+    }
+  }, [JSON.stringify(interactedNotification)])
+
   return (
     <>
+      <StatusBar style="dark" />
       <Tab.Navigator screenOptions={({ route }) => ({
         tabBarIcon: ({color}) => {
           let iconName
@@ -46,10 +67,9 @@ const AppScreen = () => {
           }}>
           <Tab.Screen
             name="Feed"
-            component={FeedScreen} />
-          {/* <Tab.Screen
-            name="Notifications"
-              component={NotificationsScreen} /> */}
+            component={FeedScreen}
+            options={{ tabBarBadge: feedBadgeCount || null }}
+             />
           <Tab.Screen
             name="Profiles"
             component={ProfileHub}
@@ -65,9 +85,13 @@ const AppScreen = () => {
             name="Language"
             component={LanguageScreen} />
         </Tab.Navigator>
-        <StatusBar style="dark" />
       </>
   )
-
 }
- export default AppScreen
+
+const mapStateToProps = (state) => ({
+  interactedNotification: getLastInteractedNotification(state),
+  feedBadgeCount: getBadgeCount(state)
+})
+
+ export default connect(mapStateToProps)(toJS(AppScreen))

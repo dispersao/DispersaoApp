@@ -64,7 +64,7 @@ const ProfileHeader = (props) => {
         <Thumbnail
           big
           style={styles.thumb}
-          source={{uri: photo?.url}}  />
+          source={{uri: photo?.url}} />
         <View style={styles.rightBlock}>
           <Text style={styles.title}>
             {name}
