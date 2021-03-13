@@ -18,7 +18,6 @@ const reducer = (state = Map({lastInteracted: null, lastForeground: null}), acti
           data: action.payload.notifications
         })
       )
-      console.log(state.toJS(), newState.toJS())
       return newState
 
     case SET_NOTIFICATION_VIEWED:

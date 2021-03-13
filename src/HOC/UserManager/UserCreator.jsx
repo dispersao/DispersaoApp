@@ -65,7 +65,7 @@ const UserCreator = ({
       findUser({expotoken})
     } else {
       const locale = getCurrentLanguage()
-      console.log('language = ', locale)
+      // console.log('language = ', locale)
       createUser({ expotoken: null, locale })
     }
   }
@@ -116,7 +116,7 @@ const UserCreator = ({
 
   useEffect(() => {
     if(userId && storedId && userId === storedId){
-      console.log('have the user', userId)
+      // console.log('have the user', userId)
       onUser(userId)
     } else if(creationError) {
       onUser(null, creationError)

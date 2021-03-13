@@ -79,7 +79,6 @@ const JabaScreen = ({
   const deleteUser = async () => {
     await removeData("appid")
     let id = await retrieveData('appid')
-    console.log('is id deleted? ', id)
   }
 
   const { t } = useTranslation()

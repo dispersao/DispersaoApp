@@ -43,7 +43,7 @@ const UserManager = ({
     }, TIMEOUT_SPLASH)
     
     return () => {
-      console.log('clear timer')
+      //console.log('clear timer')
       clearTimeout(timer)
     }
   }, [])
@@ -54,16 +54,16 @@ const UserManager = ({
 
   const userFetched = useCallback((user, error) => {
     if(user) {
-      console.log('setting the user')
+      // console.log('setting the user')
       setUserId(user)
     } else {
-      console.log('userFetched', error, user)
+      // console.log('userFetched', error, user)
     }
   })
 
   useEffect(() => {
     if(timeUp && availableScript && userId){
-      console.log('render children')
+      // console.log('render children')
       setReady(true)
       hideAsync()
     }

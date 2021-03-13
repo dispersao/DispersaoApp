@@ -43,7 +43,7 @@ let backListener = Notifications.addNotificationResponseReceivedListener(
       }
     } = response
     const { data } = request.content
-    console.log(`interacted with `, JSON.stringify(data))
+    // console.log(`interacted with `, JSON.stringify(data))
     lastInterNoti = {
       ...data,
       id: request.identifier
@@ -71,12 +71,12 @@ const NotificationManager = ({
   const lastNotificationResponse = Notifications.useLastNotificationResponse()
 
   if (lastNotificationResponse) {
-    console.log(
-      'last notification',
-      JSON.stringify(
-        lastNotificationResponse.notification?.request?.content?.data
-      )
-    )
+    // console.log(
+    //   'last notification',
+    //   JSON.stringify(
+    //     lastNotificationResponse.notification?.request?.content?.data
+    //   )
+    // )
   }
 
   const setExpotoken = (token) => {
@@ -104,7 +104,7 @@ const NotificationManager = ({
         request
       }) => {
         const {data} = request.content
-        console.log(request)
+        // console.log(request)
         if (
           JSON.stringify(data) !== JSON.stringify(lastFrontReceivedNotification)
         ) {
@@ -118,7 +118,7 @@ const NotificationManager = ({
           })
           setForegroundNotification(request.identifier)
         }
-        console.log(`received in foreground`, data)
+        // console.log(`received in foreground`, data)
       }
     )
 

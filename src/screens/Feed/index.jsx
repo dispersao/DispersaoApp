@@ -98,8 +98,12 @@ const Feed = ({
   }, [scrollTo])
 
   const calculateScrollTo = ({ y, h }) => {
-    const margin = (Dimensions.get('window').height - h) / 2
-    return Math.max(0, y - margin)
+    if (h < Dimensions.get('window').height){
+      const margin = (Dimensions.get('window').height - h) / 2
+      return Math.max(0, y - margin)
+    } else {
+      return y
+    }
   }
 
   const onRefresh = useCallback(() => {
