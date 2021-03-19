@@ -116,7 +116,6 @@ const UserCreator = ({
 
   useEffect(() => {
     if(userId && storedId && userId === storedId){
-      // console.log('have the user', userId)
       onUser(userId)
     } else if(creationError) {
       onUser(null, creationError)

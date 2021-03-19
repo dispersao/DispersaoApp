@@ -91,7 +91,6 @@ function* updateAppuser(action) {
     }
   } catch(e) {
     const error = e?.response || e
-    // console.log('error updating user', error)
     yield put(updateAppuserError(error))
   }
 }
