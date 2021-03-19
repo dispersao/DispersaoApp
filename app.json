@@ -10,7 +10,7 @@
       "android",
       "web"
     ],
-    "version": "1.0.5",
+    "version": "1.0.6",
     "orientation": "default",
     "primaryColor": "#cccccc",
     "icon": "./assets/images/app_icon.png",
@@ -29,7 +29,7 @@
     "android": {
       "package": "net.dispersao.filmeapp",
       "googleServicesFile": "./google-services.json",
-      "versionCode": 5,
+      "versionCode": 6,
       "permissions": [
         "VIBRATE"
       ],
