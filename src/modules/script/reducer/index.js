@@ -16,14 +16,12 @@ const reducer = (
     case FETCH_SCRIPT_SUCCESS:
     case FFETCH_SCRIPT_STATE_SUCCESS:
       if (Object.keys(action.payload.scripts).length) {
-        const res = state.mergeDeep(
+        return state.mergeDeep(
           fromJS({
             ...action.payload.scripts,
             loaded: true
           })
         )
-        console.log(JSON.stringify(res))
-        return res
       } else {
         return state.mergeDeep(
           fromJS({
