@@ -4,6 +4,10 @@
       "languageName": "English",
       "noposts": "No published content yet",
       "loading": "Fetching information...",
+      "theEnd":{
+        "title": "The End!",
+        "body": "The session is over! Thank you for participating!",
+      },
       "logoDescription": "an interactive film\nabout love and politics",
       "error": {
         "title": "Something went wrong...",

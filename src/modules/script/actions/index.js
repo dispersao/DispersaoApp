@@ -11,6 +11,13 @@ export const FETCH_AVAILABLE_SCRIPTS_ERROR = 'FETCH_AVAILABLE_SCRIPTS_ERROR'
 
 export const STOP_FETCH_AVAILABLE_SCRIPT = 'STOP_FETCH_AVAILABLE_SCRIPT'
 
+export const POLL_FETCH_SCRIPT_STATE = 'POLL_FETCH_SCRIPT_STATE'
+
+export const FFETCH_SCRIPT_STATE_SUCCESS = 'FETCH_SCRIPT_STATE_SUCCESS'
+export const FETCH_SCRIPT_STATE_ERROR = 'FETCH_SCRIPT_STATE_ERROR'
+
+export const STOP_FETCH_SCRIPT_STATE = 'STOP_FETCH_SCRIPT_STATE'
+
 export const fetchScript = () => ({
   type: FETCH_SCRIPT,
   payload: {}
@@ -56,5 +63,29 @@ export const fetchAvailableScriptsError = (error) => ({
 
 export const stopFetchAvailableScripts = () => ({
   type: STOP_FETCH_AVAILABLE_SCRIPT,
+  payload: {}
+})
+
+export const pollFetchScriptState = () => ({
+  type: POLL_FETCH_SCRIPT_STATE,
+  payload: { }
+})
+
+export const fetchScriptStateSuccess = (scripts) => ({
+  type: FFETCH_SCRIPT_STATE_SUCCESS,
+  payload: {
+    scripts
+  }
+})
+
+export const fetchScriptStateError = (error) => ({
+  type: FETCH_SCRIPT_STATE_ERROR,
+  payload: {
+    error
+  }
+})
+
+export const stopFetchScriptState = () => ({
+  type: STOP_FETCH_SCRIPT_STATE,
   payload: {}
 })

@@ -15,6 +15,9 @@ import { toJS } from '../utils/immutableToJs'
 
 import { getLastInteractedNotification } from '../modules/notification/selector'
 import { getBadgeCount } from '../modules/notification/selector'
+
+import ScriptManager from './ScriptManager'
+
 const Tab = createBottomTabNavigator()
 
 const AppScreen = ({
@@ -33,7 +36,7 @@ const AppScreen = ({
   }, [JSON.stringify(interactedNotification)])
 
   return (
-    <>
+    <ScriptManager>
       <StatusBar style="dark" />
       <Tab.Navigator screenOptions={({ route }) => ({
         tabBarIcon: ({color}) => {
@@ -85,7 +88,7 @@ const AppScreen = ({
             name="Language"
             component={LanguageScreen} />
         </Tab.Navigator>
-      </>
+      </ScriptManager>
   )
 }
 
