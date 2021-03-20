@@ -34,6 +34,7 @@
       }
     },
     "feed": {
+      "noSound": "No audio",
       "time": {
         "second": {
           "one": "{{amount}} second ago",
