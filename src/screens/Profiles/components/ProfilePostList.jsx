@@ -13,7 +13,6 @@ import { useTranslation } from 'react-i18next'
 const styles = StyleSheet.create({
   container: {
     paddingTop: 15,
-    marginHorizontal: 10
   },
   listTitle: {
     fontSize: 18,
