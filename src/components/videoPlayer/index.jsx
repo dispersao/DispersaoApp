@@ -3,8 +3,10 @@ import React, {
    useEffect
 } from 'react'
 import { Video } from 'expo-av'
-import { View } from 'native-base'
-import { AntDesign } from '@expo/vector-icons'
+import { View, Text } from 'native-base'
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
+
+import { useTranslation } from 'react-i18next'
 
 import {
   StyleSheet,
@@ -13,13 +15,19 @@ import {
 } from 'react-native'
 
 const styles = StyleSheet.create({
-  buttonContainer: {
+  graphicContainer: {
     position: 'absolute',
+    width: '100%',
+    height: '100%'
+  },
+  buttonContainer: {
     width: '100%',
     height: '100%',
     display: 'flex',
+    flex: 5,
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'absolute'
   },
   button: {
     display: 'flex',
@@ -29,6 +37,24 @@ const styles = StyleSheet.create({
   video: {
     width: '100%',
     height: '100%'
+  },
+  mute: {
+    flex: 1,
+    flexDirection: 'row',
+    padding: 5,
+    marginTop: 20,
+    justifyContent: 'flex-end',
+    position: 'absolute',
+    right:0,
+    backgroundColor: "black",
+    opacity: 0.5
+  },
+  muteText: {
+    color: "#999999",
+    paddingRight: 5
+  },
+  muteIcon: {
+
   }
 })
 const PlayerVideo = ({
@@ -43,6 +69,8 @@ const PlayerVideo = ({
   const [videoLoaded, setVideoLoaded] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isWaitingToPlay, setIsWaitingToPly] = useState(false)
+
+  const { t } = useTranslation()
 
   const  setVideoRef = (comp) => {
     setPlayerRef(comp)
@@ -63,7 +91,6 @@ const PlayerVideo = ({
         videoRef.stopAsync()
       }
       setIsPlaying(false)
-      
     }
   }
 
@@ -93,7 +120,6 @@ const PlayerVideo = ({
   }
 
   const onVideoReady = (status) => {
-    // console.log(status)
   }
 
   return (
@@ -115,16 +141,31 @@ const PlayerVideo = ({
         ref={setVideoRef}
       />
       <TouchableOpacity
-        style={styles.buttonContainer}
+        style={styles.graphicContainer}
         onPress={playPause}
       >
+      {!isPlaying && 
+       (<View style={styles.mute}>
+          <Text style={ styles.muteText }>
+            {t('feed.noSound')}
+            </Text>
+          <MaterialCommunityIcons
+            style={styles.muteIcon}
+            name="volume-mute"
+            color="#999999"
+            size={20} 
+           />
+        </View>)
+      || null}
       {(loadStarted && !isPlaying && !isWaitingToPlay && 
+       <View style={styles.buttonContainer}>
         <AntDesign
           style={styles.button}
           name="play" 
           size={60} 
           color="#d96235"
           />
+          </View>
         ) || null
       }
       {isWaitingToPlay && 
@@ -134,6 +175,7 @@ const PlayerVideo = ({
         />
       }
     </TouchableOpacity>
+    
   </View>
   )
 }

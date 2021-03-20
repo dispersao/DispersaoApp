@@ -4,7 +4,8 @@ import {
   call,
   put, 
   takeLeading,
-  delay
+  delay,
+  select
 } from 'redux-saga/effects'
 
 import {
@@ -14,14 +15,25 @@ import {
   fetchAvailableScriptsSuccess,
   fetchAvailableScriptsError,
   stopFetchAvailableScripts,
+
+  POLL_FETCH_SCRIPT_STATE,
+  STOP_FETCH_SCRIPT_STATE,
+  fetchScriptStateSuccess,
+  fetchScriptStateError,
+  stopFetchScriptState
 } from '../actions'
 
 import {
-  fetchScript as fetchScriptAPI,
-  fetchAvailableScript as fetchAvailabeScriptsAPI
+  fetchAvailableScript as fetchAvailabeScriptsAPI,
+  fetchScriptState as fetchScriptStateAPI
 } from '../api'
 
-const POLLING_DELAY = 1000
+import {
+  getScript
+} from '../../appuser/selector'
+
+const AVAILABLE_SCRIPT_POLLING_DELAY = 1000
+const SCRIPT_STATE_POLLING_DELAY = 60000
 
 export function* watchFetchAvailableScripts() {
   yield takeLeading(FETCH_AVAILABLE_SCRIPTS, fetchAvailableScripts)
@@ -48,12 +60,36 @@ function* pollAvailableScript() {
       try {
           const scripts = yield fetchAvailabeScriptsAPI()
           yield put(fetchAvailableScriptsSuccess(scripts))
-          yield delay(POLLING_DELAY)
+          yield delay(AVAILABLE_SCRIPT_POLLING_DELAY)
       } catch (err) {
           yield put(fetchAvailableScriptsError(err))
           // Once the polling has encountered an error,
           // it should be stopped immediately
           yield put(stopFetchAvailableScripts())
       }
+  }
+}
+
+
+export function* watchPollScriptState() {
+  while (true) {
+      yield take(POLL_FETCH_SCRIPT_STATE)
+      yield race([call(pollFetchScriptState), take(STOP_FETCH_SCRIPT_STATE)] )
+  }
+}
+
+function* pollFetchScriptState() {
+  const token = yield select(getScript)
+  while (true) {
+    try {
+      const { entities: { scripts } } = yield fetchScriptStateAPI({ token })
+      yield put(fetchScriptStateSuccess(scripts))
+      yield delay(SCRIPT_STATE_POLLING_DELAY)
+    } catch(err) {
+      yield put(fetchScriptStateError(err))
+      // Once the polling has encountered an error,
+      // it should be stopped immediately
+      yield put(stopFetchScriptState())
+    }
   }
 }

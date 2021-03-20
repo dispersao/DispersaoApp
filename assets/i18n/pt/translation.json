@@ -4,6 +4,10 @@
       "languageName": "Português",
       "noposts": "Ainda não há nenhuma atualização",
       "loading": "Atualizando a informação...",
+      "theEnd":{
+        "title": "Fim!",
+        "body": "O filme acabou! Obrigada por participar!"
+      },
       "logoDescription": "um filme interativo\nsobre amor e política",
       "error": {
         "title": "Something went wrong...",
@@ -30,6 +34,7 @@
       }
     },
     "feed": {
+      "noSound": "Sem áudio",
       "time": {
         "second": {
           "one": "há {{amount}} segundos atrás",

@@ -99,11 +99,11 @@ UserManager.propTypes = {
   getAvailableScripts: PropTypes.func
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
   availableScript: getAvailableScripts(state),
 })
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+const mapDispatchToProps = (dispatch) => ({
   getAvailableScripts: () => dispatch(fetchAvailableScripts()),
 })
 

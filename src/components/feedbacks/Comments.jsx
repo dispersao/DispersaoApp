@@ -5,6 +5,7 @@ const Comments = (props) => {
   return (
     <IconFeedback 
       icon='ios-chatbubbles'
+      isButton={false}
       {...props}
    />
   )

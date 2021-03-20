@@ -4,7 +4,8 @@ import {
 
 import {
   watchPollAvailableScripts,
-  watchFetchAvailableScripts
+  watchFetchAvailableScripts,
+  watchPollScriptState
 } from './modules/script/sagas'
 
 import {
@@ -25,6 +26,7 @@ export default function* rootSaga() {
   yield all([
     watchFetchAvailableScripts(),
     watchPollAvailableScripts(),
+    watchPollScriptState(),
     watchCreateAppuser(),
     watchFindAppuser(),
     watchUpdateAppuser(),
