@@ -33,7 +33,7 @@ import {
 } from '../../appuser/selector'
 
 const AVAILABLE_SCRIPT_POLLING_DELAY = 1000
-const SCRIPT_STATE_POLLING_DELAY = 60000
+const SCRIPT_STATE_POLLING_DELAY = 10000
 
 export function* watchFetchAvailableScripts() {
   yield takeLeading(FETCH_AVAILABLE_SCRIPTS, fetchAvailableScripts)
@@ -86,6 +86,7 @@ function* pollFetchScriptState() {
       yield put(fetchScriptStateSuccess(scripts))
       yield delay(SCRIPT_STATE_POLLING_DELAY)
     } catch(err) {
+      console.log(err);
       yield put(fetchScriptStateError(err))
       // Once the polling has encountered an error,
       // it should be stopped immediately
