@@ -12,7 +12,7 @@ export const fetchSessioncontents = async ({ script, types = [] }) => {
   let query = `sessioncontents?script.token=${script}`
   let queries = []
   if (types.length) {
-    queries = types.map(t => `${query}&${t}_null&state=published`)
+    queries = types.map(t => `${query}&${t}_null=false&state=published`)
   } else {
     queries.push(query)
   }
