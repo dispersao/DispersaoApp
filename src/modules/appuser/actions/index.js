@@ -6,6 +6,10 @@ export const FIND_APPUSER = 'FIND_APPUSER'
 export const FIND_APPUSER_SUCCESS = 'FIND_APPUSER_SUCCESS'
 export const FIND_APPUSER_ERROR = 'FIND_APPUSER_ERROR'
 
+export const APPUSER_LIKES_FETCH = 'APPUSER_LIKES_FETCH'
+export const APPUSER_LIKES_FETCH_SUCCESS = 'APPUSER_LIKES_FETCH_SUCCESS'
+export const APPUSER_LIKES_FETCH_ERROR = 'APPUSER_LIKES_FETCH_ERROR'
+
 export const UPDATE_APPUSER = 'UPDATE_APPUSER'
 export const UPDATE_APPUSER_SUCCESS = 'UPDATE_APPUSER_SUCCESS'
 export const UPDATE_APPUSER_ERROR = 'UPDATE_APPUSER_ERROR'
@@ -14,6 +18,21 @@ export const findAppUser = (search) => ({
   type: FIND_APPUSER,
   payload: {
     ...search
+  }
+})
+
+
+export const findAppuserSuccess = (appuser) => ({
+  type: FIND_APPUSER_SUCCESS,
+  payload: {
+    appuser
+  }
+})
+
+export const findAppuserError = (error) => ({
+  type: FIND_APPUSER_ERROR,
+  payload: {
+    error
   }
 })
 
@@ -39,21 +58,6 @@ export const createAppuserError = (error) => ({
   }
 })
 
-
-export const findAppuserSuccess = (appuser) => ({
-  type: FIND_APPUSER_SUCCESS,
-  payload: {
-    appuser
-  }
-})
-
-export const findAppuserError = (error) => ({
-  type: FIND_APPUSER_ERROR,
-  payload: {
-    error
-  }
-})
-
 export const updateAppuser = (appuser) => ({
   type: UPDATE_APPUSER,
   payload: {
@@ -71,6 +75,20 @@ export const updateAppuserSuccess = (appuser) => ({
 
 export const updateAppuserError = (error) => ({
   type: UPDATE_APPUSER_ERROR,
+  payload: {
+    error
+  }
+})
+
+export const appuserLikesFetch = (appuser) => ({
+  type: APPUSER_LIKES_FETCH,
+  payload: {
+    appuser
+  }
+})
+
+export const appuserLikesFetchError = (error) => ({
+  type: APPUSER_LIKES_FETCH,
   payload: {
     error
   }

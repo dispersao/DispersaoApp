@@ -2,7 +2,7 @@ import createCachedSelector from "re-reselect"
 
 import { getId } from '../../appuser/selector'
 
-const getState = (state) => state.likes
+export const getState = (state) => state.likes
 const getLikesIds = (state, props) => props.likes 
 const getLikeIdsJSON = (state, props) => JSON.stringify(props.likes.sort())
 

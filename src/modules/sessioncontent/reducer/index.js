@@ -3,7 +3,9 @@ import { fromJS, Map } from 'immutable'
 import {
   SESSIONCONTENTS_FETCH_SUCCESS,
   SESSIONCONTENTS_FETCH,
-  SESSIONCONTENT_VIEWED
+  SESSIONCONTENT_VIEWED,
+  SESSIONCONTENT_LIKES_FETCH,
+  SESSIONCONTENT_LIKES_FETCH_SUCCESS
 } from '../actions'
 
 import {
@@ -23,6 +25,19 @@ const reducer = (state = Map({loading: false, fetched_at: null}), action) => {
         })
       )
 
+    case SESSIONCONTENT_LIKES_FETCH:
+      return state.setIn(['data', action.payload.sessioncontent.toString(), 'loading'], true)
+    
+    case SESSIONCONTENT_LIKES_FETCH_SUCCESS:
+      return state.mergeDeep(fromJS({
+        data: {
+          [action.payload.sessioncontent.id]: {
+            loading: false,
+            ...action.payload.sessioncontent
+          }
+        }
+      })) 
+      
     case SESSIONCONTENT_VIEWED:
       return state.setIn(['data', action.payload.sessioncontent.toString(), 'viewed'], true)
 

@@ -6,6 +6,10 @@ import {
   normalizeAppuserList
 } from '../schema'
 
+import {
+  normalizeLikesList
+} from '../../likes/schema'
+
 if (axios.defaults.baseURL) {
   axios.defaults.baseURL = config.api.url
   axios.defaults.headers.post['Content-Type'] = 'json'
@@ -46,4 +50,18 @@ export const updateAppuser = async (options) => {
       }
     })
   return normalizeAppuser(user.data)
+}
+
+export const findApppuserLikes = async (options) => {
+  const { id } = options
+
+  const likes = await axios.put(`/appusers/${id}/likes`)
+    .catch(error => {
+      if(error.response.data) {
+        throw error.response.data
+      } else {
+        throw error
+      }
+    })
+  return normalizeLikesList(likes.data)
 }

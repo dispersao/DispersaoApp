@@ -16,7 +16,7 @@ import {
 import {
   createLike as createLikeAPI,
   updateLike as updateLikeAPI,
-  deleteLike as deleteLikeAPI,
+  deleteLike as deleteLikeAPI
 } from '../api'
 
 import { getId as getAppuserId } from '../../appuser/selector'
@@ -57,3 +57,5 @@ function* updateLike(action) {
     console.log(e)
   }
 }
+
+

@@ -4,6 +4,8 @@ import { getState as getScripts} from '../../script/selector'
 
 const getState = (state) => state.appuser
 
+export const getLoading = (state) => state.appuser.get('loading')
+
 const getStateData = createSelector(
   [getState], appuser => appuser.get('data')
 )
