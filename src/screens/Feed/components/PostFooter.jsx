@@ -4,7 +4,7 @@ import { StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { toJS } from '../../../utils/immutableToJs.jsx'
 
-import { getLikesByLikeIds } from '../../../modules/likes/selector'
+import { getLikesBySessioncontentId } from '../../../modules/likes/selector'
 
 import LikesBox from '../../../components/feedbacks/LikesBox.jsx'
 import { Comments } from '../../../components/feedbacks/index.jsx'
@@ -24,21 +24,23 @@ const styles = StyleSheet.create({
 
 const PostFooter = ({
   id,
-  processedLikes,
+  myLike,
+  likes = 0,
+  dislikes = 0,
   comments
 }) => {
-  const likes = processedLikes.filter(l => !l.dislike)
+  /*const likes = processedLikes.filter(l => !l.dislike)
   const dislikes = processedLikes.filter(l => l.dislike)
 
   const myLikes = processedLikes.filter(l => l.appuser)
-  const myLike = myLikes.length && myLikes[0]
+  const myLike = myLikes.length && myLikes[0]*/
   
   return (
     <>
       <Left>
         <LikesBox
-          likes={likes.length}
-          dislikes={dislikes.length}
+          likes={likes}
+          dislikes={dislikes}
           myLike={myLike}
           sessioncontentId={id}/>
       </Left>
@@ -52,7 +54,7 @@ const PostFooter = ({
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  processedLikes: getLikesByLikeIds(state, ownProps)
+  myLike: getLikesBySessioncontentId(state, ownProps)
 })
 
 export default connect(

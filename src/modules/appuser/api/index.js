@@ -52,10 +52,10 @@ export const updateAppuser = async (options) => {
   return normalizeAppuser(user.data)
 }
 
-export const findApppuserLikes = async (options) => {
+export const findAppuserLikes = async (options) => {
   const { id } = options
 
-  const likes = await axios.put(`/appusers/${id}/likes`)
+  const likes = await axios.get(`/appusers/${id}/likes`)
     .catch(error => {
       if(error.response.data) {
         throw error.response.data

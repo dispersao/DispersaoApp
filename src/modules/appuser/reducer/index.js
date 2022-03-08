@@ -10,7 +10,6 @@ import {
   FIND_APPUSER,
   CREATE_APPUSER,
   UPDATE_APPUSER,
-  APPUSER_LIKES_FETCH,
   APPUSER_LIKES_FETCH_SUCCESS,
   APPUSER_LIKES_FETCH_ERROR
 } from '../actions'
@@ -19,9 +18,6 @@ const reducer = (state = fromJS({
   data: null, error: null
 }), action) => {
   switch(action.type) {
-    case APPUSER_LIKES_FETCH:
-      return state.setIn('loading', true)
-
     case APPUSER_LIKES_FETCH_SUCCESS:
     case APPUSER_LIKES_FETCH_ERROR:
       return state.setIn('loading', false)

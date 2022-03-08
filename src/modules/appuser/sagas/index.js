@@ -15,11 +15,11 @@ import {
   updateAppuserSuccess,
   updateAppuserError,
   findAppuserError,
-  findAppuserLikesError
+  appuserLikesFetchError
 } from '../actions'
 
 import {
-  fetchLikesSucces
+  likesFetchSuccess
 } from '../../likes/actions'
 
 import {
@@ -30,7 +30,7 @@ import {
   createAppuser as createAppuserAPI,
   findAppuser as findAppuserAPI,
   updateAppuser as updateAppuserAPI,
-  findApppuserLikes as findAppuserLikesAPI
+  findAppuserLikes as findAppuserLikesAPI
 } from '../api'
 
 import { getId as getAppuserId } from '../selector'
@@ -99,10 +99,10 @@ function* findAppusersLikes() {
   try {
     const id = yield select(getAppuserId)
     const { entities } = yield findAppuserLikesAPI({ id })
-    yield put(fetchLikesSucces(entities.likes))
+    yield put(likesFetchSuccess(entities?.likes || {}))
   } catch(e) {
     console.log(e)
     const error = e?.response || e
-    yield put(findAppuserLikesError(error))
+    yield put(appuserLikesFetchError(error))
   }
 }

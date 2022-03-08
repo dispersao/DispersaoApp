@@ -3,12 +3,11 @@ import { connect } from 'react-redux'
 import { getSessioncontentListByType,
   getLoading as getSessioncontentsLoading
 } from '../modules/sessioncontent/selector'
-import { getLoading as getAppuserLoading } from '../modules/appuser/selector'
+import { getLoading as getLikesLoading } from '../modules/likes/selector'
 
 import { getState as getLikes } from '../modules/likes/selector'
 import { sessioncontentsFetch } from '../modules/sessioncontent/actions'
 import { appuserLikesFetch } from '../modules/appuser/actions'
-import { useCallback } from 'react'
 
 const WithLoadedData = (WrappedComponent, externalProps) => {
 
@@ -30,17 +29,12 @@ const WithLoadedData = (WrappedComponent, externalProps) => {
     }, [sessioncontents])
 
     useEffect(() => {
-      if (!likes || !Array.isArray(likes)) {
+      if (!likes) {
         fetchAppuserLikes()
       }
     }, [likes])
 
-    const fetch = useCallback(()=>{
-      fetchAppuserLikes()
-      fetchSessioncontent()
-    })
-
-    return <WrappedComponent {...props} loading={dataloading} fetch={fetch} />
+    return <WrappedComponent {...props} loading={dataloading} fetch={fetchSessioncontent} />
   }
 
   const mapStateToProps = (state, ownProps) => ({
@@ -49,7 +43,7 @@ const WithLoadedData = (WrappedComponent, externalProps) => {
       ...externalProps
     }),
     likes: getLikes(state),
-    dataloading: getSessioncontentsLoading(state) && getAppuserLoading(state)
+    dataloading: getSessioncontentsLoading(state) && getLikesLoading(state)
   })
 
   const mapDispatchToProps = (dispatch, ownProps) => ({
