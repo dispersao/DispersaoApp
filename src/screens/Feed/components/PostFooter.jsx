@@ -41,7 +41,7 @@ const PostFooter = ({
         <LikesBox
           likes={likes}
           dislikes={dislikes}
-          myLike={myLike}
+          myLike={myLike && myLike.length && myLike[0]}
           sessioncontentId={id}/>
       </Left>
       {comments && comments.length > 0 &&

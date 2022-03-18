@@ -8,9 +8,6 @@ import {
   SESSIONCONTENT_LIKES_FETCH_SUCCESS
 } from '../actions'
 
-import {
-  LIKE_CREATED_SUCCESS
-} from '../../likes/actions'
 
 const reducer = (state = Map({loading: false, fetched_at: null}), action) => {
   switch(action.type) {
@@ -41,14 +38,6 @@ const reducer = (state = Map({loading: false, fetched_at: null}), action) => {
     case SESSIONCONTENT_VIEWED:
       return state.setIn(['data', action.payload.sessioncontent.toString(), 'viewed'], true)
 
-    case LIKE_CREATED_SUCCESS:
-      let newState = state
-      const likes = Object.values(action.payload.like)
-      likes.forEach(l => {
-        let likesList = state.getIn(['data', l.sessioncontent.toString(), 'likes']).push(l.id)
-        newState = newState.setIn(['data', l.sessioncontent.toString(), 'likes'], likesList)
-        })
-      return newState.set('loading', false)
     default:
       return state
   }

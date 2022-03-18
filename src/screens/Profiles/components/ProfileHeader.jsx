@@ -77,7 +77,7 @@ const ProfileHeader = (props) => {
           <LikesBox
             likes={likes}
             dislikes={dislikes}
-            myLike={myLike}
+            myLike={myLike && myLike.length && myLike[0]}
             sessioncontentId={sessioncontent.id}/>
         </View>
       </View>
