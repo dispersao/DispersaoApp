@@ -28,7 +28,6 @@ const LikesBox = ({
   const likeStr = 'like'
   const dislikeStr = 'dislike'
 
-
   let [myLikeStatus, setMyLikeStatus] = useState('loaded')
 
   let myLikeType
@@ -53,24 +52,27 @@ const LikesBox = ({
     setMyLikeStatus('loaded')
   }, [JSON.stringify(myLike)])
 
-
-  if (myLikeStatus === 'loaded' && Number.isInteger(likes) && Number.isInteger(dislikes)) {
+  if (
+    myLikeStatus === 'loaded' &&
+    Number.isInteger(likes) &&
+    Number.isInteger(dislikes)
+  ) {
     return (
-       <View style={styles.container}>
-          <Likes
-            amount={likes}
-            marked={myLikeType === likeStr}
-            onClick={() => onClick(likeStr)}
-          />
-          <Dislikes
-            amount={dislikes}
-            marked={myLikeType === dislikeStr}
-            onClick={() => onClick(dislikeStr)}
-          />
-        </View>
+      <View style={styles.container}>
+        <Likes
+          amount={likes}
+          marked={myLikeType === likeStr}
+          onClick={() => onClick(likeStr)}
+        />
+        <Dislikes
+          amount={dislikes}
+          marked={myLikeType === dislikeStr}
+          onClick={() => onClick(dislikeStr)}
+        />
+      </View>
     )
   } else {
-    return <Spinner color="#d96235" size="small" style={styles.spinner}/>
+    return <Spinner color="#d96235" size="small" style={styles.spinner} />
   }
 }
 
@@ -82,12 +84,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         sessioncontent: ownProps.sessioncontentId
       })
     ),
-  updateLike: (id, dislike) =>
-    dispatch(
-      likeUpdate({ id, dislike })
-    ),
-  deleteLike: id =>
-    dispatch(likeDelete({ id }))
+  updateLike: (id, dislike) => dispatch(likeUpdate({ id, dislike })),
+  deleteLike: id => dispatch(likeDelete({ id }))
 })
 
 export default connect(null, mapDispatchToProps)(LikesBox)

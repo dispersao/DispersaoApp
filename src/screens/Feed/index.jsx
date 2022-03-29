@@ -129,9 +129,9 @@ const Feed = ({
   }
 
   let text
-  if (loading) {
+  if (loading || !posts) {
     text = 'general.loading'
-  } else if (!posts || !posts.length) {
+  } else if (!posts.length) {
     text = 'general.noposts'
   }
 
