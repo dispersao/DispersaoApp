@@ -30,12 +30,14 @@ export const sessioncontentsFetchError = (error) => ({
 })
 
 
-export const sessioncontentLikesFetch = (sessioncontent) => ({
-  type: SESSIONCONTENTS_LIKES_FETCH,
+export const sessioncontentLikesFetch = (sessioncontent) => {
+  return {
+  type: SESSIONCONTENT_LIKES_FETCH,
   payload: {
     sessioncontent
   }
-})
+}
+}
 
 export const sessioncontentLikesFetchSuccess = (sessioncontent) => ({
   type: SESSIONCONTENT_LIKES_FETCH_SUCCESS,

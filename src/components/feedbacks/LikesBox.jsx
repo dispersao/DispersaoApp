@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react"
-import { connect } from "react-redux"
+import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import { View, StyleSheet } from 'react-native'
+import { Spinner } from 'native-base'
 
-import {
-  likeCreate,
-  likeUpdate,
-  likeDelete,
-} from "../../modules/likes/actions"
+import { likeCreate, likeUpdate, likeDelete } from '../../modules/likes/actions'
 
-import { Likes, Dislikes } from "./index.jsx"
+import { Likes, Dislikes } from './index.jsx'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row'
+  },
+  spinner: {
+    height: 38
   }
 })
 
@@ -23,21 +23,22 @@ const LikesBox = ({
   myLike,
   createLike,
   updateLike,
-  deleteLike,
+  deleteLike
 }) => {
-  const likeStr = "like"
-  const dislikeStr = "dislike"
+  const likeStr = 'like'
+  const dislikeStr = 'dislike'
 
-  let [myLikeStatus, setMyLikeStatus] = useState("loaded")
+
+  let [myLikeStatus, setMyLikeStatus] = useState('loaded')
 
   let myLikeType
-  if(myLike) {
+  if (myLike) {
     myLikeType = myLike.dislike ? dislikeStr : likeStr
   }
 
-  const onClick = (type) => {
-    if (myLikeStatus !== "loading") {
-      setMyLikeStatus("loading")
+  const onClick = type => {
+    if (myLikeStatus !== 'loading') {
+      setMyLikeStatus('loading')
       if (!myLike) {
         createLike(type === dislikeStr)
       } else if (type !== myLikeType) {
@@ -49,13 +50,13 @@ const LikesBox = ({
   }
 
   useEffect(() => {
-    setMyLikeStatus("loaded")
+    setMyLikeStatus('loaded')
   }, [JSON.stringify(myLike)])
 
-  return (
-    <>
-      {myLikeStatus === "loaded" && (
-        <View style={styles.container}>
+
+  if (myLikeStatus === 'loaded' && Number.isInteger(likes) && Number.isInteger(dislikes)) {
+    return (
+       <View style={styles.container}>
           <Likes
             amount={likes}
             marked={myLikeType === likeStr}
@@ -67,24 +68,26 @@ const LikesBox = ({
             onClick={() => onClick(dislikeStr)}
           />
         </View>
-      )}
-    </>
-  )
+    )
+  } else {
+    return <Spinner color="#d96235" size="small" style={styles.spinner}/>
+  }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  createLike: (dislike) =>
+  createLike: dislike =>
     dispatch(
       likeCreate({
         dislike,
-        sessioncontent: ownProps.sessioncontentId,
+        sessioncontent: ownProps.sessioncontentId
       })
     ),
-  updateLike: (id, dislike) => dispatch(likeUpdate({ id, dislike })),
-  deleteLike: (id) => dispatch(likeDelete({ id })),
+  updateLike: (id, dislike) =>
+    dispatch(
+      likeUpdate({ id, dislike })
+    ),
+  deleteLike: id =>
+    dispatch(likeDelete({ id }))
 })
 
-export default connect(
-  null, 
-  mapDispatchToProps)
-(LikesBox)
+export default connect(null, mapDispatchToProps)(LikesBox)

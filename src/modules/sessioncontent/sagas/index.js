@@ -10,6 +10,7 @@ import {
   sessioncontentsFetchSuccess,
   sessioncontentsFetchError,
   SESSIONCONTENT_LIKES_FETCH,
+  sessioncontentLikesFetch,
   sessioncontentLikesFetchSuccess,
   sessioncontentLikesFetchError
 } from '../actions'
@@ -52,6 +53,12 @@ function* findSessioncontents(action) {
     })
     entities.sessioncontents = entities.sessioncontents || {}
     yield mapSuccess(entities, { fetched_at: performance.now() })
+
+    const fetchedSessionContents = Object.values(entities.sessioncontents)
+    yield* fetchedSessionContents.map(function* ({ id }) {
+      yield put(sessioncontentLikesFetch(id))
+    })
+   
   } catch(e) {
     console.log(e)
     yield put(sessioncontentsFetchError(e))
@@ -61,10 +68,12 @@ function* findSessioncontents(action) {
 function* findSessioncontentsLikes(action){
   try {
     const id = action.payload.sessioncontent
+
     const likes = yield fetchSessioncontentsLikesAPI({id, dislike: 0})
-    const dislikes = yield fetchSessioncontentsLikesAPI({id, dislike: 1})
+    const  dislikes = yield fetchSessioncontentsLikesAPI({id, dislike: 1})
     yield put(sessioncontentLikesFetchSuccess({id, likes, dislikes}))
   } catch (e) {
+    console.log(e)
     yield put(sessioncontentLikesFetchError(e))
   }
 }

@@ -1,7 +1,8 @@
 import { 
   put, 
   takeLeading,
-  select
+  select,
+  takeEvery
 } from 'redux-saga/effects'
 
 import {
@@ -14,6 +15,10 @@ import {
 } from '../actions'
 
 import {
+  sessioncontentLikesFetch
+} from '../../sessioncontent/actions'
+
+import {
   createLike as createLikeAPI,
   updateLike as updateLikeAPI,
   deleteLike as deleteLikeAPI
@@ -22,9 +27,9 @@ import {
 import { getId as getAppuserId } from '../../appuser/selector'
 
 export function* watchCreateDeleteUpdateLike() {
-  yield takeLeading(LIKE_CREATE, createLike)
-  yield takeLeading(LIKE_DELETE, deleteLike)
-  yield takeLeading(LIKE_UPDATE, updateLike)
+  yield takeEvery(LIKE_CREATE, createLike)
+  yield takeEvery(LIKE_DELETE, deleteLike)
+  yield takeEvery(LIKE_UPDATE, updateLike)
 }
 
 function* createLike(action) {
@@ -34,7 +39,12 @@ function* createLike(action) {
       ...action.payload.like,
       appuser
     })
-    yield put(likeCreatedSuccess(entities.likes))
+    
+    /*yield* Object.values(entities.likes).map(function*({sessioncontent}) {
+      yield put(sessioncontentLikesFetch(sessioncontent))
+    })*/
+    yield put(likeCreatedSuccess(entities.likes)) 
+
   } catch (e) {
     console.log(e)
   }
@@ -42,7 +52,12 @@ function* createLike(action) {
 
 function* deleteLike(action) {
   try {
+    console.log('on delete')
     const {entities} = yield deleteLikeAPI(action.payload.like)
+   
+    /*yield* Object.values(entities.likes).map(function*({sessioncontent}) {
+      yield put(sessioncontentLikesFetch(sessioncontent))
+    })*/
     yield put(likeDeletedSuccess(entities.likes))
   } catch (e) {
     console.log(e)
@@ -51,8 +66,13 @@ function* deleteLike(action) {
 
 function* updateLike(action) {
   try {
+    console.log('on update')
     const {entities} = yield updateLikeAPI(action.payload.like)
+    /*yield* Object.values(entities.likes).map(function*({sessioncontent}) {
+      yield put(sessioncontentLikesFetch(sessioncontent))
+    })*/
     yield put (likeUpdatedSuccess(entities.likes))
+
   } catch (e) {
     console.log(e)
   }

@@ -55,11 +55,6 @@ const ProfileHeader = (props) => {
     dislikes,
     myLike
   } = props
-  /*const likes = processedLikes.filter(l => !l.dislike)
-  const dislikes = processedLikes.filter(l => l.dislike)
-
-  const myLikes = processedLikes.filter(l => l.appuser)
-  const myLike = myLikes.length && myLikes[0]*/
 
   return (
       <View style={styles.content}>
@@ -75,8 +70,8 @@ const ProfileHeader = (props) => {
             {description}
           </Text>
           <LikesBox
-            likes={likes}
-            dislikes={dislikes}
+            likes={sessioncontent.likes}
+            dislikes={sessioncontent.dislikes}
             myLike={myLike && myLike.length && myLike[0]}
             sessioncontentId={sessioncontent.id}/>
         </View>
@@ -87,7 +82,6 @@ const ProfileHeader = (props) => {
 const mapStateToProps = (state, ownProps) => ({
   contentcreatorElement: getContentcreatorByContentcreatorId(state, ownProps),
   myLike: getLikesBySessioncontentId(state, ownProps)
-  //processedLikes: getLikesByLikeIds(state, ownProps.sessioncontent)
 })
 
 export default connect(

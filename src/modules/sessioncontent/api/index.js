@@ -26,6 +26,7 @@ export const fetchSessioncontents = async ({ script, types = [] }) => {
 }
 
 export const fetchSessioncontentsLikes = async({ id, ...options }) => {
-  let query = Object.entities(options).map(([k, v]) => `${k}=${v}`).join('&')
-  return axios.get(`sessioncontents/${id}/likes/count?${query}`)
+  let query = Object.entries(options).map(([k, v]) => `${k}=${v}`).join('&')
+  const likes = await axios.get(`sessioncontents/${id}/likes/count?${query}`)
+  return likes.data.total
 }

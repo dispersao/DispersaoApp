@@ -25,16 +25,11 @@ const styles = StyleSheet.create({
 const PostFooter = ({
   id,
   myLike,
-  likes = 0,
-  dislikes = 0,
+  likes,
+  dislikes,
   comments
 }) => {
-  /*const likes = processedLikes.filter(l => !l.dislike)
-  const dislikes = processedLikes.filter(l => l.dislike)
-
-  const myLikes = processedLikes.filter(l => l.appuser)
-  const myLike = myLikes.length && myLikes[0]*/
-  
+ 
   return (
     <>
       <Left>

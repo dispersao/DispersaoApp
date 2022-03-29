@@ -160,7 +160,7 @@ const Feed = ({
             posts.map((post, index) => {
               return (
                 <Post
-                  key={index}
+                  key={post.id}
                   headerClick={handleHeaderClick}
                   onLayout={onLayoutEvent}
                   animateOnMount={true}
