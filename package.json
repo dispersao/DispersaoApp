@@ -60,7 +60,7 @@
     "react-native-gesture-handler": "~1.8.0",
     "react-native-keyboard-aware-scroll-view": "git+https://github.com/APSL/react-native-keyboard-aware-scroll-view.git#fb40649a9c84aa23d6a55355e9e0e432795967a6",
     "react-native-parsed-text": "0.0.22",
-    "react-native-reanimated": "~1.13.0",
+    "react-native-reanimated": "~2.10.0",
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.0",
     "react-redux": "^7.2.0",
