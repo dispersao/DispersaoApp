@@ -31,4 +31,3 @@ export const deleteLike = async (options) => {
   let like = await axios.delete(`/likes/${id}`, params)
   return normalizeLikes(like.data)
 }
-

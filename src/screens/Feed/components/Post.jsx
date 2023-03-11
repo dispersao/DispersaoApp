@@ -44,7 +44,7 @@ const Post = props => {
 
   useEffect(() => {
     if (!viewed) {
-      markContentAsViewed(id)
+      markContentAsViewed()
     }
   }, [viewed])
 
@@ -90,7 +90,7 @@ const Post = props => {
       {comments.map((comment, index) => {
         return (
           <Comment
-            key={index}
+            key={comment.id}
             footer={index === comments.length - 1}
             onLayout={onCommentLayout}
             animateOnMount={animateOnMount}
@@ -110,8 +110,8 @@ const mapStateToProps = (state, ownProps) => ({
   interactedContent: getLastInteractedNotification(state)?.sessioncontent
 })
 
-const mapDispatchToPorps = (dispatch, ownProps) => ({
-  markContentAsViewed: id => dispatch(sessioncontentViewed(id))
+const mapDispatchToPorps = (dispatch, { id }) => ({
+  markContentAsViewed: () => dispatch(sessioncontentViewed(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToPorps)(toJS(Post))

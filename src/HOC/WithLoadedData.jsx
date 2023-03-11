@@ -1,29 +1,40 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { getSessioncontentListByType,
-  getLoading
+  getLoading as getSessioncontentsLoading
 } from '../modules/sessioncontent/selector'
+import { getLoading as getLikesLoading } from '../modules/likes/selector'
 
+import { getState as getLikes } from '../modules/likes/selector'
 import { sessioncontentsFetch } from '../modules/sessioncontent/actions'
+import { appuserLikesFetch } from '../modules/appuser/actions'
 
 const WithLoadedData = (WrappedComponent, externalProps) => {
 
   const LoadedData = (props) => {
     const { 
-      fetch, 
+      fetchSessioncontent,
+      fetchAppuserLikes, 
       sessioncontents,
-      dataloading
+      dataloading,
+      likes
     } = props
 
     const { noEmptyList } = externalProps
 
     useEffect(() => {
       if (!sessioncontents || (!sessioncontents.size && noEmptyList)) {
-        fetch()
+        fetchSessioncontent()
       }
     }, [sessioncontents])
 
-    return <WrappedComponent {...props} loading={dataloading} />
+    useEffect(() => {
+      if (!likes) {
+        fetchAppuserLikes()
+      }
+    }, [likes])
+
+    return <WrappedComponent {...props} loading={dataloading} fetch={fetchSessioncontent} />
   }
 
   const mapStateToProps = (state, ownProps) => ({
@@ -31,14 +42,16 @@ const WithLoadedData = (WrappedComponent, externalProps) => {
       ...ownProps,
       ...externalProps
     }),
-    dataloading: getLoading(state)
+    likes: getLikes(state),
+    dataloading: getSessioncontentsLoading(state) && getLikesLoading(state)
   })
 
   const mapDispatchToProps = (dispatch, ownProps) => ({
-    fetch: () => dispatch(sessioncontentsFetch({
+    fetchSessioncontent: () => dispatch(sessioncontentsFetch({
       ...ownProps,
       ...externalProps
-    }))
+    })),
+    fetchAppuserLikes: () => dispatch(appuserLikesFetch())
   })
 
   return connect(

@@ -1,13 +1,18 @@
 import { 
   put, 
   takeLeading,
-  select
+  select,
+  takeEvery
 } from 'redux-saga/effects'
 
 import {
   SESSIONCONTENTS_FETCH,
   sessioncontentsFetchSuccess,
   sessioncontentsFetchError,
+  SESSIONCONTENT_LIKES_FETCH,
+  sessioncontentLikesFetch,
+  sessioncontentLikesFetchSuccess,
+  sessioncontentLikesFetchError
 } from '../actions'
 
 import {
@@ -21,11 +26,13 @@ import { contentcreatorsFetchSuccess } from '../../contentcreator/actions'
 import { likesFetchSuccess } from '../../likes/actions'
 
 import {
-  fetchSessioncontents as fetchSessioncontentsAPI
+  fetchSessioncontents as fetchSessioncontentsAPI,
+  fetchSessioncontentsLikes as fetchSessioncontentsLikesAPI
 } from '../api'
 
 export function* watchSessioncontentsFetch() {
   yield takeLeading(SESSIONCONTENTS_FETCH, findSessioncontents)
+  yield takeEvery(SESSIONCONTENT_LIKES_FETCH, findSessioncontentsLikes)
 }
 
 const entitiesMap = {
@@ -46,9 +53,28 @@ function* findSessioncontents(action) {
     })
     entities.sessioncontents = entities.sessioncontents || {}
     yield mapSuccess(entities, { fetched_at: performance.now() })
+
+    const fetchedSessionContents = Object.values(entities.sessioncontents)
+    yield* fetchedSessionContents.map(function* ({ id }) {
+      yield put(sessioncontentLikesFetch(id))
+    })
+   
   } catch(e) {
     console.log(e)
     yield put(sessioncontentsFetchError(e))
+  }
+}
+
+function* findSessioncontentsLikes(action){
+  try {
+    const id = action.payload.sessioncontent
+
+    const likes = yield fetchSessioncontentsLikesAPI({id, dislike: 0})
+    const  dislikes = yield fetchSessioncontentsLikesAPI({id, dislike: 1})
+    yield put(sessioncontentLikesFetchSuccess({id, likes, dislikes}))
+  } catch (e) {
+    console.log(e)
+    yield put(sessioncontentLikesFetchError(e))
   }
 }
 

@@ -12,7 +12,7 @@ import {
 import LikesBox from '../../../components/feedbacks/LikesBox.jsx'
 
 import { getContentcreatorByContentcreatorId } from '../../../modules/contentcreator/selector'
-import { getLikesByLikeIds } from '../../../modules/likes/selector'
+import { getLikesBySessioncontentId } from '../../../modules/likes/selector'
 
 
 const styles = StyleSheet.create({
@@ -47,17 +47,14 @@ const styles = StyleSheet.create({
 
 const ProfileHeader = (props) => {
   const {
-    processedLikes,
     sessioncontent,
     contentcreatorElement : { name },
     description,
-    photo
+    photo,
+    likes,
+    dislikes,
+    myLike
   } = props
-  const likes = processedLikes.filter(l => !l.dislike)
-  const dislikes = processedLikes.filter(l => l.dislike)
-
-  const myLikes = processedLikes.filter(l => l.appuser)
-  const myLike = myLikes.length && myLikes[0]
 
   return (
       <View style={styles.content}>
@@ -73,9 +70,9 @@ const ProfileHeader = (props) => {
             {description}
           </Text>
           <LikesBox
-            likes={likes.length}
-            dislikes={dislikes.length}
-            myLike={myLike}
+            likes={sessioncontent.likes}
+            dislikes={sessioncontent.dislikes}
+            myLike={myLike && myLike.length && myLike[0]}
             sessioncontentId={sessioncontent.id}/>
         </View>
       </View>
@@ -84,7 +81,7 @@ const ProfileHeader = (props) => {
 
 const mapStateToProps = (state, ownProps) => ({
   contentcreatorElement: getContentcreatorByContentcreatorId(state, ownProps),
-  processedLikes: getLikesByLikeIds(state, ownProps.sessioncontent)
+  myLike: getLikesBySessioncontentId(state, ownProps)
 })
 
 export default connect(

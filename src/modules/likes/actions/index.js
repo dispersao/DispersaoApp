@@ -6,7 +6,6 @@ export const LIKE_DELETED_SUCCESS = 'LIKE_DELETED_SUCCESS'
 export const LIKE_UPDATE = 'LIKE_UPDATE'
 export const LIKE_UPDATED_SUCCESS = 'LIKE_UPDATED_SUCCESS'
 
-
 export const likesFetchSuccess = (likes) => ({
   type: LIKES_FETCH_SUCCESS,
   payload: {
@@ -55,3 +54,5 @@ export const likeUpdatedSuccess = (like) => ({
     like
   }
 })
+
+
