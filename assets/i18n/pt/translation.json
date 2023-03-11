@@ -37,8 +37,8 @@
       "noSound": "Sem áudio",
       "time": {
         "second": {
-          "one": "há {{amount}} segundos atrás",
-          "other": "há {{amount}} segundo atrás"
+          "one": "há {{amount}} segundo atrás",
+          "other": "há {{amount}} segundos atrás"
         },
         "minute": {
           "one": "há {{amount}} minuto atrás",

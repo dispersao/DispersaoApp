@@ -84,7 +84,9 @@ const Feed = ({
   useEffect(() => {
     if (interactedContent) {
       if (contentYs.hasOwnProperty(interactedContent)) {
-        setScrollTo(calculateScrollTo(contentYs[interactedContent]))
+        const interactedContentY = contentYs[interactedContent]
+        const calcHeight = calculateScrollTo(interactedContentY)
+        setScrollTo(calcHeight)
       } else if (fetchedAt < received_at && !loading) {
         fetch && fetch()
       }
@@ -92,15 +94,16 @@ const Feed = ({
   }, [interactedContent, contentYs, fetchedAt, fetch, received_at])
 
   useEffect(() => {
-    if (contentUIRef.current) {
+    if (contentUIRef.current && Number.isInteger(scrollTo)) {
       contentUIRef.current._root.scrollToPosition(0, scrollTo, true)
     }
   }, [scrollTo])
 
   const calculateScrollTo = ({ y, h }) => {
-    if (h < Dimensions.get('window').height){
-      const margin = (Dimensions.get('window').height - h) / 2
-      return Math.max(0, y - margin)
+    const intY = Math.round(y)
+    if (h < Dimensions.get('window').height) {
+      const margin = Math.round((Dimensions.get('window').height - h) / 2)
+      return Math.max(0, intY - margin)
     } else {
       return y
     }
@@ -128,6 +131,13 @@ const Feed = ({
     })
   }
 
+  const viewOnScroll = event => {
+    console.log(event.nativeEvent.contentOffset.y)
+    if (Number.isInteger(scrollTo)) {
+      setScrollTo(null)
+    }
+  }
+
   let text
   if (loading || !posts) {
     text = 'general.loading'
@@ -141,6 +151,7 @@ const Feed = ({
         <Content
           padder
           ref={contentUIRef}
+          onScroll={viewOnScroll}
           refreshControl={
             <RefreshControl
               refreshing={loading}
