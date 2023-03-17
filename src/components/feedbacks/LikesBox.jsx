@@ -28,7 +28,6 @@ const LikesBox = ({
   const likeStr = 'like'
   const dislikeStr = 'dislike'
 
-  let [myLikeStatus, setMyLikeStatus] = useState('loaded')
 
   let myLikeType
   if (myLike) {
@@ -36,24 +35,17 @@ const LikesBox = ({
   }
 
   const onClick = type => {
-    if (myLikeStatus !== 'loading') {
-      setMyLikeStatus('loading')
-      if (!myLike) {
-        createLike(type === dislikeStr)
-      } else if (type !== myLikeType) {
-        updateLike(myLike.id, type === dislikeStr)
-      } else {
-        deleteLike(myLike.id)
-      }
+    if (!myLike) {
+      createLike(type === dislikeStr)
+    } else if (type !== myLikeType) {
+      updateLike(myLike.id, type === dislikeStr)
+    } else {
+      deleteLike(myLike.id, type === dislikeStr)
     }
   }
 
-  useEffect(() => {
-    setMyLikeStatus('loaded')
-  }, [JSON.stringify(myLike)])
 
   if (
-    myLikeStatus === 'loaded' &&
     Number.isInteger(likes) &&
     Number.isInteger(dislikes)
   ) {
@@ -84,8 +76,14 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         sessioncontent: ownProps.sessioncontentId
       })
     ),
-  updateLike: (id, dislike) => dispatch(likeUpdate({ id, dislike })),
-  deleteLike: id => dispatch(likeDelete({ id }))
+  updateLike: (id, dislike) =>
+    dispatch(
+      likeUpdate({ id, dislike, sessioncontent: ownProps.sessioncontentId })
+    ),
+  deleteLike: (id, dislike) =>
+    dispatch(
+      likeDelete({ id, sessioncontent: ownProps.sessioncontentId, dislike })
+    )
 })
 
 export default connect(null, mapDispatchToProps)(LikesBox)

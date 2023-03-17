@@ -132,7 +132,6 @@ const Feed = ({
   }
 
   const viewOnScroll = event => {
-    console.log(event.nativeEvent.contentOffset.y)
     if (Number.isInteger(scrollTo)) {
       setScrollTo(null)
     }
