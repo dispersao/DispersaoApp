@@ -1,10 +1,12 @@
 import { fromJS } from 'immutable'
+import { optimistic } from 'redux-optimistic-ui'
 
 import {
   LIKES_FETCH_SUCCESS,
-  LIKE_CREATED_SUCCESS,
-  LIKE_DELETED_SUCCESS,
-  LIKE_UPDATED_SUCCESS
+  LIKE_CREATE,
+  LIKE_DELETE,
+  LIKE_UPDATE,
+  LIKE_CREATE_SUCCESS
 } from '../actions'
 
 import { APPUSER_LIKES_FETCH } from '../../appuser/actions'
@@ -20,16 +22,36 @@ const reducer = (state = fromJS({ loading: false }), action) => {
           data: action.payload.likes
         })
       )
-    case LIKE_CREATED_SUCCESS:
-    case LIKE_UPDATED_SUCCESS:
-      return state.mergeDeep(fromJS({ data: action.payload.like }))
-    case LIKE_DELETED_SUCCESS:
-      const likes = Object.keys(action.payload.like)
-      const newData = state.get('data').deleteAll(likes)
-      return state.set('data', newData)
+    case LIKE_CREATE:
+      return state.setIn(
+        ['data', action.payload.id.toString()],
+        fromJS(action.payload)
+      )
+    case LIKE_UPDATE:
+      return state.mergeDeepIn(
+        ['data', action.payload.id.toString()],
+        fromJS(action.payload)
+      )
+    case LIKE_DELETE:
+      return state.deleteIn(['data', action.payload.id.toString()])
+    case LIKE_CREATE_SUCCESS:
+      const newId = Object.keys(action.payload.result)[0]
+      const oldId = action.payload.original.id.toString()
+      let hasOldLike = state.hasIn(['data', oldId])
+
+      if (hasOldLike) {
+        return state
+          .setIn(
+            ['data', newId.toString()],
+            state.getIn(['data', oldId]).set('id', newId)
+          )
+          .deleteIn(['data', action.payload.original.id.toString()])
+      } else {
+        return state
+      }
     default:
       return state
   }
 }
 
-export default reducer
+export default optimistic(reducer)

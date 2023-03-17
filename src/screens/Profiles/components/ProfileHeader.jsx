@@ -51,10 +51,9 @@ const ProfileHeader = (props) => {
     contentcreatorElement : { name },
     description,
     photo,
-    likes,
-    dislikes,
     myLike
   } = props
+
 
   return (
       <View style={styles.content}>
@@ -81,7 +80,7 @@ const ProfileHeader = (props) => {
 
 const mapStateToProps = (state, ownProps) => ({
   contentcreatorElement: getContentcreatorByContentcreatorId(state, ownProps),
-  myLike: getLikesBySessioncontentId(state, ownProps)
+  myLike: getLikesBySessioncontentId(state, {id: ownProps.sessioncontent.id})
 })
 
 export default connect(

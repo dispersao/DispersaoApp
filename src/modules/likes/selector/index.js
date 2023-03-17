@@ -1,13 +1,11 @@
-import createCachedSelector from "re-reselect"
+import createCachedSelector from 're-reselect'
+import { ensureState } from 'redux-optimistic-ui'
 
-// import { getId } from '../../appuser/selector'
-
-export const getState = (state) => state.likes.get('data')
-// const getLikesIds = (state, props) => props.likes 
-// const getLikeIdsJSON = (state, props) => JSON.stringify(props.likes.sort())
+export const getState = state => ensureState(state.likes).get('data')
 const getSessioncontentId = (state, props) => props.id
+const getId = (state, props) => props.id
 
-export const getLoading = (state) => state.likes.get('loading')
+export const getLoading = state => ensureState(state.likes).get('loading')
 
 export const getLikesBySessioncontentId = createCachedSelector(
   [getState, getSessioncontentId],
@@ -15,21 +13,16 @@ export const getLikesBySessioncontentId = createCachedSelector(
     if (!likes || !id) {
       return
     }
-    return likes
-      .filter(l => l.get('sessioncontent') === id)
-      .valueSeq()
+    return likes.filter(l => l.get('sessioncontent') === id).valueSeq()
   }
 )(getSessioncontentId)
 
-/*export const getLikesByLikeIds = createCachedSelector(
-[getState, getLikesIds, getId],
-(likes, likeIds, appuserId) => {
-  if (!likes || !likeIds) {
-    return
+export const getLikeByLikeId = createCachedSelector(
+  [getState, getId],
+  (likes, id) => {
+    if (!likes || !id) {
+      return
+    }
+    return likes.get(id.toString())
   }
-  return likes
-    .filter(l => likeIds.includes(l.get('id')))
-    .map(l => l.get('appuser') === appuserId ? l : l.set('appuser', null))
-    .valueSeq()
-}
-)(getLikeIdsJSON)*/
+)(getId)

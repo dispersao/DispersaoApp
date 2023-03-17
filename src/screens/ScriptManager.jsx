@@ -16,12 +16,14 @@ import {
 import { getCurrentUserScript as getAppuserScript } from '../modules/appuser/selector'
 
 const ScriptManager = ({
-  script: { state },
+  script,
   children,
   pollScriptState,
   stopFetchScriptState,
   fetchAvailableScripts
 }) => {
+
+  const state = script ? script.state : ''
 
   const { navigate } = useNavigation()
   const { t } = useTranslation()

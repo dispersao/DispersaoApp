@@ -6,7 +6,7 @@
     "slug": "snack-db27b3e3-a2d5-4324-abd4-efd904fac69c",
     "privacy": "unlisted",
     "platforms": ["ios", "android", "web"],
-    "version": "1.0.10",
+    "version": "1.0.11",
     "orientation": "default",
     "primaryColor": "#cccccc",
     "icon": "./assets/images/app_icon.png",
