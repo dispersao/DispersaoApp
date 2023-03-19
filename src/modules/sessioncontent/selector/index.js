@@ -1,4 +1,5 @@
 import createCachedSelector from 're-reselect'
+import { createArraySelector } from '../../../utils/selectorsUtils'
 import { ensureState } from 'redux-optimistic-ui'
 
 export const getState = state => ensureState(state.sessioncontents).get('data')
@@ -26,10 +27,12 @@ export const getSessioncontentListByType = createCachedSelector(
       )
       .sort(
         (a, b) => new Date(b.get('updated_at')) - new Date(a.get('updated_at'))
-      )
-      .valueSeq()
+      ).valueSeq()
   }
-)(getTypesJSON)
+)({
+  selectorCreator: createArraySelector,
+  keySelector: getTypesJSON
+})
 
 export const getSessioncontentByContentId = createCachedSelector(
   [getState, getType, getId],

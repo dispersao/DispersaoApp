@@ -1,6 +1,8 @@
 import { createSelector } from 'reselect'
 import createCachedSelector from 're-reselect'
 import config from '../../../../config.json'
+import { createArraySelector } from '../../../utils/selectorsUtils'
+
 
 import { getState as getSessionContents } from '../../sessioncontent/selector'
 const getState = (state) => state.notifications.get('data')
@@ -10,7 +12,7 @@ export const getLastInteracted = (state, props) =>
 export const getLastForeground = (state, props) =>
   state.notifications.get('lastForeground')
 
-export const getNotificationsAsList = createSelector(
+export const getNotificationsAsList = createArraySelector(
   [getState],
   (notifications) => {
     if (!notifications) {

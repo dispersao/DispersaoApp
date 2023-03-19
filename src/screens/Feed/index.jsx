@@ -10,10 +10,9 @@ import {
   RefreshControl,
   View,
   Text,
-  Dimensions
+  Dimensions,
+  ScrollView as Content
 } from 'react-native'
-
-import { Content } from 'native-base'
 
 import {
   getFetchedAt,
@@ -31,7 +30,7 @@ import { getBadgeCount } from '../../modules/notification/selector'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Constants.statusBarHeight
+    marginTop: Constants.statusBarHeight,
   },
   text: {
     fontSize: 12,
@@ -44,10 +43,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 150
+  },
+  content: {
+    margin: 10
   }
 })
 
-const Feed = ({
+const Feed = React.memo(({
   posts,
   loading,
   fetchedAt,
@@ -86,6 +88,7 @@ const Feed = ({
       if (contentYs.hasOwnProperty(interactedContent)) {
         const interactedContentY = contentYs[interactedContent]
         const calcHeight = calculateScrollTo(interactedContentY)
+        console.log('seetting scrollTo', calcHeight, interactedContent, contentYs, fetchedAt, fetch, received_at)
         setScrollTo(calcHeight)
       } else if (fetchedAt < received_at && !loading) {
         fetch && fetch()
@@ -95,7 +98,7 @@ const Feed = ({
 
   useEffect(() => {
     if (contentUIRef.current && Number.isInteger(scrollTo)) {
-      contentUIRef.current._root.scrollToPosition(0, scrollTo, true)
+      contentUIRef.current.scrollTo({x:0, y:scrollTo, animated:true})
     }
   }, [scrollTo])
 
@@ -148,7 +151,7 @@ const Feed = ({
     <>
       <SafeAreaView style={styles.container}>
         <Content
-          padder
+          style={styles.content}
           ref={contentUIRef}
           onScroll={viewOnScroll}
           refreshControl={
@@ -184,7 +187,7 @@ const Feed = ({
       <ForegroundNotification />
     </>
   )
-}
+})
 
 const mapStateToProps = state => ({
   posts: getSessioncontentListByType(state, { types: ['post'] }),

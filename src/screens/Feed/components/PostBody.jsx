@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   
   text: {
     fontSize: 14,
-    paddingHorizontal: 5,
+    paddingHorizontal: 16,
     paddingBottom: 10
   },
   username: {

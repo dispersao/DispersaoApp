@@ -9,9 +9,11 @@ import { getState as getLikes } from '../modules/likes/selector'
 import { sessioncontentsFetch } from '../modules/sessioncontent/actions'
 import { appuserLikesFetch } from '../modules/appuser/actions'
 
+import useDeepCompareEffect from 'use-deep-compare-effect'
+
 const WithLoadedData = (WrappedComponent, externalProps) => {
 
-  const LoadedData = (props) => {
+  const LoadedData = React.memo((props) => {
     const { 
       fetchSessioncontent,
       fetchAppuserLikes, 
@@ -35,7 +37,7 @@ const WithLoadedData = (WrappedComponent, externalProps) => {
     }, [likes])
 
     return <WrappedComponent {...props} loading={dataloading} fetch={fetchSessioncontent} />
-  }
+  })
 
   const mapStateToProps = (state, ownProps) => ({
     sessioncontents: getSessioncontentListByType(state, {
