@@ -1,14 +1,9 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import {
-  Platform,
-  StyleSheet,
-  KeyboardAvoidingView
-} from 'react-native'
+import { Platform, StyleSheet, KeyboardAvoidingView } from 'react-native'
 import Constants from 'expo-constants'
 import { StatusBar } from 'expo-status-bar'
 
-import { Ionicons } from '@expo/vector-icons'
 import { CommonActions } from '@react-navigation/native'
 
 import { Container, Content } from 'native-base'
@@ -20,6 +15,7 @@ import { toJS } from '../../utils/immutableToJs.jsx'
 import SmallLogo from '../../components/smallLogo'
 import TokenCheck from './components/TokenCheck.jsx'
 import { getCurrentUserScript as getAppuserScript } from '../../modules/appuser/selector'
+import BackButton from '../../components/ui/BackButton.jsx'
 
 const TokenScreen = ({ navigation, userScript }) => {
   const acceptedState = ['started', 'paused', 'playing']
@@ -40,23 +36,9 @@ const TokenScreen = ({ navigation, userScript }) => {
     }
   }, [userScript])
 
-  const onHandleClick = () => {
-    navigation.goBack()
-  }
-
   return (
     <Container style={styles.container}>
-      {(Platform.OS === 'ios' && (
-        <Ionicons.Button
-          style={styles.button}
-          name="ios-arrow-back"
-          color="#999999"
-          backgroundColor="rgba(255,255,255,0)"
-          size={25}
-          onPress={onHandleClick}
-        />
-      )) ||
-        null}
+      <BackButton onPress={navigation.goBack} darkMode={true} />
       <Content contentContainerStyle={styles.contentStyles}>
         <KeyboardAvoidingView
           behavior={Platform.OS == 'ios' ? 'padding' : 'height'}

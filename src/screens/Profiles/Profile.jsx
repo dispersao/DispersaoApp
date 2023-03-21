@@ -1,14 +1,15 @@
 import React, { useRef } from 'react'
 
-import { Ionicons } from '@expo/vector-icons'
 import Constants from 'expo-constants'
 import { connect } from 'react-redux'
 
 import ScrollUpContext from './context'
 
-import { SafeAreaView, StyleSheet, Platform } from 'react-native'
-
-import { Content } from 'native-base'
+import {
+  SafeAreaView,
+  StyleSheet,
+  ScrollView as Content
+} from 'react-native'
 
 import { getSessioncontentByContentId } from '../../modules/sessioncontent/selector'
 import { getProfileByProfileId } from '../../modules/profile/selector'
@@ -19,6 +20,7 @@ import { toJS } from '../../utils/immutableToJs.jsx'
 import ProfileInfo from './components/ProfileInfo.jsx'
 import ProfilePostList from './components/ProfilePostList.jsx'
 import ContentcreatorProfile from './components/ContentcreatorProfile.jsx'
+import BackButton from '../../components/ui/BackButton'
 
 const styles = StyleSheet.create({
   container: {
@@ -27,42 +29,25 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    flexDirection: 'column'
-  },
-  button: {
-    padding: 5,
-    paddingLeft: 15
+    flexDirection: 'column',
+    margin: 10
   }
 })
 
 const Profile = ({ navigation, sessioncontent, profile, contentcreator }) => {
   const scrollerRef = useRef(null)
 
-  const onHandleClick = () => {
-    navigation.goBack()
-  }
-
   return (
     <ScrollUpContext.Provider
       value={{
         scrollUp: () => {
-          scrollerRef.current._root.scrollToPosition(0, 0, true)
+          scrollerRef.current.scrollTo({ x: 0, y: 0, animation: true })
         }
       }}
     >
       <SafeAreaView style={styles.container}>
-        <Content style={styles.content} ref={scrollerRef} padder>
-          {(Platform.OS === 'ios' && (
-            <Ionicons.Button
-              style={styles.button}
-              name="ios-arrow-back"
-              color="#999999"
-              backgroundColor="rgba(255,255,255,0)"
-              size={25}
-              onPress={onHandleClick}
-            />
-          )) ||
-            null}
+        <Content style={styles.content} ref={scrollerRef}>
+         <BackButton onPress={navigation.goBack}/>
           {(profile || null) && (
             <>
               <ProfileInfo profile={profile} sessioncontent={sessioncontent} />

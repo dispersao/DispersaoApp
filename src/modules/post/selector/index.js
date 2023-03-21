@@ -1,5 +1,7 @@
 import createCachedSelector from 're-reselect'
 import config from '../../../../config.json'
+import { createArraySelector } from '../../../utils/selectorsUtils'
+
 
 const getState = (state) => state.posts
 const getPostId = (state, props) => props.post
@@ -26,7 +28,10 @@ export const getPostsByContentcreatorId = createCachedSelector(
       .map(post => formatPost(post))
       .valueSeq()
   }
-)(getContentcreatorId)
+)({
+  selectorCreator: createArraySelector,
+  keySelector: getContentcreatorId
+})
 
 const formatPost = (post) => {
   let retValue = post

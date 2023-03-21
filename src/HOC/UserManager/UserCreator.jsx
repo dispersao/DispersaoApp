@@ -65,7 +65,6 @@ const UserCreator = ({
       findUser({expotoken})
     } else {
       const locale = getCurrentLanguage()
-      // console.log('language = ', locale)
       createUser({ expotoken: null, locale })
     }
   }

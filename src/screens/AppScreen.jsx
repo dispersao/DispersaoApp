@@ -43,7 +43,7 @@ const AppScreen = ({
           let iconName
           let routeName = route.name
           if (routeName === 'Feed') {
-            iconName = 'ios-paper' //Ionicons
+            iconName = 'ios-newspaper' //Ionicons
           } else if (routeName === 'Notifications') {
             iconName = 'ios-notifications'
           } else if (routeName === 'Profiles') {
