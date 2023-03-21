@@ -1,4 +1,4 @@
-{
+export default {
   "expo": {
     "owner": "dispersao",
     "name": "Dispersão",
@@ -27,7 +27,7 @@
     },
     "android": {
       "package": "net.dispersao.filmeapp",
-      "googleServicesFile": "./google-services.json",
+      "googleServicesFile": process.env.GOOGLE_SERVICES_JSON,
       "versionCode": 10,
       "permissions": [
         "VIBRATE"
